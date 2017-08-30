@@ -1,0 +1,57 @@
+<html lang="en" ng-app="accountsApp">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Optimize mobile viewport -->
+    <title>Node/Angular Accounts</title>
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <!-- load bootstrap -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <!-- load angular -->
+    <script src="../../public/javascripts/controllers/accounts.js"></script>
+    <!-- load up our controller -->
+    <script src="../../public/javascripts/services/accounts.js"></script>
+    <!-- load our todo service -->
+    <script src="../../public/javascripts/core.js"></script>
+    <!-- load our main application -->
+</head>
+
+<body ng-controller="mainCtrl">
+    <div class = "container">
+    <header>
+        <div ng-include src="'../public/partials/header.html'"></div>
+    </header>
+    <main>
+        <div class="jumbotron">
+            <h1> Edit Account Page for <span class="label label-info"> {{ account.name }} </h1>
+        </div>
+        
+        <div id="account-form" class="row">
+        <div class="col-sm-10 col-sm-offset-1 text-center">
+            <form>
+                <div class="form-group">
+                    <!-- BIND THIS VALUE TO formData.name & formData.currency IN ANGULAR -->
+                    <input type="text" name="name" class="form-control input-lg text-center" placeholder="Account Name" ng-model="formData.name">
+                    <input type="text" name="currency" class="form-control input-lg text-center" placeholder="Enter Currency" ng-model="formData.currency">
+                    <input type="Boolean" name="active" class="form-control input-lg text-center" placeholder="Active?" ng-model="formData.active">
+                    <input type="Number" name="active" class="form-control input-lg text-center" placeholder="Payment Term" ng-model="formData.paymentTerm">
+                </div>
+
+                <!-- updateAccount() WILL Update Account selected by Id -->
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="updateAccount(account_id)">Update</button>
+            </form>
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <div ng-include src="'../public/partials/footer.html'"></div>
+    </footer>
+    </div>
+</body>
+
+</html>
