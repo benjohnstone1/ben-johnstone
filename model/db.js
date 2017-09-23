@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
-var promise = mongoose.connect('mongodb://localhost/nodewebappdb', {
+var uri = 'mongodb://heroku_n2k302mx:u2m8korq51b25f743m1haml9u8@ds161873.mlab.com:61873/heroku_n2k302mx';
+//var promise = mongoose.connect('mongodb://localhost/nodewebappdb', {
+var promise = mongoose.connect(uri, {
   useMongoClient: true,
   /* other options */
 });
