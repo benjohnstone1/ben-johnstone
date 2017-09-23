@@ -4,21 +4,31 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var flash = require('connect-flash');
+var session = require('express-session');
 var app = express();
 
-// Models
+// models ======================================================================
 var db = require('./model/db');
-var blob = require('./model/blobs');
 
+// routes ======================================================================
 // Set the route controller (view controllers are found in javascripts/controllers)
-var routes = require('./routes/index');
-var blobs = require('./routes/blob');
+var routes = require('./routes/index');//(app, passport);
 
 // Let's us access the partials in the public folder and all other public access
 app.use("/public", express.static(path.join(__dirname, 'public')));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// required for passport
+/*
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+*/
 
 
 // uncomment after placing your favicon in /public
@@ -30,7 +40,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/blobs', blobs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
