@@ -19,6 +19,10 @@
                     {{ message }}
                 </div>
                 
+                <div ng-show="user" class="alert alert-danger">
+                    You are currently logged in as {{user.username}}
+                </div>
+                
                         <!-- LOGIN FORM -->
                         <form action="/login" method="post">
                             <div class="form-group">

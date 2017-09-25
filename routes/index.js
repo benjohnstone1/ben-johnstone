@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose'); //mongo connection
+var passport = require('passport');
+var User = require('../model/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -8,35 +10,41 @@ router.get('/', function(req, res, next) {
     res.render('index');
 });
 
- // =====================================
-    // LOGIN ===============================
-    // =====================================
-    // show the login form
-    router.get('/login', function(req, res) {
-        console.log('Got a GET request for login/index');
-        // render the page and pass in any flash data if it exists
-       // res.render('login/index', { message: req.flash('loginMessage') }); 
-       res.render('login/index');
-    });
-    
-    // process the login form
-    // router.post('/login', do all our passport stuff here);
-    
-    router.get('/signup', function(req, res){
-        console.log('Got a GET request for login/signup');
-        res.render('login/signup');
-    })
-    
-    router.get('/profile', isLoggedIn, function(req, res) {
-        res.render('login/profile', {
-            user : req.user // get the user out of session and pass to template
+router.get('/login', function(req, res) {
+    res.render('login/index', { user: req.user });
+});
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
+
+router.get('/signup', function(req, res) {
+    res.render('login/signup', {});
+});
+
+router.post('/signup', function(req, res) {
+    User.register(new User({ username: req.body.username }), req.body.password, function(err, user) {
+        if (err) {
+            console.log('error while user register!', err);
+            return res.render('login/signup', { user: user });
+        }
+        console.log('user registered!');
+        passport.authenticate('local')(req, res, function() {
+            res.redirect('/');
         });
     });
-    
-    router.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
+});
+
+router.get('/profile', isLoggedIn, function(req, res) {
+    res.render('login/profile', {
+        user: req.user // get the user out of session and pass to template
     });
+});
+
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -49,9 +57,6 @@ function isLoggedIn(req, res, next) {
 }
 
 
-
-
-
 /* GET Accounts page. */
 var Account = require('../model/account');
 
@@ -61,9 +66,9 @@ router.get('/accounts', function(req, res, next) {
 })
 
 // Return JSON of all Accounts
-function getAccounts(res){
-    mongoose.model('Account').find({}, function(err, accounts){
-        if(err){
+function getAccounts(res) {
+    mongoose.model('Account').find({}, function(err, accounts) {
+        if (err) {
             res.send(err);
         }
         console.log('Get JSON request for all Accounts');
@@ -86,7 +91,7 @@ router.post('/accounts', function(req, res) {
         active: req.body.active,
         done: false
     }, function(err, account) {
-        if (err){
+        if (err) {
             res.send(err);
         }
         // Update accounts
@@ -94,12 +99,13 @@ router.post('/accounts', function(req, res) {
     });
 });
 
-function showAccount(res){
-    mongoose.model('Account').find( { _id: res } , function(err, account){
+function showAccount(res) {
+    mongoose.model('Account').find({ _id: res }, function(err, account) {
         //db.accounts.find({ _id: ObjectId("5995c9d054e2e10915621827")}) # mongo query
-        if (err){
-            console.log('GET Error: There was a problem retrieving:'+err);
-        }else{
+        if (err) {
+            console.log('GET Error: There was a problem retrieving:' + err);
+        }
+        else {
             console.log('GET Retrieving ID: ' + res);
             res.render('accounts/edit');
         }
@@ -108,11 +114,12 @@ function showAccount(res){
 
 router.get('/accounts/edit.json', function(req, res, next) {
     var id = "5995c9d054e2e10915621827"
-     mongoose.model('Account').find( { _id: id } , function(err, account){
+    mongoose.model('Account').find({ _id: id }, function(err, account) {
         //db.accounts.find({ _id: ObjectId("5995c9d054e2e10915621827")}) # mongo query
-        if (err){
-            console.log('GET Error: There was a problem retrieving:'+err);
-        }else{
+        if (err) {
+            console.log('GET Error: There was a problem retrieving:' + err);
+        }
+        else {
             console.log('GET Retrieving ID: ' + id);
             console.log('Account retrieved is: ' + account);
             res.json(account);
@@ -125,48 +132,49 @@ router.get('/accounts/edit/:id', function(req, res, next) {
     var id = req.params.id;
     console.log('Request Id:', id);
     res.render('accounts/edit');
-   // showAccount(req.params.id);
-   /* 
-    mongoose.model('Account').findById(req.params.id, function(err, account){
-     //   _id: req.params.account_id;
-        if (err){
-            console.log('GET Error: There was a problem retrieving:'+err);
-        }else{
-            console.log('GET Retrieving ID: ' + account._id);
-            res.render('accounts/edit');
-        }
-    });*/
+    // showAccount(req.params.id);
+    /* 
+     mongoose.model('Account').findById(req.params.id, function(err, account){
+      //   _id: req.params.account_id;
+         if (err){
+             console.log('GET Error: There was a problem retrieving:'+err);
+         }else{
+             console.log('GET Retrieving ID: ' + account._id);
+             res.render('accounts/edit');
+         }
+     });*/
 });
 
 /* Set routes for updating the account */
-router.put('/accounts/:account_id/edit.json', function(req,res){
-    mongoose.model('Account').findById(req.id, function(err, account){
+router.put('/accounts/:account_id/edit.json', function(req, res) {
+    mongoose.model('Account').findById(req.id, function(err, account) {
         var name = req.body.name;
         var currency = req.body.currency;
         var active = req.body.active;
         var paymentTerm = req.body.paymentTerm;
-        
+
         Account.update({
             name: name,
             currency: currency,
             active: active,
             paymentTerm: paymentTerm
         });
-        
-        if(err){
+
+        if (err) {
             console.log('Error in PUT request updating account');
-        }else{
+        }
+        else {
             console.log('Success sending JSON of updated account');
             res.json(res);
         }
     })
 })
 
-router.delete('/accounts/:account_id', function(req, res){
+router.delete('/accounts/:account_id', function(req, res) {
     mongoose.model('Account').remove({
         _id: req.params.account_id
     }, function(err, account) {
-        if (err){
+        if (err) {
             res.send(err);
         }
         getAccounts(res);
@@ -206,8 +214,8 @@ router.post('/todos', function(req, res) {
         text: req.body.text,
         done: false
     }, function(err, todo) {
-        if (err){
-          res.send(err);
+        if (err) {
+            res.send(err);
         }
         // get and return all the todos after you create another
         getTodos(res);
@@ -220,7 +228,7 @@ router.delete('/todos/:todo_id', function(req, res) {
     mongoose.model('Todo').remove({
         _id: req.params.todo_id
     }, function(err, todo) {
-        if (err){
+        if (err) {
             res.send(err);
         }
         getTodos(res);
