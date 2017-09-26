@@ -1,16 +1,18 @@
 <!-- views/partials/header.html -->
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+<nav class="navbar navbar-toggleable-md">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
     <a class="navbar-brand" href="/">Home</a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/login">Login</a>
             <a class="nav-item nav-link" href="/profile">Profile</a>
             <a class="nav-item nav-link" href="/todos">Todos</a>
             <a class="nav-item nav-link" href="/accounts">Accounts</a>
-            <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
+        <div class="nav navbar-nav navbar-right">
+            <a class="nav-item nav-link" href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+            <a class="nav-item nav-link" href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
         </div>
     </div>
 </nav>
