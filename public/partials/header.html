@@ -1,15 +1,16 @@
 <!-- views/partials/header.html -->
-
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-       <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/signup">Signup</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/todos">Todos</a></li>
-            <li><a href="/accounts">Accounts</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <a class="navbar-brand" href="/">Home</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/login">Login</a>
+            <a class="nav-item nav-link" href="/profile">Profile</a>
+            <a class="nav-item nav-link" href="/todos">Todos</a>
+            <a class="nav-item nav-link" href="/accounts">Accounts</a>
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
     </div>
 </nav>
