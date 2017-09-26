@@ -1,6 +1,15 @@
 <html lang="en" ng-app="">
 
 <head>
+    <!-- BOOTSTRAP -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Fonts -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <div ng-include src="'../../public/partials/head.html'"></div>
 </head>
@@ -17,29 +26,29 @@
                 <div ng-show="message.length > 0" class="alert alert-danger">
                     {{ message }}
                 </div>
-                
+
                 <div ng-show="user" class="alert alert-danger">
                     You are currently logged in as {{user.username}}
                 </div>
-                
-                        <!-- LOGIN FORM -->
-                        <form action="/login" method="post">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" class="form-control" name="username">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" name="password">
-                            </div>
 
-                            <button type="submit" class="btn btn-warning btn-lg">Login</button>
-                        </form>
+                <!-- LOGIN FORM -->
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password">
+                    </div>
 
-                        <hr>
+                    <button type="submit" class="btn btn-warning btn-lg">Login</button>
+                </form>
 
-                        <p>Need an account? <a href="/signup">Signup</a></p>
-                        <p>Or go <a href="/">home</a>.</p>
+                <hr>
+
+                <p>Need an account? <a href="/signup">Signup</a></p>
+                <p>Or go <a href="/">home</a>.</p>
 
             </div>
 
