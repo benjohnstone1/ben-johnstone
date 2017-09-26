@@ -1,20 +1,30 @@
 <html ng-app="accountsApp">
 
 <head>
-    <!-- load up our head file -->
-    <div ng-include src="'../../public/partials/head.html'"></div>
-    <!-- load up our controller -->
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Optimize mobile viewport -->
+    <title>Node/Angular Accounts</title>
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <!-- load bootstrap -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <!-- load angular -->
     <script src="../../public/javascripts/controllers/accounts.js"></script>
-    <!-- load our service -->
+    <!-- load up our controller -->
     <script src="../../public/javascripts/services/accounts.js"></script>
-    <!-- load our main application -->
+    <!-- load our todo service -->
     <script src="../../public/javascripts/core.js"></script>
+    <!-- load our main application -->
 </head>
 
 <body ng-controller="mainCtrl">
     <div class="container">
         <header>
-            <div ng-include src="'../../public/partials/header.html'"></div>
+            <div ng-include src="'../public/partials/header.html'"></div>
         </header>
         <main>
             <div class="jumbotron">
@@ -44,7 +54,10 @@
                                 <td><button class="btn btn-danger" ng-click="deleteAccount(account._id)">Delete</button></td>
                         </tr>
                     </tbody>
+                       
                 </table>
+					
+
 				<p class="text-center" ng-show="loading">
 					<span class="fa fa-spinner fa-spin fa-3x"></span>
                     </p>
@@ -64,15 +77,16 @@
 
                 </div>
 
-                <!-- createAccount() WILL CREATE NEW Account -->
+                <!-- createAccou t() WILL CREATE NEW Account -->
                 <button type="submit" class="btn btn-primary btn-lg" ng-click="createAccount()">Add</button>
             </form>
         </div>
     </div>
 
+
     </main>
     <footer>
-        <div ng-include src="'../../public/partials/footer.html'"></div>
+        <div ng-include src="'../public/partials/footer.html'"></div>
     </footer>
 </body>
 </div>

@@ -1,11 +1,15 @@
 <!-- ASSIGN OUR ANGULAR MODULE -->
 <html ng-app="scotchTodo">
 <head>
-	    <div ng-include src="'../../public/partials/head.html'"></div>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
 	<title>Node/Angular Todo App</title>
 
-
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
@@ -14,6 +18,7 @@
 	</style>
 
 	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
 	<script src="../../public/javascripts/controllers/main.js"></script> <!-- load up our controller -->
 	<script src="../../public/javascripts/services/todos.js"></script> <!-- load our todo service -->
 	<script src="../../public/javascripts/core.js"></script> <!-- load our main application -->
