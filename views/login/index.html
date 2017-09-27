@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
     <!-- Include partials head -->
-    <div ng-include src="'../../public/partials/head.html'"></div>
+    <!--<div ng-include src="'../../public/partials/head.html'"></div>-->
+    <link rel="stylesheet" href="../public/stylesheets/style.css">
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
@@ -15,7 +20,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 </head>
 
-<body class="container">
+<body class="container" ng-cloak class="container {{ bodyClass }}">
     <header>
         <div ng-include src="'../../public/partials/header.html'"></div>
     </header>
