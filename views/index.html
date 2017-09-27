@@ -1,22 +1,20 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="">
+<html lang="en" ng-app="homeApp" ng-controller="homeCtrl">
 
 <head>
     <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- BOOTSTRAP -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>MEAN Stack</title>
+    <!-- Include partials head -->
+    <div ng-include src="'../public/partials/head.html'"></div>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Fonts -->
-     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <!-- load angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <div ng-include src="'../../public/partials/head.html'"></div>
+    <!-- ANGULAR -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <!-- Load Controller-->
+    <script src="../public/javascripts/core.js"></script>
 </head>
 
 <body class="container">
@@ -25,7 +23,7 @@
     </header>
     <main>
         <div class="jumbotron">
-            <h1> Home... Welcome :) </h1>
+            <h1> {{welcome}} </h1>
         </div>
     </main>
     <footer>

@@ -1,4 +1,4 @@
-var module = angular.module('accountsController', [])
+var module = angular.module('accountsController', []);
 
 	// inject the account service factory into our controller
     module.controller('mainCtrl', ['$scope', '$http', 'Accounts', function($scope, $http, Accounts) {
