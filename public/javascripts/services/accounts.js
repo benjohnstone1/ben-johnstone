@@ -1,3 +1,4 @@
+/* global angular */
 var module = angular.module('accountsService', []);
 // super simple service
 // each function returns a promise object 

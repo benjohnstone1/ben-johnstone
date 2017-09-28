@@ -1,9 +1,11 @@
+/* global angular */
 angular.module('scotchTodo', ['todoController', 'todoService']);
 angular.module('accountsApp', ['accountsController', 'accountsService']);
-angular.module('profileApp', ['profileController']);
+angular.module('profileApp', ['profileController', 'loginService']);
+angular.module('loginApp', ['loginController', 'loginService']);
 
-var app = angular.module('homeApp', []);
-app.controller('homeCtrl', ['$scope', function($scope){
+var homeApp = angular.module('homeApp', []);
+homeApp.controller('homeCtrl', ['$scope', function($scope){
     $scope.welcome = 'Home... Welcome :)';
 }]);
 

@@ -1,4 +1,4 @@
-<html lang="en" ng-app="">
+<html lang="en" ng-app="loginApp" ng-controller="loginCtrl">
 
 <head>
     <!-- META -->
@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
     <!-- Include partials head -->
-    <!--<div ng-include src="'../../public/partials/head.html'"></div>-->
+    <!-- Have removed as stylesheets causing FOUC and scripts causing errors... maybe best for just partial html-->
+    <!--<div ng-include src="'../public/partials/head.html'"></div>-->
+    <!--Style Sheets-->
     <link rel="stylesheet" href="../public/stylesheets/style.css">
     <!-- BOOTSTRAP CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -18,9 +20,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- ANGULAR -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <!-- Load controllers & services-->
+    <script src="../../public/javascripts/controllers/login.controller.js"></script>
+    <script src="../../public/javascripts/services/login.service.js"></script>
+    <script src="../../public/javascripts/core.js"></script>
 </head>
 
-<body class="container" ng-cloak class="container {{ bodyClass }}">
+<body ng-cloak class="container {{ bodyClass }}">
     <header>
         <div ng-include src="'../../public/partials/header.html'"></div>
     </header>
@@ -40,26 +46,21 @@
                 <!-- LOGIN FORM -->
                 <form action="/login" method="post">
                     <div class="form-group">
-                        <label>Email</label>
+                        <label>Email </label>
+                         <label>Username placeholder {{ username}} </label>
                         <input type="text" class="form-control" name="username">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
                         <input type="password" class="form-control" name="password">
                     </div>
-
                     <button type="submit" class="btn btn-warning btn-lg">Login</button>
                 </form>
-
                 <hr>
-
                 <p>Need an account? <a href="/signup">Signup</a></p>
                 <p>Or go <a href="/">home</a>.</p>
-
             </div>
-
         </div>
-
     </main>
     <footer>
         <div ng-include src="'../../public/partials/footer.html'"></div>

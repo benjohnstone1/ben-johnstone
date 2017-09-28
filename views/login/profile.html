@@ -1,7 +1,7 @@
-<html lang="en" ng-app="profileApp">
+<html lang="en" ng-app="profileApp" ng-controller="profileCtrl">
 
 <head>
-<!-- META -->
+    <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Profile Page</title>
@@ -15,37 +15,40 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
+    <!-- Latest compiled javaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- ANGULAR -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-    <!-- Load Controllers & Services-->
+    <!-- Load controllers & services-->
     <script src="../../public/javascripts/controllers/profile.controller.js"></script>
+    <script src="../../public/javascripts/services/login.service.js"></script>
     <script src="../../public/javascripts/core.js"></script>
 </head>
 
-<body class="container" ng-controller="mainCtrl" ng-cloak class="container {{ bodyClass }}">
-    <header>
-        <div ng-include src="'../../public/partials/header.html'"></div>
-    </header>
-    <main>
-        <div class="jumbotron">
-            <h1> Profile Page </h1>
-        </div>
-        <div class="container">
-            <div>
-                <label>User: {{user.username}}</label>
+<body ng-cloak class="container {{ bodyClass }}">
+        <header>
+            <div ng-include src="'../../public/partials/header.html'"></div>
+        </header>
+        <main>
+            <div class="jumbotron">
+                <h1> Profile Page </h1>
             </div>
+            <div class="container">
+                <div>
+                    <label>User: {{user.username}}</label>
+                </div>
+                <div>
+                    <label>Id: {{user._id}}</label>
+                </div>
 
-            <div>
-                <label>Title: {{title}}</label>
+                <div>
+                    <label>Title: {{title}}</label>
+                </div>
             </div>
-        </div>
-    </main>
-    <footer>
-        <div ng-include src="'../../public/partials/footer.html'"></div>
-    </footer>
-
+        </main>
+        <footer>
+            <div ng-include src="'../../public/partials/footer.html'"></div>
+        </footer>
 </body>
 
 </html>

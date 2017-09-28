@@ -6,16 +6,18 @@ var User = require('../model/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    console.log('Got a GET request for /views/index.html');
     res.render('index');
 });
 
 router.get('/login', function(req, res) {
+    console.log('Login user: '+req.user);
     res.render('login/index', { user: req.user });
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    // This returns the username, _id, salt and hash
+    //console.log('Posted user: '+req.user);
+    res.redirect('/profile');
 });
 
 router.get('/signup', function(req, res) {
@@ -36,6 +38,7 @@ router.post('/signup', function(req, res) {
 });
 
 router.get('/profile', isLoggedIn, function(req, res) {
+    console.log('Profile user:'+req.user);
     res.render('login/profile', {
         user: req.user // get the user out of session and pass to template
     });
