@@ -19,6 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- ANGULAR -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-cookies.js"></script>
     <!-- Load controllers & services-->
     <script src="../../public/javascripts/controllers/profile.controller.js"></script>
     <script src="../../public/javascripts/services/login.service.js"></script>
@@ -26,29 +27,29 @@
 </head>
 
 <body ng-cloak class="container {{ bodyClass }}">
-        <header>
-            <div ng-include src="'../../public/partials/header.html'"></div>
-        </header>
-        <main>
-            <div class="jumbotron">
-                <h1> Profile Page </h1>
+    <header>
+        <div ng-include src="'../../public/partials/header.html'"></div>
+    </header>
+    <main>
+        <div class="jumbotron">
+            <h1> Profile Page </h1>
+        </div>
+        <div class="container">
+            <div>
+                <label>User: {{user.username}}</label>
             </div>
-            <div class="container">
-                <div>
-                    <label>User: {{user.username}}</label>
-                </div>
-                <div>
-                    <label>Id: {{user._id}}</label>
-                </div>
+            <div>
+                <label>Id: {{user._id}}</label>
+            </div>
 
-                <div>
-                    <label>Title: {{title}}</label>
-                </div>
+            <div>
+                <label>Title: {{title}}</label>
             </div>
-        </main>
-        <footer>
-            <div ng-include src="'../../public/partials/footer.html'"></div>
-        </footer>
+        </div>
+    </main>
+    <footer>
+        <div ng-include src="'../../public/partials/footer.html'"></div>
+    </footer>
 </body>
 
 </html>

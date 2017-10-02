@@ -10,15 +10,36 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res) {
-    console.log('Login user: '+req.user);
+    console.log('Login user: ' + req.user);
     res.render('login/index', { user: req.user });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    // This returns the username, _id, salt and hash
-    //console.log('Posted user: '+req.user);
-    res.redirect('/profile');
+router.post('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.status(401).json({
+                err: info
+            });
+            // return res.status(401);
+        }
+        req.logIn(user, function(err) {
+            if (err) {
+                return res.status(500).json({
+                    err: 'Could not log in user'
+                });
+            }
+            // res.status(200).json({
+            //     status: 'Login successful!'
+            // });
+            // Success redirect to profile page
+            res.redirect('/profile');
+        });
+    })(req, res, next);
 });
+
 
 router.get('/signup', function(req, res) {
     res.render('login/signup', {});
@@ -38,7 +59,7 @@ router.post('/signup', function(req, res) {
 });
 
 router.get('/profile', isLoggedIn, function(req, res) {
-    console.log('Profile user:'+req.user);
+    console.log('Profile user:' + req.user);
     res.render('login/profile', {
         user: req.user // get the user out of session and pass to template
     });
