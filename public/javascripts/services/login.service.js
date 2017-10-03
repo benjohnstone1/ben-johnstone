@@ -10,8 +10,13 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore', functi
     isLoggedIn: isLoggedIn,
     login: login,
     getUser: getUser,
-    getProfile: getProfile
+    getProfile: getProfile,
+    deleteUser: deleteUser
   });
+
+  function deleteUser(id) {
+    return $http.delete('/profile/' + id);
+  }
 
   function getProfile() {
     return $http.get('/profile.json');

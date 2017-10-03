@@ -41,9 +41,10 @@ router.get('/signup', function(req, res) {
 });
 
 router.post('/signup', function(req, res) {
-    User.register(new User({ username: req.body.username,
-    fname: req.body.fname,
-    lname: req.body.lname
+    User.register(new User({
+        username: req.body.username,
+        fname: req.body.fname,
+        lname: req.body.lname
     }), req.body.password, function(err, user) {
         if (err) {
             console.log('error while user register!', err);
@@ -67,11 +68,44 @@ router.get('/profile.json', function(req, res, next) {
     getUser(res, req.user.username);
 });
 
+//UPDATE
+router.put('/profile/:_id', function(req, res) {
+    User.findById(req.params._id, function(err, user) {
+        if (err) {
+            res.send(err);
+        }
+        if (req.body.fname) {
+            user.fname = req.body.fname;
+        }
+        if (req.body.fname) {
+            user.lname = req.body.lname;
+        }
+        user.save(function(err) {
+            if (err) {
+                return res.send(err);
+            }
+            return res.send('User updated');
+        });
+
+    });
+});
+
+router.delete('/profile/:_id', function(req, res) {
+    mongoose.model('User').remove({
+        _id: req.params._id
+    }, function(err, user) {
+        if (err) {
+            res.send("Error deleting user "+err);
+        }
+        res.status(200).send ("User deleted!");
+    });
+});
+
 var User = require('../model/user');
 
-function getUser(res, username){
-    mongoose.model('User').find({"username": username },function(err, user){
-        if(err){
+function getUser(res, username) {
+    mongoose.model('User').find({ "username": username }, function(err, user) {
+        if (err) {
             res.send(err);
         }
         res.json(user);
@@ -202,8 +236,8 @@ router.put('/accounts/:account_id/edit.json', function(req, res) {
             console.log('Success sending JSON of updated account');
             res.json(res);
         }
-    })
-})
+    });
+});
 
 router.delete('/accounts/:account_id', function(req, res) {
     mongoose.model('Account').remove({
@@ -225,13 +259,11 @@ function getTodos(res) {
         if (err) {
             res.send(err);
         }
-        console.log('Get JSON request for all Todos');
         res.json(todos); // return all todos in JSON format
     });
 }
 // display todos page
 router.get('/todos', function(req, res, next) {
-    console.log('Render todo page');
     res.render('todo/todo');
 });
 

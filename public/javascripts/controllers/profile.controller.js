@@ -1,7 +1,8 @@
 /* global angular */
 var module = angular.module('profileController', ['ngCookies']);
 
-module.controller('profileCtrl', ['$scope', '$http', 'AuthService', '$cookieStore', function($scope, $http, AuthService, $cookieStore) {
+module.controller('profileCtrl', ['$scope', '$http', 'AuthService', '$cookieStore', '$window', 
+function($scope, $http, AuthService, $cookieStore, $window) {
     // return email from AuthService
     AuthService.getProfile()
         .success(function(response) {
@@ -12,4 +13,19 @@ module.controller('profileCtrl', ['$scope', '$http', 'AuthService', '$cookieStor
         }).error(function(err) {
             console.log("Error: " + err);
         });
+
+    $scope.editUser = function() {
+        // edit user
+    };
+
+    $scope.deleteUser = function(id) {
+        var answer = confirm("Are you sure you want to delete your profile?");
+        if (answer) {
+            AuthService.deleteUser(id)
+                .success(function(data) {
+                    // Redirect to home page...
+                    $window.location.assign('/');
+                });
+        }
+    };
 }]);
