@@ -2,16 +2,14 @@
 var module = angular.module('profileController', ['ngCookies']);
 
 module.controller('profileCtrl', ['$scope', '$http', 'AuthService', '$cookieStore', function($scope, $http, AuthService, $cookieStore) {
-    $scope.title = 'Foobar';
-    $scope.username = '';
-    $scope.password = '';
-    console.log("Profile Controller Launched!");
-    // Call service getting request for user
-    // AuthService.login().then(function(data){
-    //     $scope.user = data;
-    //     console.log($scope.user);
-    // });
-    $scope.username = AuthService.getUser();
-    $scope.title = AuthService.getUser();
-    console.log("Cookie success?: "+$scope.title);
+    // return email from AuthService
+    AuthService.getProfile()
+        .success(function(response) {
+            $scope.username = response[0].username;
+            $scope._id = response[0]._id;
+            $scope.fname = response[0].fname;
+            $scope.lname = response[0].lname;
+        }).error(function(err) {
+            console.log("Error: " + err);
+        });
 }]);

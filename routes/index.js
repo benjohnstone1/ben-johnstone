@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose'); //mongo connection
 var passport = require('passport');
-var User = require('../model/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -31,10 +30,6 @@ router.post('/login', function(req, res, next) {
                     err: 'Could not log in user'
                 });
             }
-            // res.status(200).json({
-            //     status: 'Login successful!'
-            // });
-            // Success redirect to profile page
             res.redirect('/profile');
         });
     })(req, res, next);
@@ -46,14 +41,17 @@ router.get('/signup', function(req, res) {
 });
 
 router.post('/signup', function(req, res) {
-    User.register(new User({ username: req.body.username }), req.body.password, function(err, user) {
+    User.register(new User({ username: req.body.username,
+    fname: req.body.fname,
+    lname: req.body.lname
+    }), req.body.password, function(err, user) {
         if (err) {
             console.log('error while user register!', err);
             return res.render('login/signup', { user: user });
         }
         console.log('user registered!');
         passport.authenticate('local')(req, res, function() {
-            res.redirect('/');
+            res.redirect('/profile');
         });
     });
 });
@@ -64,6 +62,21 @@ router.get('/profile', isLoggedIn, function(req, res) {
         user: req.user // get the user out of session and pass to template
     });
 });
+
+router.get('/profile.json', function(req, res, next) {
+    getUser(res, req.user.username);
+});
+
+var User = require('../model/user');
+
+function getUser(res, username){
+    mongoose.model('User').find({"username": username },function(err, user){
+        if(err){
+            res.send(err);
+        }
+        res.json(user);
+    });
+}
 
 router.get('/logout', function(req, res) {
     req.logout();
@@ -85,7 +98,6 @@ function isLoggedIn(req, res, next) {
 var Account = require('../model/account');
 
 router.get('/accounts', function(req, res, next) {
-    console.log('Got a GET request for accounts/index');
     res.render('accounts/index');
 })
 
@@ -95,7 +107,6 @@ function getAccounts(res) {
         if (err) {
             res.send(err);
         }
-        console.log('Get JSON request for all Accounts');
         res.json(accounts);
     });
 }
