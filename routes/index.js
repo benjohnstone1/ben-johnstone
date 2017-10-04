@@ -57,7 +57,6 @@ router.post('/signup', function(req, res) {
 });
 
 router.get('/profile', isLoggedIn, function(req, res) {
-    console.log('Profile user:' + req.user);
     res.render('login/profile', {
         user: req.user // get the user out of session and pass to template
     });
@@ -113,7 +112,7 @@ function getUser(res, username) {
 
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    // res.redirect('/');
 });
 
 // route middleware to make sure a user is logged in
@@ -123,7 +122,7 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
     // if they aren't redirect them to the home page
-    res.redirect('/login');
+    res.redirect('/#/login');
 }
 
 

@@ -1,0 +1,20 @@
+<div ng-controller="profileController" ng-cloak class="{{ bodyClass }}">
+    <div class="jumbotron">
+        <h1> Profile Page </h1>
+    </div>
+    <div class="container">
+        <div>
+            <label>Name: {{fname}} {{lname}}</label>
+        </div>
+        <div>
+            <label>User: {{username}}</label>
+        </div>
+        <div>
+            <label>Id: {{_id}}</label>
+        </div>
+        <div>
+            <span><button class="btn btn-primary" ng-click="editUser(_id)">Edit Profile</button></span>
+            <span><button class="btn btn-danger" ng-click="deleteUser(_id)">Delete Profile</button></span>
+        </div>
+    </div>
+</div>

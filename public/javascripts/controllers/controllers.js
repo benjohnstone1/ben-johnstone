@@ -1,6 +1,6 @@
 /* global angular */
 //=======================   Init Application =================================
-var myApp = angular.module('myApp', ['AuthService']);
+var myApp = angular.module('myApp');
 
 //=======================  Home Controller =================================
 myApp.controller('homeController', ['$scope',
@@ -114,8 +114,34 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService',
 ]);
 
 //=======================  Login Controller =================================
-// var loginApp = angular.module('myApp', ['AuthService']);
 myApp.controller('loginController', ['$scope', '$location', 'AuthService',
+	function($scope, $location, AuthService) {
+		$scope.login = function() {
+			// initial values
+			$scope.error = false;
+			$scope.disabled = true;
+
+			AuthService.login($scope.loginForm.username, $scope.loginForm.password)
+				// handle success
+				.then(function() {
+					$location.path('/');
+					$scope.disabled = false;
+					$scope.loginForm = {};
+				})
+				// handle error
+				.catch(function() {
+					$scope.error = true;
+					$scope.errorMessage = "Invalid username and/or password";
+					$scope.disabled = false;
+					$scope.loginForm = {};
+				});
+
+		};
+	}
+]);
+
+//=======================  Signup Controller =================================
+myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 	function($scope, $location, AuthService) {
 		$scope.login = function() {
 			// initial values

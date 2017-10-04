@@ -1,47 +1,42 @@
 /* global angular */
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute', 'AuthService']);
 
-myApp.config(function ($routeProvider) {
+myApp.config(function($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'partials/home.html',
-      access: {restricted: true}
+      templateUrl: '../partials/home.html',
+      access: { restricted: false }
     })
     .when('/accounts', {
-      templateUrl: 'partials/login.html',
-      controller: 'accountsController',
-      access: {restricted: false}
+      templateUrl: '../partials/accounts.html',
+      access: { restricted: false }
+    })
+    .when('/todos', {
+      templateUrl: '../partials/todos.html',
+      access: { restricted: false }
     })
     .when('/login', {
-      templateUrl: 'partials/login.html',
-      controller: 'loginController',
-      access: {restricted: false}
+      templateUrl: '../partials/login.html',
+      access: { restricted: false }
     })
-    .when('/logout', {
-      controller: 'logoutController',
-      access: {restricted: true}
+    .when('/signup', {
+      templateUrl: '../partials/signup.html',
+      access: { restricted: false }
     })
-    .when('/register', {
-      templateUrl: 'partials/register.html',
-      controller: 'registerController',
-      access: {restricted: false}
-    })
-    .when('/one', {
-      template: '<h1>This is page one!</h1>',
-      access: {restricted: true}
-    })
-    .when('/two', {
-      template: '<h1>This is page two!</h1>',
-      access: {restricted: false}
+    .when('/profile', {
+      templateUrl: '../partials/profile.html',
+      access: { restricted: false }
     })
     .otherwise({
       redirectTo: '/'
     });
 });
 
-myApp.run(function ($rootScope, $location, $route, AuthService) {
+myApp.run(function($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
-    function (event, next, current) {
+    function(event, next, current) {
+
+      /*
       AuthService.getUserStatus()
       .then(function(){
         if (next.access.restricted && !AuthService.isLoggedIn()){
@@ -49,5 +44,6 @@ myApp.run(function ($rootScope, $location, $route, AuthService) {
           $route.reload();
         }
       });
-  });
+      */
+    });
 });

@@ -3,7 +3,7 @@
 var module = angular.module('AuthService', ['ngCookies']);
 
 //=======================  Accounts Service =================================
-angular.module('myApp').factory('AccountsService', ['$http',
+module.factory('AccountsService', ['$http',
     function($http) {
         return {
             get: function() {
@@ -26,7 +26,7 @@ angular.module('myApp').factory('AccountsService', ['$http',
 ]);
 
 //=======================  Todos Service =================================
-angular.module('myApp').factory('TodosService', ['$http',
+module.factory('TodosService', ['$http',
     function($http) {
         return {
             get: function() {
