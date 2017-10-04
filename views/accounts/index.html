@@ -1,12 +1,10 @@
-<html ng-app="accountsApp">
+<html ng-app="myApp">
 
 <head>
-   <!-- META -->
+    <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Accounts Page</title>
-    <!-- Include partials head -->
-    <!--<div ng-include src="'../../public/partials/head.html'"></div>-->
     <!--Style Sheets-->
     <link rel="stylesheet" href="../public/stylesheets/style.css">
     <!-- BOOTSTRAP CSS -->
@@ -20,24 +18,20 @@
     <!-- ANGULAR -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
     <!--Load Controller & Services-->
-    <script src="../../public/javascripts/controllers/accounts.js"></script>
-    <script src="../../public/javascripts/services/accounts.js"></script>
-    <script src="../../public/javascripts/core.js"></script>
+    <script src="../../public/javascripts/controllers/controllers.js"></script>
+    <script src="../../public/javascripts/services/services.js"></script>
 </head>
 
-<body ng-controller="mainCtrl" ng-cloak class="container {{ bodyClass }}">
-    <div class="container">
-        <header>
-            <div ng-include src="'../public/partials/header.html'"></div>
-        </header>
-        <main>
-            <div class="jumbotron">
-                <h1> Accounts Page - <span class="label label-info"> {{ accounts.length }} </h1>
-        </div>
-        
+<body ng-controller="accountsController" ng-cloak class="container {{ bodyClass }}">
+    <header>
+        <div ng-include src="'../../public/partials/header.html'"></div>
+    </header>
+    <div class="jumbotron">
+        <h1> Accounts Page - <span class="label label-info"> {{ accounts.length }} </h1>
+    </div>
     	<div id="account-list" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
-        	<!-- LOOP OVER THE Accounts IN $scope.accounts -->
+        	 <!--LOOP OVER THE Accounts IN $scope.accounts -->
         	<div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <thead>
@@ -59,15 +53,12 @@
                                 <td><button class="btn btn-danger" ng-click="deleteAccount(account._id)">Delete</button></td>
                         </tr>
                     </tbody>
-                       
                 </table>
-                </div>
-					
-
-				<p class="text-center" ng-show="loading">
-					<span class="fa fa-spinner fa-spin fa-3x"></span>
-                    </p>
             </div>
+			<p class="text-center" ng-show="loading">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+            </p>
+    </div>
     </div>
 
     <div id="account-form" class="row">
@@ -75,7 +66,7 @@
             <form>
                 <div class="form-group">
 
-                    <!-- BIND THIS VALUE TO formData.name & formData.currency IN ANGULAR -->
+                    <!--BIND THIS VALUE TO formData.name & formData.currency IN ANGULAR -->
                     <input type="text" name="name" class="form-control input-lg text-center" placeholder="Account Name" ng-model="formData.name">
                     <input type="text" name="currency" class="form-control input-lg text-center" placeholder="Enter Currency" ng-model="formData.currency">
                     <input type="Boolean" name="active" class="form-control input-lg text-center" placeholder="Active?" ng-model="formData.active">
@@ -83,18 +74,15 @@
 
                 </div>
 
-                <!-- createAccou t() WILL CREATE NEW Account -->
+                <!--createAccount() WILL CREATE NEW Account -->
                 <button type="submit" class="btn btn-primary btn-lg" ng-click="createAccount()">Add</button>
             </form>
         </div>
     </div>
 
-
-    </main>
     <footer>
-        <div ng-include src="'../public/partials/footer.html'"></div>
+        <div ng-include src="'../../public/partials/footer.html'"></div>
     </footer>
 </body>
-</div>
 
 </html>

@@ -1,19 +1,19 @@
 /* global angular */
-var module = angular.module('accountsController', []);
-	// inject the account service factory into our controller
-    module.controller('mainCtrl', ['$scope', '$http', 'Accounts', function($scope, $http, Accounts) {
-    	$scope.formData = { };
+
+angular.module('myApp',[]).controller('accountsController', ['$scope', '$http', 'AccountsService',
+	function($scope, $http, AccountsService) {
+		$scope.formData = {};
 		$scope.loading = true;
 
 		// GET =====================================================================
 		// when landing on the page, get all accounts and show them
 		// use the service to get all the accounts
-		Accounts.get()
+		AccountsService.get()
 			.success(function(data) {
 				$scope.accounts = data;
 				$scope.loading = false;
 			});
-			
+
 		// CREATE ==================================================================
 		// when submitting the add form, send the text to the node API
 		$scope.createAccount = function() {
@@ -23,7 +23,7 @@ var module = angular.module('accountsController', []);
 				$scope.loading = true;
 
 				// call the create function from our service (returns a promise object)
-				Accounts.create($scope.formData)
+				AccountsService.create($scope.formData)
 
 					// if successful creation, call our get function to get all the new todos
 					.success(function(data) {
@@ -38,9 +38,9 @@ var module = angular.module('accountsController', []);
 		// delete an account after checking it
 		$scope.deleteAccount = function(id) {
 			$scope.loading = true;
-			var answer = confirm("Are you sure you want to delete this account?")
+			var answer = confirm("Are you sure you want to delete this account?");
 			if (answer) {
-				Accounts.delete(id)
+				AccountsService.delete(id)
 					// if successful creation, call our get function to get all the new todos
 					.success(function(data) {
 						$scope.loading = false;
@@ -52,25 +52,26 @@ var module = angular.module('accountsController', []);
 			}
 		};
 		// Show Edit Account Page ==================================================
-		$scope.showEditPage = function(id){
+		$scope.showEditPage = function(id) {
 			$scope.loading = true;
-			
-			Accounts.show(id)
-			.success(function(data){
-				$scope.loading = false;
-			 	$scope.accounts = data;
-			});
+
+			AccountsService.show(id)
+				.success(function(data) {
+					$scope.loading = false;
+					$scope.accounts = data;
+				});
 		};
-		
+
 		// UPDATE ==================================================================
 		// update an account
 		$scope.updateAccount = function(id) {
 			$scope.loading = true;
-			
-			Accounts.put(id)
-			.success(function(data){
-				$scope.loading = false;
-				$scope.accounts = data;
-			});
+
+			AccountsService.put(id)
+				.success(function(data) {
+					$scope.loading = false;
+					$scope.accounts = data;
+				});
 		};
-}]);
+	}
+]);

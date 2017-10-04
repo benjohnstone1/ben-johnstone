@@ -9,7 +9,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res) {
-    console.log('Login user: ' + req.user);
     res.render('login/index', { user: req.user });
 });
 
@@ -270,7 +269,6 @@ router.get('/todos', function(req, res, next) {
 
 // get all todos
 router.get('/todos.json', function(req, res) {
-    // use mongoose to get all todos in the database
     getTodos(res);
 });
 

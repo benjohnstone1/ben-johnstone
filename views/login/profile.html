@@ -1,12 +1,9 @@
-<html lang="en" ng-app="profileApp" ng-controller="profileCtrl">
-
+<html lang="en" ng-app="loginApp">
 <head>
     <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Profile Page</title>
-    <!-- Include partials head -->
-    <!--<div ng-include src="'../../public/partials/head.html'"></div>-->
     <!--Style Sheets-->
     <link rel="stylesheet" href="../public/stylesheets/style.css">
     <!-- BOOTSTRAP CSS -->
@@ -21,12 +18,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-cookies.js"></script>
     <!-- Load controllers & services-->
-    <script src="../../public/javascripts/controllers/profile.controller.js"></script>
-    <script src="../../public/javascripts/services/login.service.js"></script>
-    <script src="../../public/javascripts/core.js"></script>
+    <script src="../../public/javascripts/controllers/controllers.js"></script>
+    <script src="../../public/javascripts/services/services.js"></script>
 </head>
 
-<body ng-cloak class="container {{ bodyClass }}">
+<body ng-controller="profileController" ng-cloak class="container {{ bodyClass }}">
     <header>
         <div ng-include src="'../../public/partials/header.html'"></div>
     </header>
