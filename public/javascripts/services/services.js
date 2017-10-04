@@ -1,10 +1,9 @@
 /* global angular */
 //=======================   Init Application =================================
-var module = angular.module('myApp');
-var loginModule = angular.module('AuthService', ['ngCookies']);
+var module = angular.module('AuthService', ['ngCookies']);
 
 //=======================  Accounts Service =================================
-module.factory('AccountsService', ['$http',
+angular.module('myApp').factory('AccountsService', ['$http',
     function($http) {
         return {
             get: function() {
@@ -27,7 +26,7 @@ module.factory('AccountsService', ['$http',
 ]);
 
 //=======================  Todos Service =================================
-module.factory('TodosService', ['$http',
+angular.module('myApp').factory('TodosService', ['$http',
     function($http) {
         return {
             get: function() {
@@ -44,12 +43,10 @@ module.factory('TodosService', ['$http',
 ]);
 
 //=======================  Auth Service =================================
-// var loginModule = angular.module('AuthService', ['ngCookies']);
-loginModule.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
+module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
     function($http, $q, $timeout, $cookieStore) {
         // create user variable
         var user = null;
-
         // return available functions for use in the controllers
         return ({
             isLoggedIn: isLoggedIn,
@@ -109,8 +106,6 @@ loginModule.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                     user = false;
                     deferred.reject();
                 });
-            console.log("Deferred Promise:" + JSON.stringify(deferred.promise));
-            // return promise object
             return deferred.promise;
         }
     }

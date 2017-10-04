@@ -1,7 +1,6 @@
 /* global angular */
 //=======================   Init Application =================================
-var myApp = angular.module('myApp', []);
-var loginApp = angular.module('loginApp', ['AuthService']);
+var myApp = angular.module('myApp', ['AuthService']);
 
 //=======================  Home Controller =================================
 myApp.controller('homeController', ['$scope',
@@ -116,7 +115,7 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService',
 
 //=======================  Login Controller =================================
 // var loginApp = angular.module('myApp', ['AuthService']);
-loginApp.controller('loginController', ['$scope', '$location', 'AuthService',
+myApp.controller('loginController', ['$scope', '$location', 'AuthService',
 	function($scope, $location, AuthService) {
 		$scope.login = function() {
 			// initial values
@@ -143,7 +142,7 @@ loginApp.controller('loginController', ['$scope', '$location', 'AuthService',
 ]);
 
 //=======================  Profile Controller ================================
-loginApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$window', 
+myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$window', 
 function($scope, $http, AuthService, $cookieStore, $window) {
     // return email from AuthService
     AuthService.getProfile()

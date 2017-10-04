@@ -4,10 +4,8 @@ var module = angular.module('AuthService', ['ngCookies']);
 
 module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
   function($http, $q, $timeout, $cookieStore) {
-  
     // create user variable
     var user = null;
-
     // return available functions for use in the controllers
     return ({
       isLoggedIn: isLoggedIn,
@@ -67,8 +65,6 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
           user = false;
           deferred.reject();
         });
-      console.log("Deferred Promise:" + JSON.stringify(deferred.promise));
-      // return promise object
       return deferred.promise;
     }
     
