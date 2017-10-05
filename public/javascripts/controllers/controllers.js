@@ -99,9 +99,21 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService',
 					});
 			}
 		};
+		
+		// INCRAESE ==================================================================
+		$scope.increase = function(index){
+			console.log($scope.todos[index].text);
+		};
+		
+		// DECREASE ==================================================================
+		$scope.decrease = function(index){
+			console.log($scope.todos[index].text);
+		};
 
 		// DELETE ==================================================================
 		$scope.deleteTodo = function(id) {
+			var answer = confirm('Sure you want to delete?');
+			if (answer){
 			$scope.loading = true;
 			TodosService.delete(id)
 				// if successful creation, call our get function to get all the new todos
@@ -109,6 +121,9 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService',
 					$scope.loading = false;
 					$scope.todos = data; // assign our new list of todos
 				});
+			}else{
+				$scope.loading = false();
+			}
 		};
 	}
 ]);

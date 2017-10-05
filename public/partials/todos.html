@@ -7,12 +7,17 @@
 
     <!--TODO LIST -->
     <div id="todo-list" class="row">
-        <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-sm-8 col-sm-offset-2">
             <!--LOOP OVER THE TODOS IN $scope.todos -->
-            <div class="checkbox" ng-repeat="todo in todos">
+            <div ng-repeat="todo in todos" style="padding:5px;">
+                <button ng-click="increase($index)" class="btn btn-primary btn-sm">+</button>
+                <button ng-click="decrease($index)" class="btn btn-warning btn-sm">-</button>
                 <label>
-						<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-					</label>
+						{{ $index + 1 }} - {{ todo.text }} 
+				</label>
+                <span class="pull-right">
+                <button ng-click="deleteTodo(todo._id)" class="btn btn-danger btn-sm">X</button>
+                </span>
             </div>
             <p class="text-center" ng-show="loading">
                 <span class="fa fa-spinner fa-spin fa-3x"></span>

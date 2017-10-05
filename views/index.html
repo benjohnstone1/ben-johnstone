@@ -1,10 +1,11 @@
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="myApp">
+<!DOCTYPE html>
+<html ng-app="myApp" lang="en">
 
 <head>
     <!-- META -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Ben Johnstone</title>
     <!--Style Sheets-->
     <link rel="stylesheet" href="../public/stylesheets/style.css">
@@ -25,16 +26,10 @@
     <script src="../../public/javascripts/controllers/controllers.js"></script>
     <script src="../../public/javascripts/services/services.js"></script>
     <!--Fixes Collapse of Navbar in SPA-->
-    <script>
-        $(document).on('click', '.navbar-collapse.in', function(e) {
-            if ($(e.target).is('a')) {
-                $(this).collapse('hide');
-            }
-        });
-    </script>
+    <script src="../../public/javascripts/navbar.js"></script>
 </head>
 
-<body class="container">
+<body class="container-fluid">
     <header>
         <div ng-include src="'../public/partials/header.html'"></div>
     </header>
