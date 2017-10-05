@@ -124,7 +124,7 @@ myApp.controller('loginController', ['$scope', '$location', 'AuthService',
 			AuthService.login($scope.loginForm.username, $scope.loginForm.password)
 				// handle success
 				.then(function() {
-					$location.path('/');
+					$location.path('/profile');
 					$scope.disabled = false;
 					$scope.loginForm = {};
 				})
@@ -140,27 +140,39 @@ myApp.controller('loginController', ['$scope', '$location', 'AuthService',
 	}
 ]);
 
+//=======================  Logout Controller =================================
+myApp.controller('logoutController', ['$scope', '$location', 'AuthService',
+	function($scope, $location, AuthService) {
+		$scope.logout = function() {
+			AuthService.logout()
+				.then(function() {
+					$location.path('/login');
+				});
+		};
+	}
+]);
+
 //=======================  Signup Controller =================================
 myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 	function($scope, $location, AuthService) {
-		$scope.login = function() {
+		$scope.signup = function() {
 			// initial values
 			$scope.error = false;
 			$scope.disabled = true;
 
-			AuthService.login($scope.loginForm.username, $scope.loginForm.password)
+			AuthService.signup($scope.signupForm.username, $scope.signupForm.password, $scope.signupForm.fname, $scope.signupForm.lname)
 				// handle success
 				.then(function() {
-					$location.path('/');
+					$location.path('/profile');
 					$scope.disabled = false;
-					$scope.loginForm = {};
+					$scope.signupForm = {};
 				})
 				// handle error
 				.catch(function() {
 					$scope.error = true;
 					$scope.errorMessage = "Invalid username and/or password";
 					$scope.disabled = false;
-					$scope.loginForm = {};
+					$scope.signupForm = {};
 				});
 
 		};

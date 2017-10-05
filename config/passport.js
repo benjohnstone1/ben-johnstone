@@ -1,5 +1,4 @@
 // config/passport.js
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
@@ -14,13 +13,13 @@ passport.use(new LocalStrategy({
       // Return if user not found in database
       if (!user) {
         return done(null, false, {
-          message: 'User not found'
+          errorMessage: 'User not found'
         });
       }
       // Return if password is wrong
       if (!user.validPassword(password)) {
         return done(null, false, {
-          message: 'Password is wrong'
+          errorMessage: 'Password is wrong'
         });
       }
       // If credentials are correct, return the user object

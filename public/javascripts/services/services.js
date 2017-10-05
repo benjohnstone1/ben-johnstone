@@ -53,8 +53,74 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
             login: login,
             getUser: getUser,
             getProfile: getProfile,
-            deleteUser: deleteUser
+            deleteUser: deleteUser,
+            signup: signup,
+            logout: logout,
+            getUserStatus: getUserStatus,
         });
+
+        function getUserStatus() {
+            return $http.get('/profile')
+                // handle success
+                .success(function(data) {
+                    if (data.status) {
+                        user = true;
+                    }
+                    else {
+                        user = false;
+                    }
+                })
+                // handle error
+                .error(function(data) {
+                    user = false;
+                });
+        }
+
+        function logout() {
+            // create a new instance of deferred
+            var deferred = $q.defer();
+            // send a get request to the server
+            $http.get('/logout')
+                // handle success
+                .success(function(data) {
+                    user = false;
+                    deferred.resolve();
+                })
+                // handle error
+                .error(function(data) {
+                    user = false;
+                    deferred.reject();
+                });
+            // return promise object
+            return deferred.promise;
+        }
+
+        function signup(username, password, fname, lname) {
+            
+            // Setting a cookie
+            $cookieStore.put('userID', username);
+            // create a new instance of deferred
+            var deferred = $q.defer();
+
+            // send a post request to the server
+            $http.post('/signup', { username: username, password: password, fname: fname, lname: lname })
+                // handle success
+                .success(function(data, status) {
+                    if (status === 200 && data.status) {
+                        deferred.resolve();
+                    }
+                    else {
+                        deferred.reject();
+                    }
+                })
+                // handle error
+                .error(function(data) {
+                    deferred.reject();
+                });
+
+            // return promise object
+            return deferred.promise;
+        }
 
         function deleteUser(id) {
             return $http.delete('/profile/' + id);
@@ -76,7 +142,6 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 return false;
             }
         }
-
 
         function login(username, password) {
 

@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res) {
-    res.render('login/index', { user: req.user });
+    // res.render('login/index', { user: req.user });
 });
 
 router.post('/login', function(req, res, next) {
@@ -29,36 +29,49 @@ router.post('/login', function(req, res, next) {
                     err: 'Could not log in user'
                 });
             }
-            res.redirect('/profile');
+            res.status(200).json({
+                status: 'Login successful!'
+            });
         });
     })(req, res, next);
 });
 
 
 router.get('/signup', function(req, res) {
-    res.render('login/signup', {});
+    // res.render('login/signup', {});
 });
 
 router.post('/signup', function(req, res) {
-    User.register(new User({
+    User.register(new User({ 
         username: req.body.username,
         fname: req.body.fname,
-        lname: req.body.lname
-    }), req.body.password, function(err, user) {
-        if (err) {
-            console.log('error while user register!', err);
-            return res.render('login/signup', { user: user });
-        }
-        console.log('user registered!');
-        passport.authenticate('local')(req, res, function() {
-            res.redirect('/profile');
-        });
+        lname: req.body.lname        
+    }),
+    req.body.password, function(err, user) {
+    if (err) {
+      return res.status(500).json({
+        err: err
+      });
+    }
+    passport.authenticate('local')(req, res, function () {
+      return res.status(200).json({
+        status: 'Registration successful!'
+      });
     });
+  });
 });
 
-router.get('/profile', isLoggedIn, function(req, res) {
-    res.render('login/profile', {
-        user: req.user // get the user out of session and pass to template
+router.get('/profile', function(req, res) {
+    // res.render('login/profile', {
+    //     user: req.user // get the user out of session and pass to template
+    // });
+    if (!req.isAuthenticated()) {
+        return res.status(200).json({
+            status: false
+        });
+    }
+    res.status(200).json({
+        status: true
     });
 });
 
@@ -93,9 +106,9 @@ router.delete('/profile/:_id', function(req, res) {
         _id: req.params._id
     }, function(err, user) {
         if (err) {
-            res.send("Error deleting user "+err);
+            res.send("Error deleting user " + err);
         }
-        res.status(200).send ("User deleted!");
+        res.status(200).send("User deleted!");
     });
 });
 
@@ -112,12 +125,13 @@ function getUser(res, username) {
 
 router.get('/logout', function(req, res) {
     req.logout();
-    // res.redirect('/');
+    res.status(200).json({
+        status: 'Logged out successfully'
+    });
 });
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
         return next();
@@ -131,7 +145,7 @@ var Account = require('../model/account');
 
 router.get('/accounts', function(req, res, next) {
     res.render('accounts/index');
-})
+});
 
 // Return JSON of all Accounts
 function getAccounts(res) {
@@ -180,7 +194,7 @@ function showAccount(res) {
 }
 
 router.get('/accounts/edit.json', function(req, res, next) {
-    var id = "5995c9d054e2e10915621827"
+    var id = "5995c9d054e2e10915621827";
     mongoose.model('Account').find({ _id: id }, function(err, account) {
         //db.accounts.find({ _id: ObjectId("5995c9d054e2e10915621827")}) # mongo query
         if (err) {
@@ -192,7 +206,7 @@ router.get('/accounts/edit.json', function(req, res, next) {
             res.json(account);
         }
     });
-})
+});
 
 /* Set routes for edit page */
 router.get('/accounts/edit/:id', function(req, res, next) {

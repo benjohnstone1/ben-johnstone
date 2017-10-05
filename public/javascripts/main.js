@@ -25,18 +25,21 @@ myApp.config(function($routeProvider) {
     })
     .when('/profile', {
       templateUrl: '../partials/profile.html',
+      access: { restricted: true }
+    })
+    .when('/logout', {
+      controller: 'logoutController',
       access: { restricted: false }
     })
     .otherwise({
-      redirectTo: '/'
+      redirectTo: '/',
+      access: { restricted: false }
     });
 });
 
 myApp.run(function($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
     function(event, next, current) {
-
-      /*
       AuthService.getUserStatus()
       .then(function(){
         if (next.access.restricted && !AuthService.isLoggedIn()){
@@ -44,6 +47,5 @@ myApp.run(function($rootScope, $location, $route, AuthService) {
           $route.reload();
         }
       });
-      */
     });
 });

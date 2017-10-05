@@ -8,24 +8,24 @@
                 {{ message }}
             </div>
             <!-- SIGNUP FORM -->
-            <form action="/signup" method="post">
+            <form ng-submit="signup()">
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control" name="fname" placeholder='First Name'>
+                    <input type="text" class="form-control" name="fname" placeholder='First Name' ng-model='signupForm.fname'>
                 </div>
                 <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" class="form-control" name="lname" placeholder='Last Name'>
+                    <input type="text" class="form-control" name="lname" placeholder='Last Name' ng-model='signupForm.lname'>
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" name="username" placeholder='Email'>
+                    <input type="text" class="form-control" name="username" placeholder='Email' ng-model='signupForm.username'>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" name="password" placeholder='Password'>
+                    <input type="password" class="form-control" name="password" placeholder='Password' ng-model='signupForm.password'>
                 </div>
-                <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+                <button ng-click="signup()" class="btn btn-warning btn-lg">Signup</button>
             </form>
 
             <hr>
