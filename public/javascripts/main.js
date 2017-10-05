@@ -9,11 +9,11 @@ myApp.config(function($routeProvider) {
     })
     .when('/accounts', {
       templateUrl: '../partials/accounts.html',
-      access: { restricted: false }
+      access: { restricted: true }
     })
     .when('/todos', {
       templateUrl: '../partials/todos.html',
-      access: { restricted: false }
+      access: { restricted: true }
     })
     .when('/login', {
       templateUrl: '../partials/login.html',
