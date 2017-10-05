@@ -1,5 +1,6 @@
 <!-- ASSIGN OUR ANGULAR MODULE -->
 <html ng-app="myApp">
+
 <head>
     <!-- META -->
     <meta charset="utf-8">
@@ -23,7 +24,14 @@
     <script src="../../public/javascripts/main.js"></script>
     <script src="../../public/javascripts/controllers/controllers.js"></script>
     <script src="../../public/javascripts/services/services.js"></script>
-    <!--<script src="../../public/javascripts/core.js"></script> -->
+    <!--Fixes Collapse of Navbar in SPA-->
+    <script>
+        $(document).on('click', '.navbar-collapse.in', function(e) {
+            if ($(e.target).is('a')) {
+                $(this).collapse('hide');
+            }
+        });
+    </script>
 </head>
 
 <body class="container">
