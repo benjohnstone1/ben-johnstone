@@ -1,19 +1,28 @@
 <div ng-controller="editAccountsController" ng-cloak class="{{ bodyClass }}">
-    
-    Edit Page!
-    <!--<div id="account-form" class="row">-->
-    <!--    <div class="col-sm-8 col-sm-offset-2 text-center">-->
-    <!--        <form>-->
-    <!--            <div class="form-group">-->
-                    <!--BIND THIS VALUE TO formData.name & formData.currency IN ANGULAR -->
-    <!--                <input type="text" name="name" class="form-control input-lg text-center" placeholder="{{account.name}}" ng-model="formData.name">-->
-    <!--                <input type="text" name="currency" class="form-control input-lg text-center" placeholder="{{account.currency}}" ng-model="formData.currency">-->
-    <!--                <input type="Boolean" name="active" class="form-control input-lg text-center" placeholder="{{account.active}}" ng-model="formData.active">-->
-    <!--                <input type="Number" name="active" class="form-control input-lg text-center" placeholder="{{acccount.paymentTerm}}" ng-model="formData.paymentTerm">-->
-    <!--            </div>-->
-                <!--createAccount() WILL Update Account -->
-    <!--            <button type="submit" class="btn btn-primary btn-lg" ng-click="saveAccountEdit()">Save</button>-->
-    <!--        </form>-->
-    <!--    </div>-->
-    <!--</div>-->
+    <div class="jumbotron">
+        <h1> Edit Account - <span class="label label-info"> {{ accounts.name }} </span></h1>
+    </div>
+
+    <p class="text-center" ng-show="loading">
+        <span class="fa fa-spinner fa-spin fa-3x"></span>
+    </p>
+
+    <div id="account-form" class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+                <div class="form-group">
+                    <label> Account Name: </label>
+                    <input type="text" name="name" class="form-control input-lg text-center"  ng-value="accounts.name" ng-model="accounts.name">
+                    <label> Currency: </label>
+                    <input type="text" name="currency" class="form-control input-lg text-center" ng-value="accounts.currency" ng-model="accounts.currency">
+                    <label> Active: </label>
+                    <input type="Boolean" name="active" class="form-control input-lg text-center" ng-value="accounts.active" ng-model="accounts.active">
+                    <label> Payment Terms: </label>
+                    <input type="Int" name="paymentTerm" class="form-control input-lg text-center" ng-value="accounts.paymentTerm" ng-model="accounts.paymentTerm">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="updateAccount(accounts._id)">Save</button>
+                <a href="/#/accounts" class="btn btn-default btn-lg">Cancel</a>
+            </form>
+        </div>
+    </div>
 </div>

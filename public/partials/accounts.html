@@ -21,9 +21,7 @@
                             <td>{{ account.currency }}</td>
                             <td>{{ account.active }}</td>
                             <td>{{ account.paymentTerm }}</td>
-                            <!--<td><a class="btn btn-primary" href="accounts/edit/{{account._id}}">Edit</a></td>-->
-                            <td><a ng-href="/#/accounts/edit/{{account._id}}">Edit</a></td>
-                            <!--<td><button class="btn btn-primary" ng-click="showEditPage(account._id)">Edit</button></td>-->
+                            <td><a ng-href="/#/accounts/edit/{{account._id}}" class="btn btn-primary" >Edit</a></td>
                             <td><button class="btn btn-danger" ng-click="deleteAccount(account._id)">Delete</button></td>
                         </tr>
                     </tbody>
@@ -43,7 +41,7 @@
                     <input type="text" name="name" class="form-control input-lg text-center" placeholder="Account Name" ng-model="formData.name">
                     <input type="text" name="currency" class="form-control input-lg text-center" placeholder="Enter Currency" ng-model="formData.currency">
                     <input type="Boolean" name="active" class="form-control input-lg text-center" placeholder="Active?" ng-model="formData.active">
-                    <input type="Number" name="active" class="form-control input-lg text-center" placeholder="Payment Term" ng-model="formData.paymentTerm">
+                    <input type="Number" name="paymentTerm" class="form-control input-lg text-center" placeholder="Payment Term" ng-model="formData.paymentTerm">
 
                 </div>
 

@@ -18,8 +18,8 @@ module.factory('AccountsService', ['$http',
             showEditPage: function(id) {
                 return $http.get('/accounts/edit/'+id);
             },
-            update: function(id) {
-                return $http.put('/accounts/' + id + 'edit.json');
+            update: function(id,accountData) {
+                return $http.post('/accounts/edit/' + id, accountData);
             }
         };
     }

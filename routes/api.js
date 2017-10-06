@@ -42,23 +42,24 @@ router.get('/signup', function(req, res) {
 });
 
 router.post('/signup', function(req, res) {
-    User.register(new User({ 
-        username: req.body.username,
-        fname: req.body.fname,
-        lname: req.body.lname        
-    }),
-    req.body.password, function(err, user) {
-    if (err) {
-      return res.status(500).json({
-        err: err
-      });
-    }
-    passport.authenticate('local')(req, res, function () {
-      return res.status(200).json({
-        status: 'Registration successful!'
-      });
-    });
-  });
+    User.register(new User({
+            username: req.body.username,
+            fname: req.body.fname,
+            lname: req.body.lname
+        }),
+        req.body.password,
+        function(err, user) {
+            if (err) {
+                return res.status(500).json({
+                    err: err
+                });
+            }
+            passport.authenticate('local')(req, res, function() {
+                return res.status(200).json({
+                    status: 'Registration successful!'
+                });
+            });
+        });
 });
 
 router.get('/profile', function(req, res) {
@@ -154,13 +155,12 @@ router.get('/accounts', function(req, res, next) {
 });
 
 router.get('/accounts/edit/:accountID', function(req, res, next) {
-    console.log("Params: "+JSON.stringify(req.params));
     getAccountsEdit(res, req.params.accountID);
 });
 
 // Return JSON of all Accounts
 function getAccounts(res) {
-    mongoose.model('Account').find({ }, function(err, accounts) {
+    mongoose.model('Account').find({}, function(err, accounts) {
         if (err) {
             res.send(err);
         }
@@ -176,6 +176,29 @@ function getAccountsEdit(res, id) {
         res.json(accounts);
     });
 }
+
+// Update Existing Account
+router.post('/accounts/edit/:accountID', function(req, res, next) {
+    var Account = mongoose.model('Account');
+    var id = req.params.accountID;
+    var body = req.body;
+
+    Account.findById(id, function(error, account) {
+    // Handle the error using the Express error middleware
+    if(error) return next(error);
+    // Render not found error
+    if(!account) {
+      return res.status(404).json({
+        message: 'Account with id ' + id + ' can not be found.'
+      });
+    }
+    // Update the account model
+    account.update(body, function(error, account) {
+      if(error) return next(error);
+      res.json(account);
+    });
+  });
+});
 
 // Create new Account
 router.post('/accounts', function(req, res) {

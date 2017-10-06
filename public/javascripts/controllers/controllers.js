@@ -58,14 +58,13 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.accounts = data;
-					console.log($scope.accounts[0]);
 				});
 		};
 
 		// UPDATE ==================================================================
 		$scope.updateAccount = function(id) {
 			$scope.loading = true;
-			AccountsService.put(id)
+			AccountsService.put(id, $scope.editAccountData)
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.accounts = data;
@@ -75,67 +74,31 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 ]);
 
 //=======================  Edit Accounts Controller ================================
-myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', 'AccountsService',
-	function($scope, $http, $routeParams, AccountsService) {
-		$scope.formData = {};
+myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', '$location', 'AccountsService',
+	function($scope, $http, $routeParams, $location, AccountsService) {
+		$scope.editAccountData = {};
 		$scope.loading = true;
-		
 		var accountID = $routeParams.accountID;
 
-		// GET ===================================================
-		AccountsService.get()
+		// GET Edit Page ===================================================
+		AccountsService.showEditPage(accountID)
 			.success(function(data) {
-				$scope.accounts = data;
+				$scope.accounts = data[0];
 				$scope.loading = false;
 			});
-
-		// CREATE ==================================================================
-		$scope.createAccount = function() {
-			if ($scope.formData.name != undefined) {
-				$scope.loading = true;
-				AccountsService.create($scope.formData)
-					.success(function(data) {
-						$scope.loading = false;
-						$scope.formData = {}; // clear the form so our user is ready to enter another
-						$scope.accounts = data; // assign our new list of accounts
-					});
-			}
-		};
-
-		// DELETE ==================================================================
-		$scope.deleteAccount = function(id) {
-			$scope.loading = true;
-			var answer = confirm("Are you sure you want to delete this account?");
-			if (answer) {
-				AccountsService.delete(id)
-					.success(function(data) {
-						$scope.loading = false;
-						$scope.accounts = data; // assign our new list of todos
-					});
-			}
-			else {
-				$scope.loading = false;
-			}
-		};
-		// Show Edit Account Page ==================================================
-		$scope.showEditPage = function(id) {
-			$scope.loading = true;
-
-			AccountsService.showEditPage(id)
-				.success(function(data) {
-					$scope.loading = false;
-					$scope.accounts = data;
-					console.log($scope.accounts[0]);
-				});
-		};
 
 		// UPDATE ==================================================================
 		$scope.updateAccount = function(id) {
 			$scope.loading = true;
-			AccountsService.put(id)
+			AccountsService.update(id, $scope.accounts)
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.accounts = data;
+					$location.path('/accounts');
+				})
+				.error(function(){
+					$scope.loading = false;
+					alert("Error - Couldn't Save Update");
 				});
 		};
 	}
