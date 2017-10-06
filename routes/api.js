@@ -63,9 +63,6 @@ router.post('/signup', function(req, res) {
 });
 
 router.get('/profile', function(req, res) {
-    // res.render('login/profile', {
-    //     user: req.user // get the user out of session and pass to template
-    // });
     if (!req.isAuthenticated()) {
         return res.status(200).json({
             status: false
@@ -80,8 +77,12 @@ router.get('/profile.json', function(req, res, next) {
     getUser(res, req.user.username);
 });
 
-//UPDATE
 router.put('/profile/:_id', function(req, res) {
+    if (!req.isAuthenticated()){
+        return res.status(200).json({
+            status: false
+        });
+    }
     User.findById(req.params._id, function(err, user) {
         if (err) {
             res.send(err);
@@ -100,6 +101,41 @@ router.put('/profile/:_id', function(req, res) {
         });
 
     });
+});
+
+router.get('/profile/edit/:profileID', function(req, res) {
+    mongoose.model('User').find({ "_id": req.params.profileID }, function(err, user) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(user);
+    });
+});
+
+// Update Existing Profile
+router.post('/profile/edit/:profileID', function(req, res, next) {
+    var User = mongoose.model('User');
+    var id = req.params.profileID;
+    var body = req.body;
+    console.log("id: "+id);
+    
+    console.log("User:"+JSON.stringify(body));
+
+    User.findById(id, function(error, user) {
+    // Handle the error using the Express error middleware
+    if(error) return next(error);
+    // Render not found error
+    if(!user) {
+      return res.status(404).json({
+        message: 'User with id ' + id + ' can not be found.'
+      });
+    }
+    // Update the account model
+    User.update(body, function(error, user) {
+      if(error) return next(error);
+      res.json(user);
+    });
+  });
 });
 
 router.delete('/profile/:_id', function(req, res) {
@@ -231,31 +267,6 @@ function showAccount(res) {
         }
     });
 }
-
-/* Set routes for updating the account */
-router.put('/accounts/:account_id/edit.json', function(req, res) {
-    mongoose.model('Account').findById(req.id, function(err, account) {
-        var name = req.body.name;
-        var currency = req.body.currency;
-        var active = req.body.active;
-        var paymentTerm = req.body.paymentTerm;
-
-        Account.update({
-            name: name,
-            currency: currency,
-            active: active,
-            paymentTerm: paymentTerm
-        });
-
-        if (err) {
-            console.log('Error in PUT request updating account');
-        }
-        else {
-            console.log('Success sending JSON of updated account');
-            res.json(res);
-        }
-    });
-});
 
 router.delete('/accounts/:account_id', function(req, res) {
     mongoose.model('Account').remove({

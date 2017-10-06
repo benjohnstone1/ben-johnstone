@@ -13,7 +13,10 @@
             <label>Id: {{_id}}</label>
         </div>
         <div>
-            <span><button class="btn btn-primary" ng-click="editUser(_id)">Edit Profile</button></span>
+            <label>Admin: {{admin}}</label>
+        </div>
+        <div>
+            <span><a class="btn btn-primary" href="/#/profile/edit/{{_id}}">Edit Profile</a></span>
             <span><button class="btn btn-danger" ng-click="deleteUser(_id)">Delete Profile</button></span>
         </div>
     </div>

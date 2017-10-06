@@ -57,7 +57,12 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
             signup: signup,
             logout: logout,
             getUserStatus: getUserStatus,
+            editUser: editUser,
         });
+        
+        function editUser(id, user) {
+            return $http.post('/profile/edit/' + id, user);
+        }
 
         function getUserStatus() {
             return $http.get('/profile')
@@ -85,6 +90,8 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 .success(function(data) {
                     user = false;
                     deferred.resolve();
+                    $cookieStore.put('userID', '');
+                    alert("Successfully Logged Out");
                 })
                 // handle error
                 .error(function(data) {

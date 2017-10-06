@@ -199,7 +199,7 @@ myApp.controller('logoutController', ['$scope', '$location', 'AuthService',
 		$scope.logout = function() {
 			AuthService.logout()
 				.then(function() {
-					$location.path('/login');
+					$location.path('/');
 				});
 		};
 	}
@@ -233,21 +233,31 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 ]);
 
 //=======================  Profile Controller ================================
-myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$window',
-	function($scope, $http, AuthService, $cookieStore, $window) {
-		// return email from AuthService
+myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$window', '$routeParams', '$location',
+	function($scope, $http, AuthService, $cookieStore, $routeParams, $window, $location) {
+		var profileID = $routeParams.profileID;
+		// return username from AuthService
 		AuthService.getProfile()
 			.success(function(response) {
 				$scope.username = response[0].username;
 				$scope._id = response[0]._id;
 				$scope.fname = response[0].fname;
 				$scope.lname = response[0].lname;
+				$scope.admin = response[0].admin;
 			}).error(function(err) {
 				console.log("Error: " + err);
 			});
 
-		$scope.editUser = function() {
-			// edit user
+		$scope.editUser = function(id, fname, lname) {
+			var user = { fname: fname, lname: lname};
+			console.log(id);
+			AuthService.editUser(id, user)
+				.success(function(data){
+					$location.path('/profile');
+				})
+				.error(function(){
+					alert("Error - could not update");
+				});
 		};
 
 		$scope.deleteUser = function(id) {

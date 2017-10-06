@@ -1,0 +1,25 @@
+<div ng-controller="profileController" ng-cloak class="{{ bodyClass }}">
+    <h1> Edit Profile Page - <span class="label label-info"> {{fname}} {{lname}} </span></h1>
+    <div class="container text-center">
+        <div>
+            <label>First Name:</label>
+            <input type="text" name="fname" class="form-control input-lg text-center" ng-value="fname" ng-model="fname">
+        </div>
+        <label>Last Name:</label>
+        <input type="text" name="fname" class="form-control input-lg text-center" ng-value="lname" ng-model="lname">
+        <div>
+            <label>User: {{username}}</label>
+        </div>
+        <div>
+            <label>Id: {{_id}}</label>
+        </div>
+        <div>
+            <label>Admin: {{admin}}</label>
+        </div>
+        <div>
+            <span><button class="btn btn-primary btn-lg" ng-click="editUser(_id,fname,lname)">Save</button></span>
+            <span><a class="btn btn-default btn-lg" href="/#/profile">Cancel</a></span>
+            <span><button class="btn btn-danger btn-lg" ng-click="deleteUser(_id)">Delete</button></span>
+        </div>
+    </div>
+</div>

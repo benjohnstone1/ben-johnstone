@@ -11,6 +11,11 @@ myApp.config(function($routeProvider) {
       templateUrl: '../partials/accounts.html',
       access: { restricted: true }
     })
+    // the :accountID is now available to the controller
+    .when('/accounts/edit/:accountID', {
+      templateUrl: '../partials/accounts.edit.html',
+      access: { restricted: true }
+    })
     .when('/todos', {
       templateUrl: '../partials/todos.html',
       access: { restricted: true }
@@ -27,14 +32,13 @@ myApp.config(function($routeProvider) {
       templateUrl: '../partials/profile.html',
       access: { restricted: true }
     })
+    .when('/profile/edit/:profileID', {
+      templateUrl: '../partials/profile.edit.html',
+      access: { restricted: true }
+    })
     .when('/logout', {
       controller: 'logoutController',
       access: { restricted: false }
-    })
-    // the :accountID is now available to the controller
-    .when('/accounts/edit/:accountID', {
-      templateUrl: '../partials/accounts.edit.html',
-      access: { restricted: true }
     })
     .otherwise({
       redirectTo: '/',
