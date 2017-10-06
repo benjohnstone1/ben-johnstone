@@ -9,16 +9,42 @@
     <div id="todo-list" class="row">
         <div class="col-sm-8 col-sm-offset-2">
             <!--LOOP OVER THE TODOS IN $scope.todos -->
-            <div ng-repeat="todo in todos" style="padding:5px;">
-                <button ng-click="increase($index)" class="btn btn-primary btn-sm">+</button>
-                <button ng-click="decrease($index)" class="btn btn-warning btn-sm">-</button>
-                <label>
-						{{ $index + 1 }} - {{ todo.text }} 
-				</label>
-                <span class="pull-right">
-                <button ng-click="deleteTodo(todo._id)" class="btn btn-danger btn-sm">X</button>
-                </span>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <th>Increase</th>
+                        <th>Decrease</th>
+                        <th>Todo</th>
+                        <th>Delete?</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="todo in todos | orderBy: '-rank' track by $index" style="padding:0px;">
+                            <td><button ng-click="increase($index)" class="btn btn-primary btn-sm">+</button>
+                            </td>
+                            <td> <button ng-click="decrease($index)" class="btn btn-warning btn-sm">-</button>
+                            </td>
+                            <td> <label>
+						 Rank: {{ todo.rank }} Index: {{ $index }} - {{ todo.text }}
+				</label></td>
+                            <td>
+                                <button ng-click="deleteTodo(todo._id)" class="btn btn-danger btn-sm">X</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
+            <!--        <div ng-repeat="todo in todos | orderBy: '-rank' track by $index" style="padding:5px;">-->
+            <!--            <button ng-click="increase($index)" class="btn btn-primary btn-sm">+</button>-->
+            <!--            <button ng-click="decrease($index)" class="btn btn-warning btn-sm">-</button>-->
+            <!--            <label>-->
+            <!--		 Rank: {{ todo.rank }} Index: {{ $index }} - {{ todo.text }}-->
+            <!--</label>-->
+            <!--            <span class="pull-right">-->
+            <!--            <button ng-click="deleteTodo(todo._id)" class="btn btn-danger btn-sm">X</button>-->
+            <!--            </span>-->
+            <!--        </div>-->
+
             <p class="text-center" ng-show="loading">
                 <span class="fa fa-spinner fa-spin fa-3x"></span>
             </p>

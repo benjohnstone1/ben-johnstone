@@ -22,7 +22,8 @@
                             <td>{{ account.active }}</td>
                             <td>{{ account.paymentTerm }}</td>
                             <!--<td><a class="btn btn-primary" href="accounts/edit/{{account._id}}">Edit</a></td>-->
-                            <td><button class="btn btn-primary" window.location="accounts/edit/{{account._id}}" ng-click="showEditPage(account._id)">Edit</button></td>
+                            <td><a ng-href="/#/accounts/edit/{{account._id}}">Edit</a></td>
+                            <!--<td><button class="btn btn-primary" ng-click="showEditPage(account._id)">Edit</button></td>-->
                             <td><button class="btn btn-danger" ng-click="deleteAccount(account._id)">Delete</button></td>
                         </tr>
                     </tbody>

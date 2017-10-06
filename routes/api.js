@@ -143,13 +143,24 @@ function isLoggedIn(req, res, next) {
 /* GET Accounts page. */
 var Account = require('../model/account');
 
+/*
 router.get('/accounts', function(req, res, next) {
-    res.render('accounts/index');
+    // res.render('accounts/index');
+});
+*/
+
+router.get('/accounts', function(req, res, next) {
+    getAccounts(res);
+});
+
+router.get('/accounts/edit/:accountID', function(req, res, next) {
+    console.log("Params: "+JSON.stringify(req.params));
+    getAccountsEdit(res, req.params.accountID);
 });
 
 // Return JSON of all Accounts
 function getAccounts(res) {
-    mongoose.model('Account').find({}, function(err, accounts) {
+    mongoose.model('Account').find({ }, function(err, accounts) {
         if (err) {
             res.send(err);
         }
@@ -157,9 +168,14 @@ function getAccounts(res) {
     });
 }
 
-router.get('/accounts.json', function(req, res, next) {
-    getAccounts(res);
-})
+function getAccountsEdit(res, id) {
+    mongoose.model('Account').find({ "_id": id }, function(err, accounts) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(accounts);
+    });
+}
 
 // Create new Account
 router.post('/accounts', function(req, res) {
@@ -192,39 +208,6 @@ function showAccount(res) {
         }
     });
 }
-
-router.get('/accounts/edit.json', function(req, res, next) {
-    var id = "5995c9d054e2e10915621827";
-    mongoose.model('Account').find({ _id: id }, function(err, account) {
-        //db.accounts.find({ _id: ObjectId("5995c9d054e2e10915621827")}) # mongo query
-        if (err) {
-            console.log('GET Error: There was a problem retrieving:' + err);
-        }
-        else {
-            console.log('GET Retrieving ID: ' + id);
-            console.log('Account retrieved is: ' + account);
-            res.json(account);
-        }
-    });
-});
-
-/* Set routes for edit page */
-router.get('/accounts/edit/:id', function(req, res, next) {
-    var id = req.params.id;
-    console.log('Request Id:', id);
-    res.render('accounts/edit');
-    // showAccount(req.params.id);
-    /* 
-     mongoose.model('Account').findById(req.params.id, function(err, account){
-      //   _id: req.params.account_id;
-         if (err){
-             console.log('GET Error: There was a problem retrieving:'+err);
-         }else{
-             console.log('GET Retrieving ID: ' + account._id);
-             res.render('accounts/edit');
-         }
-     });*/
-});
 
 /* Set routes for updating the account */
 router.put('/accounts/:account_id/edit.json', function(req, res) {

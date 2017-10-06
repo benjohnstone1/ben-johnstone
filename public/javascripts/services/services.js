@@ -7,7 +7,7 @@ module.factory('AccountsService', ['$http',
     function($http) {
         return {
             get: function() {
-                return $http.get('/accounts.json');
+                return $http.get('/accounts');
             },
             create: function(accountData) {
                 return $http.post('/accounts', accountData);
@@ -15,8 +15,8 @@ module.factory('AccountsService', ['$http',
             delete: function(id) {
                 return $http.delete('/accounts/' + id);
             },
-            show: function(id) {
-                return $http.get('/accounts/edit.json');
+            showEditPage: function(id) {
+                return $http.get('/accounts/edit/'+id);
             },
             update: function(id) {
                 return $http.put('/accounts/' + id + 'edit.json');
