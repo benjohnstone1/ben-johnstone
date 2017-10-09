@@ -131,7 +131,7 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$locati
 			}
 		};
 
-		// INCRAESE ==================================================================
+		// INCREASE ==================================================================
 		$scope.increase = function(id) {
 			$scope.loading = true;
 			// Get todo to edit
@@ -154,7 +154,7 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$locati
 		};
 		
 		function updateTodo(id, todo) {
-			// Update rank of todo
+			// Update todos by id
 			TodosService.update(id, todo)
 				.success(function(todoList) {
 					$scope.todos = todoList;

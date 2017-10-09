@@ -15,7 +15,7 @@
                         <th>Edit</th>
                         <th>Delete?</th>
                     </thead>
-                    <tbody>
+                    <tbody ng-if="!loading" >
                         <tr ng-repeat="account in accounts">
                             <td>{{ account.name }}</td>
                             <td>{{ account.currency }}</td>

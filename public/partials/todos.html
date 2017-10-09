@@ -10,14 +10,14 @@
         <div class="col-sm-8 col-sm-offset-2">
             <!--LOOP OVER THE TODOS IN $scope.todos -->
             <div class="table-responsive">
-                <table class="table table-hover table-striped">
+                <table class="table table-hover table-sm">
                     <thead>
                         <th>Inc.</th>
                         <th>Dec.</th>
                         <th>Todo</th>
                         <th>Delete?</th>
                     </thead>
-                    <tbody>
+                    <tbody ng-if="!loading">
                         <tr ng-repeat="todo in todos | orderBy: '-rank'">
                             <td><button ng-click="increase(todo._id)" class="btn btn-primary btn-sm">+</button>
                             </td>
@@ -31,17 +31,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <!--        <div ng-repeat="todo in todos | orderBy: '-rank' track by $index" style="padding:5px;">-->
-            <!--            <button ng-click="increase($index)" class="btn btn-primary btn-sm">+</button>-->
-            <!--            <button ng-click="decrease($index)" class="btn btn-warning btn-sm">-</button>-->
-            <!--            <label>-->
-            <!--		 Rank: {{ todo.rank }} Index: {{ $index }} - {{ todo.text }}-->
-            <!--</label>-->
-            <!--            <span class="pull-right">-->
-            <!--            <button ng-click="deleteTodo(todo._id)" class="btn btn-danger btn-sm">X</button>-->
-            <!--            </span>-->
-            <!--        </div>-->
 
             <p class="text-center" ng-show="loading">
                 <span class="fa fa-spinner fa-spin fa-3x"></span>

@@ -18,11 +18,11 @@ myApp.config(function($routeProvider) {
     })
     .when('/todos', {
       templateUrl: '../partials/todos.html',
-      access: { restricted: false }
+      access: { restricted: true }
     })
     .when('/todos/edit/:todo_id', {
       templateUrl: '../partials/todos.html',
-      access: { restricted: false }
+      access: { restricted: true }
     })
     .when('/login', {
       templateUrl: '../partials/login.html',
