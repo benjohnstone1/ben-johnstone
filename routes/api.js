@@ -1,16 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose'); //mongo connection
+var mongoose = require('mongoose');
 var passport = require('passport');
 
-/* GET home page. */
+//=======================  Home Routes =================================
+
 router.get('/', function(req, res, next) {
     res.render('index');
 });
 
-router.get('/login', function(req, res) {
-    // res.render('login/index', { user: req.user });
-});
+//=======================  Login Routes =================================
 
 router.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
@@ -36,6 +35,7 @@ router.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+//=======================  Signup Routes =================================
 
 router.get('/signup', function(req, res) {
     // res.render('login/signup', {});
@@ -61,6 +61,8 @@ router.post('/signup', function(req, res) {
             });
         });
 });
+
+//=======================  Profile Routes =================================
 
 router.get('/profile', function(req, res) {
     if (!req.isAuthenticated()) {
@@ -112,7 +114,6 @@ router.get('/profile/edit/:profileID', function(req, res) {
     });
 });
 
-// Update Existing Profile
 router.post('/profile/edit/:profileID', function(req, res, next) {
     var User = mongoose.model('User');
     var id = req.params.profileID;
@@ -149,7 +150,18 @@ router.delete('/profile/:_id', function(req, res) {
     });
 });
 
+//=======================  User Routes =================================
+
 var User = require('../model/user');
+
+router.get('/users', function(req,res,next){
+    User.find({}, function(err, users){
+        if(err){
+            res.send(err);
+        }
+        res.json(users);
+    });
+});
 
 function getUser(res, username) {
     mongoose.model('User').find({ "username": username }, function(err, user) {
@@ -160,6 +172,8 @@ function getUser(res, username) {
     });
 }
 
+//=======================  Logout Routes =================================
+
 router.get('/logout', function(req, res) {
     req.logout();
     res.status(200).json({
@@ -167,24 +181,10 @@ router.get('/logout', function(req, res) {
     });
 });
 
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
-    // if they aren't redirect them to the home page
-    res.redirect('/#/login');
-}
+//=======================  Account Routes =================================
 
-
-/* GET Accounts page. */
-var Account = require('../model/account');
-
-/*
-router.get('/accounts', function(req, res, next) {
-    // res.render('accounts/index');
-});
-*/
+require('../model/account');
+var Account = mongoose.model('Account');
 
 router.get('/accounts', function(req, res, next) {
     getAccounts(res);
@@ -194,9 +194,8 @@ router.get('/accounts/edit/:accountID', function(req, res, next) {
     getAccountsEdit(res, req.params.accountID);
 });
 
-// Return JSON of all Accounts
 function getAccounts(res) {
-    mongoose.model('Account').find({}, function(err, accounts) {
+    Account.find({}, function(err, accounts) {
         if (err) {
             res.send(err);
         }
@@ -205,7 +204,7 @@ function getAccounts(res) {
 }
 
 function getAccountsEdit(res, id) {
-    mongoose.model('Account').find({ "_id": id }, function(err, accounts) {
+    Account.find({ "_id": id }, function(err, accounts) {
         if (err) {
             res.send(err);
         }
@@ -213,9 +212,7 @@ function getAccountsEdit(res, id) {
     });
 }
 
-// Update Existing Account
 router.post('/accounts/edit/:accountID', function(req, res, next) {
-    var Account = mongoose.model('Account');
     var id = req.params.accountID;
     var body = req.body;
 
@@ -236,9 +233,8 @@ router.post('/accounts/edit/:accountID', function(req, res, next) {
     });
 });
 
-// Create new Account
 router.post('/accounts', function(req, res) {
-    mongoose.model('Account').create({
+    Account.create({
         name: req.body.name,
         currency: req.body.currency,
         createdDate: req.body.createdDate,
@@ -255,21 +251,8 @@ router.post('/accounts', function(req, res) {
     });
 });
 
-function showAccount(res) {
-    mongoose.model('Account').find({ _id: res }, function(err, account) {
-        //db.accounts.find({ _id: ObjectId("5995c9d054e2e10915621827")}) # mongo query
-        if (err) {
-            console.log('GET Error: There was a problem retrieving:' + err);
-        }
-        else {
-            console.log('GET Retrieving ID: ' + res);
-            res.render('accounts/edit');
-        }
-    });
-}
-
 router.delete('/accounts/:account_id', function(req, res) {
-    mongoose.model('Account').remove({
+    Account.remove({
         _id: req.params.account_id
     }, function(err, account) {
         if (err) {
@@ -279,11 +262,13 @@ router.delete('/accounts/:account_id', function(req, res) {
     });
 });
 
-/* To-Do */
-var Todo = require('../model/todo');
+//=======================  Todos Routes =================================
+
+require('../model/todo');
+var Todo = mongoose.model('Todo');
 
 function getTodos(res) {
-    mongoose.model('Todo').find({}, function(err, todos) {
+    Todo.find({}, function(err, todos) {
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
             res.send(err);
@@ -292,35 +277,25 @@ function getTodos(res) {
     });
 }
 
-// // display todos page
-// router.get('/todos', function(req, res, next) {
-//     res.render('todo/todo');
-// });
-
-
-// get all todos
 router.get('/todos.json', function(req, res) {
     getTodos(res);
 });
 
-// create todo and send back all todos after creation
 router.post('/todos', function(req, res) {
-    // create a todo, information comes from AJAX request from Angular
-    mongoose.model('Todo').create({
+    Todo.create({
         text: req.body.text,
         done: false
     }, function(err, todo) {
         if (err) {
             res.send(err);
         }
-        // get and return all the todos after you create another
         getTodos(res);
     });
 
 });
 
 router.get('/todos/edit/:todo_id', function(req, res) {
-    mongoose.model('Todo').find({ '_id': req.params.todo_id }, function(err, editTodo) {
+    Todo.find({ '_id': req.params.todo_id }, function(err, editTodo) {
         if (err) {
             console.log("Error");
             res.send(err);
@@ -329,19 +304,15 @@ router.get('/todos/edit/:todo_id', function(req, res) {
     });
 });
 
-// Update Todos
 router.post('/todos/edit/:todo_id', function(req, res, next) {
-    var Todo = mongoose.model('Todo');
     var id = req.params.todo_id;
-    
     Todo.update({ _id: id }, { $set: { rank: req.body[0].rank } }, function(error, todo) {
         getTodos(res);
     });
 });
 
-// delete a todo
 router.delete('/todos/:todo_id', function(req, res) {
-    mongoose.model('Todo').remove({
+    Todo.remove({
         _id: req.params.todo_id
     }, function(err, todo) {
         if (err) {
@@ -350,5 +321,7 @@ router.delete('/todos/:todo_id', function(req, res) {
         getTodos(res);
     });
 });
+
+//=======================  Export Routes =================================
 
 module.exports = router;

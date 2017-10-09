@@ -17,7 +17,10 @@
                         <th>Todo</th>
                         <th>Delete?</th>
                     </thead>
-                    <tbody ng-if="!loading">
+                    <p class="text-center" ng-show="loading">
+                        <span class="fa fa-spinner fa-spin fa-3x"></span>
+                    </p>
+                    <tbody>
                         <tr ng-repeat="todo in todos | orderBy: '-rank'">
                             <td><button ng-click="increase(todo._id)" class="btn btn-primary btn-sm">+</button>
                             </td>
@@ -31,10 +34,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <p class="text-center" ng-show="loading">
-                <span class="fa fa-spinner fa-spin fa-3x"></span>
-            </p>
         </div>
     </div>
 

@@ -1,0 +1,37 @@
+<div ng-controller="usersController" ng-cloak class="{{ bodyClass }}">
+    <div class="jumbotron">
+        <h1> Users Page - <span class="label label-info"> {{ users.length }} </span></h1>
+    </div>
+    <div id="user-list" class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <!--LOOP OVER THE Accounts IN $scope.accounts -->
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                        <th>Id</th>
+                        <th>Admin</th>
+                        <th>Edit</th>
+                        <th>Delete?</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in users">
+                            <td>{{ user.fname }}</td>
+                            <td>{{ user.lname }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user._id }}</td>
+                            <td>{{ user.admin }}</td>
+                            <td><a ng-href="/#/" class="btn btn-primary">Edit</a></td>
+                            <td><button class="btn btn-danger" ng-click="#">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-center" ng-show="loading">
+                <span class="fa fa-spinner fa-spin fa-3x"></span>
+            </p>
+        </div>
+    </div>
+</div>

@@ -73,6 +73,16 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 	}
 ]);
 
+//=======================  Users Controller ================================
+myApp.controller('usersController', ['$scope', 'UsersService', function($scope , UsersService){
+	
+	UsersService.get()
+		.success(function(data){
+			$scope.users = data;
+			console.log(data);
+		});
+}]);
+
 //=======================  Edit Accounts Controller ================================
 myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', '$location', 'AccountsService',
 	function($scope, $http, $routeParams, $location, AccountsService) {
@@ -254,7 +264,7 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 //=======================  Profile Controller ================================
 myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$window', '$routeParams', '$location',
 	function($scope, $http, AuthService, $cookieStore, $routeParams, $window, $location) {
-		var profileID = $routeParams.profileID;
+		//var profileID = $routeParams.profileID;
 		// return username from AuthService
 		AuthService.getProfile()
 			.success(function(response) {

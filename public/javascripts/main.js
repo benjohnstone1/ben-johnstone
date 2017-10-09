@@ -7,6 +7,10 @@ myApp.config(function($routeProvider) {
       templateUrl: '../partials/home.html',
       access: { restricted: false }
     })
+    .when('/users', {
+      templateUrl: '../partials/users.html',
+      access: { restricted: true }
+    })
     .when('/accounts', {
       templateUrl: '../partials/accounts.html',
       access: { restricted: true }

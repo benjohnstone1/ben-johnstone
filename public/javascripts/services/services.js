@@ -26,6 +26,17 @@ module.factory('AccountsService', ['$http',
 ]);
 
 //=======================  Todos Service =================================
+module.factory('UsersService', ['$http',
+    function($http) {
+        return {
+            get: function() {
+                return $http.get('/users');
+            }
+        };
+    }
+]);
+
+//=======================  Todos Service =================================
 module.factory('TodosService', ['$http',
     function($http) {
         return {
