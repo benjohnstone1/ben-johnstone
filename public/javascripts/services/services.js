@@ -32,11 +32,17 @@ module.factory('TodosService', ['$http',
             get: function() {
                 return $http.get('/todos.json');
             },
+            getTodo: function(id) {
+                return $http.get('/todos/edit/'+id);
+            },
             create: function(todoData) {
                 return $http.post('/todos', todoData);
             },
             delete: function(id) {
                 return $http.delete('/todos/' + id);
+            },
+            update: function(id, todo){
+                return $http.post('/todos/edit/'+id, todo);
             }
         };
     }

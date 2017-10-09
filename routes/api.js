@@ -78,7 +78,7 @@ router.get('/profile.json', function(req, res, next) {
 });
 
 router.put('/profile/:_id', function(req, res) {
-    if (!req.isAuthenticated()){
+    if (!req.isAuthenticated()) {
         return res.status(200).json({
             status: false
         });
@@ -117,25 +117,25 @@ router.post('/profile/edit/:profileID', function(req, res, next) {
     var User = mongoose.model('User');
     var id = req.params.profileID;
     var body = req.body;
-    console.log("id: "+id);
-    
-    console.log("User:"+JSON.stringify(body));
+    console.log("id: " + id);
+
+    console.log("User:" + JSON.stringify(body));
 
     User.findById(id, function(error, user) {
-    // Handle the error using the Express error middleware
-    if(error) return next(error);
-    // Render not found error
-    if(!user) {
-      return res.status(404).json({
-        message: 'User with id ' + id + ' can not be found.'
-      });
-    }
-    // Update the account model
-    User.update(body, function(error, user) {
-      if(error) return next(error);
-      res.json(user);
+        // Handle the error using the Express error middleware
+        if (error) return next(error);
+        // Render not found error
+        if (!user) {
+            return res.status(404).json({
+                message: 'User with id ' + id + ' can not be found.'
+            });
+        }
+        // Update the account model
+        user.update(body, function(error, user) {
+            if (error) return next(error);
+            res.json(user);
+        });
     });
-  });
 });
 
 router.delete('/profile/:_id', function(req, res) {
@@ -220,20 +220,20 @@ router.post('/accounts/edit/:accountID', function(req, res, next) {
     var body = req.body;
 
     Account.findById(id, function(error, account) {
-    // Handle the error using the Express error middleware
-    if(error) return next(error);
-    // Render not found error
-    if(!account) {
-      return res.status(404).json({
-        message: 'Account with id ' + id + ' can not be found.'
-      });
-    }
-    // Update the account model
-    account.update(body, function(error, account) {
-      if(error) return next(error);
-      res.json(account);
+        // Handle the error using the Express error middleware
+        if (error) return next(error);
+        // Render not found error
+        if (!account) {
+            return res.status(404).json({
+                message: 'Account with id ' + id + ' can not be found.'
+            });
+        }
+        // Update the account model
+        account.update(body, function(error, account) {
+            if (error) return next(error);
+            res.json(account);
+        });
     });
-  });
 });
 
 // Create new Account
@@ -291,10 +291,11 @@ function getTodos(res) {
         res.json(todos); // return all todos in JSON format
     });
 }
-// display todos page
-router.get('/todos', function(req, res, next) {
-    res.render('todo/todo');
-});
+
+// // display todos page
+// router.get('/todos', function(req, res, next) {
+//     res.render('todo/todo');
+// });
 
 
 // get all todos
@@ -316,6 +317,26 @@ router.post('/todos', function(req, res) {
         getTodos(res);
     });
 
+});
+
+router.get('/todos/edit/:todo_id', function(req, res) {
+    mongoose.model('Todo').find({ '_id': req.params.todo_id }, function(err, editTodo) {
+        if (err) {
+            console.log("Error");
+            res.send(err);
+        }
+        res.json(editTodo);
+    });
+});
+
+// Update Todos
+router.post('/todos/edit/:todo_id', function(req, res, next) {
+    var Todo = mongoose.model('Todo');
+    var id = req.params.todo_id;
+    
+    Todo.update({ _id: id }, { $set: { rank: req.body[0].rank } }, function(error, todo) {
+        getTodos(res);
+    });
 });
 
 // delete a todo

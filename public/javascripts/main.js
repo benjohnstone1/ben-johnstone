@@ -18,7 +18,11 @@ myApp.config(function($routeProvider) {
     })
     .when('/todos', {
       templateUrl: '../partials/todos.html',
-      access: { restricted: true }
+      access: { restricted: false }
+    })
+    .when('/todos/edit/:todo_id', {
+      templateUrl: '../partials/todos.html',
+      access: { restricted: false }
     })
     .when('/login', {
       templateUrl: '../partials/login.html',
@@ -51,9 +55,14 @@ myApp.run(function($rootScope, $location, $route, AuthService) {
     function(event, next, current) {
       AuthService.getUserStatus()
         .then(function() {
-          if (next.access.restricted && !AuthService.isLoggedIn()) {
-            $location.path('/login');
-            $route.reload();
+          try {
+            if (next.access.restricted && !AuthService.isLoggedIn()) {
+              $location.path('/login');
+              $route.reload();
+            }
+          }
+          catch (e) {
+            // Error: Cannot read property 'restricted' of undefined, we see on homepage, unsure why next.access is undefined
           }
         });
     });

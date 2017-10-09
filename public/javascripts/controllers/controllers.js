@@ -96,7 +96,7 @@ myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', '
 					$scope.accounts = data;
 					$location.path('/accounts');
 				})
-				.error(function(){
+				.error(function() {
 					$scope.loading = false;
 					alert("Error - Couldn't Save Update");
 				});
@@ -105,8 +105,8 @@ myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', '
 ]);
 
 //=======================  Todos Controller =================================
-myApp.controller('todosController', ['$scope', '$http', 'TodosService',
-	function($scope, $http, TodosService) {
+myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$location',
+	function($scope, $http, TodosService, $location) {
 		$scope.formData = {};
 		$scope.loading = true;
 
@@ -132,20 +132,39 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService',
 		};
 
 		// INCRAESE ==================================================================
-		$scope.increase = function(index) {
-			console.log($scope.todos[index].text);
-			console.log("Old Index: " + index);
-			console.log("Old Rank:" + $scope.todos[index].rank);
-			$scope.todos[index].rank += 1;
-			console.log("New Rank:" + $scope.todos[index].rank);
-			console.log("New Index: " + index);
+		$scope.increase = function(id) {
+			$scope.loading = true;
+			// Get todo to edit
+			TodosService.getTodo(id)
+				.success(function(todo) {
+					todo[0].rank += 1;
+					updateTodo(id,todo);
+				});
 		};
-
+		
 		// DECREASE ==================================================================
-		$scope.decrease = function(index) {
-			console.log(index);
-			$scope.todos[index].rank += -1;
+		$scope.decrease = function(id) {
+			$scope.loading = true;
+			// Get todo to edit
+			TodosService.getTodo(id)
+				.success(function(todo) {
+					todo[0].rank += -1;
+					updateTodo(id,todo);
+				});
 		};
+		
+		function updateTodo(id, todo) {
+			// Update rank of todo
+			TodosService.update(id, todo)
+				.success(function(todoList) {
+					$scope.todos = todoList;
+					$scope.loading = false;
+				})
+				.error(function(error) {
+					alert('could not update!');
+					$scope.loading = false;
+				});
+		}
 
 		// DELETE ==================================================================
 		$scope.deleteTodo = function(id) {
@@ -249,13 +268,12 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cooki
 			});
 
 		$scope.editUser = function(id, fname, lname) {
-			var user = { fname: fname, lname: lname};
-			console.log(id);
+			var user = { fname: fname, lname: lname };
 			AuthService.editUser(id, user)
-				.success(function(data){
+				.success(function(data) {
 					$location.path('/profile');
 				})
-				.error(function(){
+				.error(function() {
 					alert("Error - could not update");
 				});
 		};
