@@ -6,6 +6,9 @@
             <div ng-if="error" class="alert alert-danger">
                 {{ errorMessage }}
             </div>
+            <div ng-if="success" class="alert alert-success">
+                {{ successMessage }}
+            </div>
             <!-- SIGNUP FORM -->
             <form ng-submit="signup()">
                 <div class="form-group">

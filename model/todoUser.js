@@ -1,6 +1,6 @@
 // define model =================
 var mongoose = require('mongoose');
-var todoSchema = new mongoose.Schema({
+var todoUserSchema = new mongoose.Schema({
     text: String,
     rank: {
         type: Number,
@@ -8,4 +8,4 @@ var todoSchema = new mongoose.Schema({
     },
     user_id: String,
 });
-mongoose.model('Todo', todoSchema);
+mongoose.model('TodoUser', todoUserSchema);

@@ -120,20 +120,21 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
         }
 
         function signup(username, password, fname, lname) {
-            
             // Setting a cookie
             $cookieStore.put('userID', username);
             // create a new instance of deferred
             var deferred = $q.defer();
-
             // send a post request to the server
             $http.post('/signup', { username: username, password: password, fname: fname, lname: lname })
                 // handle success
                 .success(function(data, status) {
                     if (status === 200 && data.status) {
+                        console.log("deferred is"+JSON.stringify(deferred));
+                        // this is { promise: {} }
                         deferred.resolve();
                     }
                     else {
+                        console.log('Error posting user');
                         deferred.reject();
                     }
                 })
@@ -141,7 +142,6 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 .error(function(data) {
                     deferred.reject();
                 });
-
             // return promise object
             return deferred.promise;
         }

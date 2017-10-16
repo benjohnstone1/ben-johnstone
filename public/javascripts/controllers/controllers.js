@@ -74,10 +74,10 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 ]);
 
 //=======================  Users Controller ================================
-myApp.controller('usersController', ['$scope', 'UsersService', function($scope , UsersService){
-	
+myApp.controller('usersController', ['$scope', 'UsersService', function($scope, UsersService) {
+
 	UsersService.get()
-		.success(function(data){
+		.success(function(data) {
 			$scope.users = data;
 			console.log(data);
 		});
@@ -119,10 +119,14 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$locati
 	function($scope, $http, TodosService, $location) {
 		$scope.formData = {};
 		$scope.loading = true;
-
+	
 		TodosService.get()
 			.success(function(data) {
 				$scope.todos = data;
+				$scope.loading = false;
+			})
+			.error(function(error) {
+				console.log(error);
 				$scope.loading = false;
 			});
 
@@ -148,10 +152,10 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$locati
 			TodosService.getTodo(id)
 				.success(function(todo) {
 					todo[0].rank += 1;
-					updateTodo(id,todo);
+					updateTodo(id, todo);
 				});
 		};
-		
+
 		// DECREASE ==================================================================
 		$scope.decrease = function(id) {
 			$scope.loading = true;
@@ -159,10 +163,10 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$locati
 			TodosService.getTodo(id)
 				.success(function(todo) {
 					todo[0].rank += -1;
-					updateTodo(id,todo);
+					updateTodo(id, todo);
 				});
 		};
-		
+
 		function updateTodo(id, todo) {
 			// Update todos by id
 			TodosService.update(id, todo)
@@ -211,7 +215,7 @@ myApp.controller('loginController', ['$scope', '$location', 'AuthService',
 					$scope.loginForm = {};
 				})
 				// handle error
-				.catch(function() {
+				.catch(function(error) {
 					$scope.error = true;
 					$scope.errorMessage = "Invalid username and/or password";
 					$scope.disabled = false;
@@ -240,20 +244,21 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 		$scope.signup = function() {
 			// initial values
 			$scope.error = false;
-			$scope.disabled = true;
+			$scope.success = false;
 
 			AuthService.signup($scope.signupForm.username, $scope.signupForm.password, $scope.signupForm.fname, $scope.signupForm.lname)
 				// handle success
 				.then(function() {
+					$scope.error = false;
+					$scope.success = true;
+					$scope.successMessage = "Successfully registered!";
 					$location.path('/profile');
-					$scope.disabled = false;
 					$scope.signupForm = {};
 				})
 				// handle error
 				.catch(function() {
 					$scope.error = true;
 					$scope.errorMessage = "Invalid username and/or password";
-					$scope.disabled = false;
 					$scope.signupForm = {};
 				});
 
@@ -294,7 +299,7 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cooki
 				AuthService.deleteUser(id)
 					.success(function(data) {
 						// Redirect to home page...
-						$window.location.assign('/');
+						$window.location.assign('/#/');
 					});
 			}
 		};

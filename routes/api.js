@@ -37,9 +37,9 @@ router.post('/login', function(req, res, next) {
 
 //=======================  Signup Routes =================================
 
-router.get('/signup', function(req, res) {
-    // res.render('login/signup', {});
-});
+// router.get('/signup', function(req, res) {
+//     // res.render('login/signup', {});
+// });
 
 router.post('/signup', function(req, res) {
     User.register(new User({
@@ -267,8 +267,8 @@ router.delete('/accounts/:account_id', function(req, res) {
 require('../model/todo');
 var Todo = mongoose.model('Todo');
 
-function getTodos(res) {
-    Todo.find({}, function(err, todos) {
+function getTodos(res, user) {
+    Todo.find({ user_id: user}, function(err, todos) {
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
             res.send(err);
@@ -278,18 +278,19 @@ function getTodos(res) {
 }
 
 router.get('/todos.json', function(req, res) {
-    getTodos(res);
+    getTodos(res, req.user.username);
 });
 
 router.post('/todos', function(req, res) {
     Todo.create({
         text: req.body.text,
+        user_id: req.user.username,
         done: false
     }, function(err, todo) {
         if (err) {
             res.send(err);
         }
-        getTodos(res);
+        getTodos(res, req.user.username);
     });
 
 });
@@ -307,7 +308,7 @@ router.get('/todos/edit/:todo_id', function(req, res) {
 router.post('/todos/edit/:todo_id', function(req, res, next) {
     var id = req.params.todo_id;
     Todo.update({ _id: id }, { $set: { rank: req.body[0].rank } }, function(error, todo) {
-        getTodos(res);
+        getTodos(res, req.user.username);
     });
 });
 
@@ -318,7 +319,7 @@ router.delete('/todos/:todo_id', function(req, res) {
         if (err) {
             res.send(err);
         }
-        getTodos(res);
+        getTodos(res, req.user.username);
     });
 });
 
