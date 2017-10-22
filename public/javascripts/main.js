@@ -74,7 +74,7 @@ myApp.run(function($rootScope, $location, $route, AuthService) {
             }
           }
           catch (e) {
-            console.log(e);
+            // console.log(e);
           }
         });
     });

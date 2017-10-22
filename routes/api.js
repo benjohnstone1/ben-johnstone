@@ -154,7 +154,8 @@ router.delete('/profile/:_id', function(req, res) {
 
 //=======================  User Routes =================================
 
-var User = require('../model/user');
+require('../model/user');
+var User = mongoose.model('User');
 
 router.get('/users', function(req,res,next){
     User.find({}, function(err, users){

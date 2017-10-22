@@ -34,7 +34,6 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 					});
 			}
 		};
-
 		// DELETE ==================================================================
 		$scope.deleteAccount = function(id) {
 			$scope.loading = true;
@@ -60,7 +59,6 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 					$scope.accounts = data;
 				});
 		};
-
 		// UPDATE ==================================================================
 		$scope.updateAccount = function(id) {
 			$scope.loading = true;
@@ -74,12 +72,17 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 ]);
 
 //=======================  Users Controller ================================
-myApp.controller('usersController', ['$scope', 'UsersService', function($scope, UsersService) {
-	UsersService.get()
-		.success(function(data) {
-			$scope.users = data;
-		});
-}]);
+myApp.controller('usersController', ['$scope', '$http', 'UsersService',
+	function($scope, $http, UsersService) {
+		$scope.loading = true;
+		
+		UsersService.get()
+			.success(function(data) {
+				$scope.users = data;
+				$scope.loading = false;
+			});
+	}
+]);
 
 //=======================  Edit Accounts Controller ================================
 myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', '$location', 'AccountsService',

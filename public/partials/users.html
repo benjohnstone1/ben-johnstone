@@ -15,15 +15,15 @@
                         <th>Edit</th>
                         <th>Delete?</th>
                     </thead>
-                    <tbody>
+                    <tbody ng-if="!loading" >
                         <tr ng-repeat="user in users">
                             <td>{{ user.fname }}</td>
                             <td>{{ user.lname }}</td>
                             <td>{{ user.username }}</td>
                             <td>{{ user._id }}</td>
                             <td>{{ user.admin }}</td>
-                            <td><a ng-href="/#/" class="btn btn-primary">Edit</a></td>
-                            <td><button class="btn btn-danger" ng-click="#">Delete</button></td>
+                            <td><a ng-href="#" class="btn btn-primary">Edit</a></td>
+                            <td><button class="btn btn-danger" ng-click="'#'">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
