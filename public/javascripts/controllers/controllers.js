@@ -75,11 +75,9 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 
 //=======================  Users Controller ================================
 myApp.controller('usersController', ['$scope', 'UsersService', function($scope, UsersService) {
-
 	UsersService.get()
 		.success(function(data) {
 			$scope.users = data;
-			console.log(data);
 		});
 }]);
 

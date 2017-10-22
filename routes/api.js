@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
+        console.log("user is admin: "+user.admin);
         if (err) {
             return next(err);
         }
@@ -29,7 +30,8 @@ router.post('/login', function(req, res, next) {
                 });
             }
             res.status(200).json({
-                status: 'Login successful!'
+                status: 'Login successful!',
+                admin: user.admin
             });
         });
     })(req, res, next);

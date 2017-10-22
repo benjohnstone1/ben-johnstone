@@ -16,9 +16,9 @@ module.factory('AccountsService', ['$http',
                 return $http.delete('/accounts/' + id);
             },
             showEditPage: function(id) {
-                return $http.get('/accounts/edit/'+id);
+                return $http.get('/accounts/edit/' + id);
             },
-            update: function(id,accountData) {
+            update: function(id, accountData) {
                 return $http.post('/accounts/edit/' + id, accountData);
             }
         };
@@ -44,7 +44,7 @@ module.factory('TodosService', ['$http',
                 return $http.get('/todos.json');
             },
             getTodo: function(id) {
-                return $http.get('/todos/edit/'+id);
+                return $http.get('/todos/edit/' + id);
             },
             create: function(todoData) {
                 return $http.post('/todos', todoData);
@@ -52,8 +52,8 @@ module.factory('TodosService', ['$http',
             delete: function(id) {
                 return $http.delete('/todos/' + id);
             },
-            update: function(id, todo){
-                return $http.post('/todos/edit/'+id, todo);
+            update: function(id, todo) {
+                return $http.post('/todos/edit/' + id, todo);
             }
         };
     }
@@ -64,6 +64,7 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
     function($http, $q, $timeout, $cookieStore) {
         // create user variable
         var user = null;
+        var admin = null;
         // return available functions for use in the controllers
         return ({
             isLoggedIn: isLoggedIn,
@@ -73,10 +74,11 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
             deleteUser: deleteUser,
             signup: signup,
             logout: logout,
+            isAdmin: isAdmin,
             getUserStatus: getUserStatus,
             editUser: editUser,
         });
-        
+
         function editUser(id, user) {
             return $http.post('/profile/edit/' + id, user);
         }
@@ -106,6 +108,7 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 // handle success
                 .success(function(data) {
                     user = false;
+                    admin = false;
                     deferred.resolve();
                     $cookieStore.put('userID', '');
                     alert("Successfully Logged Out");
@@ -113,6 +116,7 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 // handle error
                 .error(function(data) {
                     user = false;
+                    admin = false;
                     deferred.reject();
                 });
             // return promise object
@@ -129,7 +133,7 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 // handle success
                 .success(function(data, status) {
                     if (status === 200 && data.status) {
-                        console.log("deferred is"+JSON.stringify(deferred));
+                        console.log("deferred is" + JSON.stringify(deferred));
                         // this is { promise: {} }
                         deferred.resolve();
                     }
@@ -158,6 +162,15 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
             return $cookieStore.get('userID');
         }
 
+        function isAdmin() {
+            if (admin) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
         function isLoggedIn() {
             if (user) {
                 return true;
@@ -183,10 +196,12 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 .success(function(data, status) {
                     if (status === 200 && data.status) {
                         user = true;
+                        admin = data.admin;
                         deferred.resolve();
                     }
                     else {
                         user = false;
+                        admin = false;
                         deferred.reject();
                     }
                 })
