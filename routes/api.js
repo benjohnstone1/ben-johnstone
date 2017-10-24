@@ -13,7 +13,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
-        console.log("user is admin: "+user.admin);
         if (err) {
             return next(err);
         }
@@ -120,10 +119,6 @@ router.post('/profile/edit/:profileID', function(req, res, next) {
     var User = mongoose.model('User');
     var id = req.params.profileID;
     var body = req.body;
-    console.log("id: " + id);
-
-    console.log("User:" + JSON.stringify(body));
-
     User.findById(id, function(error, user) {
         // Handle the error using the Express error middleware
         if (error) return next(error);
@@ -141,14 +136,30 @@ router.post('/profile/edit/:profileID', function(req, res, next) {
     });
 });
 
+// We want to query all todos that match the user profile and delete them also
 router.delete('/profile/:_id', function(req, res) {
-    mongoose.model('User').remove({
-        _id: req.params._id
-    }, function(err, user) {
+    var id = req.params._id;
+    var User = mongoose.model('User');
+    var Todo = mongoose.model('Todo');
+
+    // Find username corresponding to _id of user
+    User.find({ _id: id }, function(err, user) {
         if (err) {
-            res.send("Error deleting user " + err);
+            res.send("Error could not find user " + err);
         }
-        res.status(200).send("User deleted!");
+        // Remove all todo's that match the user_id
+        Todo.remove({ user_id: user[0].username }, function(err, todo) {
+            if (err) {
+                res.send("Error deleting todos " + err);
+            }
+            // Remove user
+            User.remove({ _id: id }, function(err, user) {
+                if (err) {
+                    res.send("Error deleting user " + err);
+                }
+                res.status(200).send("User deleted");
+            });
+        });
     });
 });
 
@@ -301,7 +312,6 @@ router.post('/todos', function(req, res) {
 router.get('/todos/edit/:todo_id', function(req, res) {
     Todo.find({ '_id': req.params.todo_id }, function(err, editTodo) {
         if (err) {
-            console.log("Error");
             res.send(err);
         }
         res.json(editTodo);

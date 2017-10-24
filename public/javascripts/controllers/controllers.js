@@ -268,8 +268,8 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 ]);
 
 //=======================  Profile Controller ================================
-myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$window', '$routeParams', '$location',
-	function($scope, $http, AuthService, $cookieStore, $routeParams, $window, $location) {
+myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$routeParams', '$location',
+	function($scope, $http, AuthService, $cookieStore, $routeParams, $location) {
 		//var profileID = $routeParams.profileID;
 		// return username from AuthService
 		AuthService.getProfile()
@@ -299,8 +299,7 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cooki
 			if (answer) {
 				AuthService.deleteUser(id)
 					.success(function(data) {
-						// Redirect to home page...
-						$window.location.assign('/#/');
+						$location.path('/');
 					});
 			}
 		};
