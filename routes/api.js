@@ -38,11 +38,7 @@ router.post('/login', function(req, res, next) {
 
 //=======================  Signup Routes =================================
 
-// router.get('/signup', function(req, res) {
-//     // res.render('login/signup', {});
-// });
-
-router.post('/signup', function(req, res) {
+router.post('/signup', function(req, res, next) {
     User.register(new User({
             username: req.body.username,
             fname: req.body.fname,
@@ -180,6 +176,7 @@ router.get('/users', function(req,res,next){
 function getUser(res, username) {
     mongoose.model('User').find({ "username": username }, function(err, user) {
         if (err) {
+            console.log("couldn't find user");
             res.send(err);
         }
         res.json(user);

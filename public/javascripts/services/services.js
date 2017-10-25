@@ -128,7 +128,6 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
             var deferred = $q.defer();
             // send a post request to the server
             $http.post('/signup', { username: username, password: password, fname: fname, lname: lname })
-                // handle success
                 .success(function(data, status) {
                     if (status === 200 && data.status) {
                         deferred.resolve();
@@ -138,11 +137,9 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                         deferred.reject();
                     }
                 })
-                // handle error
                 .error(function(data) {
                     deferred.reject();
                 });
-            // return promise object
             return deferred.promise;
         }
 

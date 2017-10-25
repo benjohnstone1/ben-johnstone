@@ -127,7 +127,6 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$locati
 				$scope.loading = false;
 			})
 			.error(function(error) {
-				console.log(error);
 				$scope.loading = false;
 			});
 
@@ -248,15 +247,16 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 			$scope.success = false;
 
 			AuthService.signup($scope.signupForm.username, $scope.signupForm.password, $scope.signupForm.fname, $scope.signupForm.lname)
-				// handle success
 				.then(function() {
-					$scope.error = false;
 					$scope.success = true;
 					$scope.successMessage = "Successfully registered!";
-					$location.path('/profile');
-					$scope.signupForm = {};
+				}).then(function() {
+					AuthService.login($scope.signupForm.username, $scope.signupForm.password)
+						.then(function() {
+							$location.path('/profile');
+							$scope.signupForm = {};
+						});
 				})
-				// handle error
 				.catch(function() {
 					$scope.error = true;
 					$scope.errorMessage = "Invalid username and/or password";
@@ -279,8 +279,6 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cooki
 				$scope.fname = response[0].fname;
 				$scope.lname = response[0].lname;
 				$scope.admin = response[0].admin;
-			}).error(function(err) {
-				console.log("Error: " + err);
 			});
 
 		$scope.editUser = function(id, fname, lname) {
