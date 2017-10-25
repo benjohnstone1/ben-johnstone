@@ -85,7 +85,6 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
 
         function getUserStatus() {
             return $http.get('/profile')
-                // handle success
                 .success(function(data) {
                     if (data.status) {
                         user = true;
@@ -94,7 +93,6 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                         user = false;
                     }
                 })
-                // handle error
                 .error(function(data) {
                     user = false;
                 });
@@ -133,8 +131,6 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                 // handle success
                 .success(function(data, status) {
                     if (status === 200 && data.status) {
-                        console.log("deferred is" + JSON.stringify(deferred));
-                        // this is { promise: {} }
                         deferred.resolve();
                     }
                     else {

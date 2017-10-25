@@ -59,23 +59,24 @@ myApp.config(function($routeProvider) {
 });
 
 myApp.run(function($rootScope, $location, $route, AuthService) {
-  $rootScope.$on('$routeChangeStart',
-    function(event, next, current) {
-      AuthService.getUserStatus()
-        .then(function() {
-          try {
-            if (next.access.restricted && !AuthService.isLoggedIn()) {
-              $location.path('/login');
-              $route.reload();
+      $rootScope.$on('$routeChangeStart',
+          function(event, next, current) {
+            if (next && next.$$route && next.$$route.access.restricted) {
+              if (!AuthService.isLoggedIn()) {
+                $rootScope.$evalAsync(function() {
+                  $location.path('/login');
+                });
+              }
             }
-            else if (next.access.admin && !AuthService.isAdmin()) {
-              $location.path('/admin');
-              $route.reload();
+            if (next && next.$$route && next.$$route.access.admin) {
+              if (!AuthService.isAdmin()) {
+                $rootScope.$evalAsync(function() {
+                  $location.path('/admin');
+                });
+              }
             }
-          }
-          catch (e) {
-            // console.log(e);
-          }
-        });
     });
 });
+
+
+

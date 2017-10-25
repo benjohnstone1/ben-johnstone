@@ -75,7 +75,7 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 myApp.controller('usersController', ['$scope', '$http', 'UsersService',
 	function($scope, $http, UsersService) {
 		$scope.loading = true;
-		
+
 		UsersService.get()
 			.success(function(data) {
 				$scope.users = data;
@@ -120,7 +120,7 @@ myApp.controller('todosController', ['$scope', '$http', 'TodosService', '$locati
 	function($scope, $http, TodosService, $location) {
 		$scope.formData = {};
 		$scope.loading = true;
-	
+
 		TodosService.get()
 			.success(function(data) {
 				$scope.todos = data;
@@ -299,7 +299,10 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cooki
 			if (answer) {
 				AuthService.deleteUser(id)
 					.success(function(data) {
-						$location.path('/');
+						AuthService.logout()
+							.then(function() {
+								$location.path('/');
+							});
 					});
 			}
 		};

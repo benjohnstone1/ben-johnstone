@@ -11,6 +11,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // We're connected!
   console.log('We are connected to DB!');
-  console.log('Test Enivronment: https://express-crud-benjiforrest.c9users.io');
+  console.log('Test Enivronment: http://express-crud-benjiforrest.c9users.io');
 });
 
