@@ -137,7 +137,7 @@ router.delete('/profile/:_id', function(req, res) {
     var id = req.params._id;
     var User = mongoose.model('User');
     var Todo = mongoose.model('Todo');
-
+    
     // Find username corresponding to _id of user
     User.find({ _id: id }, function(err, user) {
         if (err) {

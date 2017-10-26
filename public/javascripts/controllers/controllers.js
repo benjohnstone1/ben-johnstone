@@ -72,8 +72,8 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 ]);
 
 //=======================  Users Controller ================================
-myApp.controller('usersController', ['$scope', '$http', 'UsersService',
-	function($scope, $http, UsersService) {
+myApp.controller('usersController', ['$scope', '$http', 'UsersService', 'AuthService',
+	function($scope, $http, UsersService, AuthService) {
 		$scope.loading = true;
 
 		UsersService.get()
@@ -81,6 +81,24 @@ myApp.controller('usersController', ['$scope', '$http', 'UsersService',
 				$scope.users = data;
 				$scope.loading = false;
 			});
+
+		$scope.deleteUser = function(id) {
+			var answer = confirm("Are you sure you want to delete this user?");
+			$scope.loading = true;
+			if (answer) {
+				AuthService.deleteUser(id)
+					.success(function(data) {
+						UsersService.get()
+						.success(function(data){
+							$scope.users = data;
+							$scope.loading = false;
+						});
+					});
+			}
+			else {
+				$scope.loading = false;
+			}
+		};
 	}
 ]);
 

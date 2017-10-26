@@ -19,14 +19,19 @@
         <li><a class="nav-item nav-link" href="/#/profile">Profile</a></li>
         <li><a class="nav-item nav-link" href="/#/todos">Todos</a></li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/#/users">Users</a></li>
-          <li><a href="#/accounts">Accounts</a></li>
-        </ul>
-      </li>
+          <ul class="dropdown-menu">
+            <li><a href="/#/users">Users</a></li>
+            <li><a href="#/accounts">Accounts</a></li>
+          </ul>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a class="nav-item nav-link" href="/#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login<span class="glyphicon glyphicon-log-in"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/#/login">Login</a></li>
+            <li><a href="#/signup">Signup</a></li>
+          </ul>
+        </li>
         <li ng-controller="logoutController"> <a class="nav-item nav-link" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
