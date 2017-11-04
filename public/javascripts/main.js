@@ -19,9 +19,17 @@ myApp.config(function($routeProvider) {
       templateUrl: '../partials/accounts.html',
       access: { restricted: true, admin: true }
     })
+    .when('/accounts/new', {
+      templateUrl: '../partials/accounts.new.html',
+      access: { restricted: true, admin: true }
+    })
     // the :accountID is now available to the controller
     .when('/accounts/edit/:accountID', {
       templateUrl: '../partials/accounts.edit.html',
+      access: { restricted: true, admin: true }
+    })
+    .when('/accounts/view/:accountID', {
+      templateUrl: '../partials/accounts.view.html',
       access: { restricted: true, admin: true }
     })
     .when('/todos', {
@@ -59,24 +67,26 @@ myApp.config(function($routeProvider) {
 });
 
 myApp.run(function($rootScope, $location, $route, AuthService) {
-      $rootScope.$on('$routeChangeStart',
-          function(event, next, current) {
-            if (next && next.$$route && next.$$route.access.restricted) {
-              if (!AuthService.isLoggedIn()) {
-                $rootScope.$evalAsync(function() {
-                  $location.path('/login');
-                });
-              }
-            }
-            if (next && next.$$route && next.$$route.access.admin) {
-              if (!AuthService.isAdmin()) {
-                $rootScope.$evalAsync(function() {
-                  $location.path('/admin');
-                });
-              }
-            }
+  $rootScope.$on('$routeChangeStart',
+    function(event, next, current) {
+      try {
+        if (next && next.$$route && next.$$route.access.restricted) {
+          if (!AuthService.isLoggedIn()) {
+            $rootScope.$evalAsync(function() {
+              $location.path('/login');
+            });
+          }
+        }
+        if (next && next.$$route && next.$$route.access.admin) {
+          if (!AuthService.isAdmin()) {
+            $rootScope.$evalAsync(function() {
+              $location.path('/admin');
+            });
+          }
+        }
+      }
+      catch (e) {
+        // if access access.restricted is undefined
+      }
     });
 });
-
-
-

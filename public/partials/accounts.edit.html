@@ -21,7 +21,7 @@
                     <input type="Int" name="paymentTerm" class="form-control input-lg text-center" ng-value="accounts.paymentTerm" ng-model="accounts.paymentTerm">
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg" ng-click="updateAccount(accounts._id)">Save</button>
-                <a href="/#/accounts" class="btn btn-default btn-lg">Cancel</a>
+                <a href="/#/accounts/view/{{accounts._id}}" class="btn btn-default btn-lg">Cancel</a>
             </form>
         </div>
     </div>

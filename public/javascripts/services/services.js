@@ -15,6 +15,9 @@ module.factory('AccountsService', ['$http',
             delete: function(id) {
                 return $http.delete('/accounts/' + id);
             },
+            deleteAccount: function(id) {
+                return $http.delete('/accounts/view/' + id);
+            },
             showEditPage: function(id) {
                 return $http.get('/accounts/edit/' + id);
             },

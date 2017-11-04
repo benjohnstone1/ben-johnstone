@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular, Chartist */
 //=======================   Init Application =================================
 var myApp = angular.module('myApp');
 
@@ -6,12 +6,33 @@ var myApp = angular.module('myApp');
 myApp.controller('homeController', ['$scope',
 	function($scope) {
 		$scope.welcome = 'Home... Welcome :)';
+		// Define charts
+		new Chartist.Line('#chart1', {
+			labels: [1, 2, 3, 4],
+			series: [
+				[100, 120, 180, 200]
+			]
+		}, {
+			width: 300,
+			height: 200
+		});
+
+		// Initialize a Line chart in the container with the ID chart2
+		new Chartist.Bar('#chart2', {
+			labels: [1, 2, 3, 4],
+			series: [
+				[5, 2, 8, 3]
+			]
+		}, {
+			width: 300,
+			height: 200
+		});
 	}
 ]);
 
 //=======================  Accounts Controller ================================
-myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
-	function($scope, $http, AccountsService) {
+myApp.controller('accountsController', ['$scope', '$http', '$location', 'AccountsService',
+	function($scope, $http, $location, AccountsService) {
 		$scope.formData = {};
 		$scope.loading = true;
 
@@ -31,6 +52,7 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 						$scope.loading = false;
 						$scope.formData = {}; // clear the form so our user is ready to enter another
 						$scope.accounts = data; // assign our new list of accounts
+						$location.path('/accounts');
 					});
 			}
 		};
@@ -59,46 +81,6 @@ myApp.controller('accountsController', ['$scope', '$http', 'AccountsService',
 					$scope.accounts = data;
 				});
 		};
-		// UPDATE ==================================================================
-		$scope.updateAccount = function(id) {
-			$scope.loading = true;
-			AccountsService.put(id, $scope.editAccountData)
-				.success(function(data) {
-					$scope.loading = false;
-					$scope.accounts = data;
-				});
-		};
-	}
-]);
-
-//=======================  Users Controller ================================
-myApp.controller('usersController', ['$scope', '$http', 'UsersService', 'AuthService',
-	function($scope, $http, UsersService, AuthService) {
-		$scope.loading = true;
-
-		UsersService.get()
-			.success(function(data) {
-				$scope.users = data;
-				$scope.loading = false;
-			});
-
-		$scope.deleteUser = function(id) {
-			var answer = confirm("Are you sure you want to delete this user?");
-			$scope.loading = true;
-			if (answer) {
-				AuthService.deleteUser(id)
-					.success(function(data) {
-						UsersService.get()
-						.success(function(data){
-							$scope.users = data;
-							$scope.loading = false;
-						});
-					});
-			}
-			else {
-				$scope.loading = false;
-			}
-		};
 	}
 ]);
 
@@ -123,12 +105,90 @@ myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', '
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.accounts = data;
-					$location.path('/accounts');
+					$location.path('/accounts/view/'+accountID);
 				})
 				.error(function() {
 					$scope.loading = false;
 					alert("Error - Couldn't Save Update");
 				});
+		};
+	}
+]);
+
+//=======================  View Accounts Controller ================================
+
+myApp.controller('viewAccountsController', ['$scope', '$http', '$routeParams', '$location', 'AccountsService',
+	function($scope, $http, $routeParams, $location, AccountsService) {
+
+		$scope.editAccountData = {};
+		$scope.loading = true;
+		var accountID = $routeParams.accountID;
+
+		// GET Edit Page ===================================================
+		AccountsService.showEditPage(accountID)
+			.success(function(data) {
+				$scope.accounts = data[0];
+				$scope.loading = false;
+			});
+
+		// Show Edit Account Page ==================================================
+		$scope.showEditPage = function(id) {
+			$scope.loading = true;
+
+			AccountsService.showEditPage(id)
+				.success(function(data) {
+					$scope.loading = false;
+					$scope.accounts = data;
+				});
+		};
+		
+			// DELETE ==================================================================
+		$scope.deleteAccount = function(id) {
+			$scope.loading = true;
+			var answer = confirm("Are you sure you want to delete this account?");
+			if (answer) {
+				AccountsService.deleteAccount(id)
+					.success(function(data) {
+						$scope.loading = false;
+						$scope.accounts = data;
+						$location.path('/accounts/');
+					});
+			}
+			else {
+				$scope.loading = false;
+			}
+		};
+
+	}
+]);
+
+//=======================  Users Controller ================================
+myApp.controller('usersController', ['$scope', '$http', 'UsersService', 'AuthService',
+	function($scope, $http, UsersService, AuthService) {
+		$scope.loading = true;
+
+		UsersService.get()
+			.success(function(data) {
+				$scope.users = data;
+				$scope.loading = false;
+			});
+
+		$scope.deleteUser = function(id) {
+			var answer = confirm("Are you sure you want to delete this user?");
+			$scope.loading = true;
+			if (answer) {
+				AuthService.deleteUser(id)
+					.success(function(data) {
+						UsersService.get()
+							.success(function(data) {
+								$scope.users = data;
+								$scope.loading = false;
+							});
+					});
+			}
+			else {
+				$scope.loading = false;
+			}
 		};
 	}
 ]);

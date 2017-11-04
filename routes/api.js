@@ -273,6 +273,18 @@ router.delete('/accounts/:account_id', function(req, res) {
     });
 });
 
+router.delete('/accounts/view/:account_id', function(req, res) {
+    Account.remove({
+        _id: req.params.account_id
+    }, function(err, account) {
+        if (err) {
+            res.send(err);
+        }
+        getAccounts(res);
+    });
+});
+
+
 //=======================  Todos Routes =================================
 
 require('../model/todo');

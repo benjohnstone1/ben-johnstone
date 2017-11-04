@@ -1,0 +1,23 @@
+<div ng-controller="accountsController" ng-cloak class="{{ bodyClass }}">
+    <div class="jumbotron">
+        <h1> Add Accounts - <span class="label label-info"> {{ accounts.length }} </span></h1>
+    </div>
+    <h3 class="text-center" >Create New Account (+)</h3>
+    <div id="account-form" class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+                <div class="form-group">
+
+                    <!--BIND THIS VALUE TO formData.name & formData.currency IN ANGULAR -->
+                    <input type="text" name="name" class="form-control input-lg text-center" placeholder="Account Name" ng-model="formData.name">
+                    <input type="text" name="currency" class="form-control input-lg text-center" placeholder="Enter Currency" ng-model="formData.currency">
+                    <input type="Boolean" name="active" class="form-control input-lg text-center" placeholder="Active?" ng-model="formData.active">
+                    <input type="Number" name="paymentTerm" class="form-control input-lg text-center" placeholder="Payment Term" ng-model="formData.paymentTerm">
+                </div>
+                <!--createAccount() WILL CREATE NEW Account -->
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createAccount()">Add</button>
+                <a href="/#/accounts/" class="btn btn-default btn-lg">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

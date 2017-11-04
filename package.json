@@ -16,6 +16,7 @@
     "express-session": "~1.0.0",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.0.1",
+    "karma-phantomjs-launcher": "^1.0.4",
     "method-override": "^2.3.9",
     "mongoose": "^4.11.6",
     "morgan": "~1.8.1",
@@ -25,9 +26,17 @@
     "passport-local": "~0.1.6",
     "passport-local-mongoose": "^1.0.0",
     "passport-twitter": "~1.0.2",
+    "phantomjs": "^2.1.7",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "angular": "^1.6.6",
+    "angular-mocks": "^1.6.6",
+    "angular-ui-router": "^0.4.3",
+    "jasmine-core": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-spec-reporter": "0.0.31"
   }
 }

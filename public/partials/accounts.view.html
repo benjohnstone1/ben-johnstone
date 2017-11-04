@@ -1,0 +1,45 @@
+<div ng-controller="viewAccountsController" ng-cloak class="{{ bodyClass }}">
+    <div class="jumbotron">
+        <h1> View Account - <span class="label label-info"> {{ accounts.name }} </span></h1>
+    </div>
+    <p class="text-center" ng-show="loading">
+        <span class="fa fa-spinner fa-spin fa-3x"></span>
+    </p>
+    <div id="account-info" class="row" style="padding-bottom: 10px">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="table-responsive">
+            <tr>
+                <td>
+                        <p class="label label-default">Account Information</p>
+                </td>
+                    <span style="float: right">
+            <td><a ng-href="/#/accounts/"class="btn btn-default">View All Accounts</a> </td>
+            <td><a ng-href="/#/accounts/edit/{{accounts._id}}" class="btn btn-primary">Edit</a></td>
+            <td><button class="btn btn-danger" ng-click="deleteAccount(accounts._id)">Delete</button></td>
+            </span>
+                </tr>
+            </div>
+            <p> <label> Account Name: </label> {{ accounts.name }} </p>
+            <p> <label> Currency: </label> {{ accounts.currency }} </p>
+            <p> <label> Active: </label> {{ accounts.active }}</p>
+            <p> <label> Payment Terms: </label> {{ accounts.paymentTerm }}</p>
+            <p> <label> Account Id: </label> {{ accounts._id }}</p>
+
+        </div>
+    </div>
+    <div id="subscription-info" class="row" style="padding-bottom: 10px">
+        <div class="col-sm-6 col-sm-offset-3">
+            <tr>
+                <h1 class="label label-default">Subscription Information</h1>
+            </tr>
+        </div>
+    </div>
+
+    <div id="invoice-info" class="row" style="padding-bottom: 10px">
+        <div class="col-sm-6 col-sm-offset-3">
+            <tr>
+                <h1 class="label label-default">Invoice Information</h1>
+            </tr>
+        </div>
+    </div>
+</div>
