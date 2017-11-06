@@ -88,5 +88,5 @@ myApp.run(function($rootScope, $location, $route, AuthService) {
       catch (e) {
         // if access access.restricted is undefined
       }
-    });
+    }); 
 });

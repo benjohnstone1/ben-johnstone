@@ -2,13 +2,12 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
+var nodemailer = require('nodemailer');
 
 //=======================  Home Routes =================================
-
 router.get('/', function(req, res, next) {
     res.render('index');
 });
-
 //=======================  Login Routes =================================
 
 router.post('/login', function(req, res, next) {
@@ -38,11 +37,41 @@ router.post('/login', function(req, res, next) {
 
 //=======================  Signup Routes =================================
 
+function sendEmail(username, fName, lName){
+    var fullName = fName+' '+lName;
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'benji.forrest@gmail.com',
+            pass: 'Rosinka1108'
+        }
+    });
+    var mailOptions = {
+        from: 'benji.forrest@gmail.com',
+        to: 'benji.forrest@gmail.com',
+        subject: 'New User Signup!',
+        html: '<p>A new user has signed up at <a href="http://ben-johnstone.herokuapp.com/">http://ben-johnstone.herokuapp.com</a></p><p>Username: '+username+'</p><p>Name: '+fullName
+    };
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.log(error);
+           
+        }
+        else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
 router.post('/signup', function(req, res, next) {
+    var username = req.body.username;
+    var fname = req.body.fname;
+    var lname = req.body.lname;
+    
     User.register(new User({
-            username: req.body.username,
-            fname: req.body.fname,
-            lname: req.body.lname
+            username: username,
+            fname: fname,
+            lname: lname
         }),
         req.body.password,
         function(err, user) {
@@ -51,6 +80,8 @@ router.post('/signup', function(req, res, next) {
                     err: err
                 });
             }
+            // Send signup email so I know who has registered
+            sendEmail(username, fname, lname);
             passport.authenticate('local')(req, res, function() {
                 return res.status(200).json({
                     status: 'Registration successful!'
@@ -137,7 +168,7 @@ router.delete('/profile/:_id', function(req, res) {
     var id = req.params._id;
     var User = mongoose.model('User');
     var Todo = mongoose.model('Todo');
-    
+
     // Find username corresponding to _id of user
     User.find({ _id: id }, function(err, user) {
         if (err) {
@@ -164,9 +195,9 @@ router.delete('/profile/:_id', function(req, res) {
 require('../model/user');
 var User = mongoose.model('User');
 
-router.get('/users', function(req,res,next){
-    User.find({}, function(err, users){
-        if(err){
+router.get('/users', function(req, res, next) {
+    User.find({}, function(err, users) {
+        if (err) {
             res.send(err);
         }
         res.json(users);
@@ -291,7 +322,7 @@ require('../model/todo');
 var Todo = mongoose.model('Todo');
 
 function getTodos(res, user) {
-    Todo.find({ user_id: user}, function(err, todos) {
+    Todo.find({ user_id: user }, function(err, todos) {
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
             res.send(err);

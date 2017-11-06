@@ -3,8 +3,8 @@
 var myApp = angular.module('myApp');
 
 //=======================  Home Controller =================================
-myApp.controller('homeController', ['$scope',
-	function($scope) {
+myApp.controller('homeController', ['$scope', '$http',
+	function($scope, $http) {
 		$scope.welcome = 'Home... Welcome :)';
 		// Define charts
 		new Chartist.Line('#chart1', {
@@ -105,7 +105,7 @@ myApp.controller('editAccountsController', ['$scope', '$http', '$routeParams', '
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.accounts = data;
-					$location.path('/accounts/view/'+accountID);
+					$location.path('/accounts/view/' + accountID);
 				})
 				.error(function() {
 					$scope.loading = false;
@@ -141,8 +141,8 @@ myApp.controller('viewAccountsController', ['$scope', '$http', '$routeParams', '
 					$scope.accounts = data;
 				});
 		};
-		
-			// DELETE ==================================================================
+
+		// DELETE ==================================================================
 		$scope.deleteAccount = function(id) {
 			$scope.loading = true;
 			var answer = confirm("Are you sure you want to delete this account?");
@@ -323,7 +323,6 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 			// initial values
 			$scope.error = false;
 			$scope.success = false;
-
 			AuthService.signup($scope.signupForm.username, $scope.signupForm.password, $scope.signupForm.fname, $scope.signupForm.lname)
 				.then(function() {
 					$scope.success = true;
@@ -340,7 +339,6 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 					$scope.errorMessage = "Invalid username and/or password";
 					$scope.signupForm = {};
 				});
-
 		};
 	}
 ]);

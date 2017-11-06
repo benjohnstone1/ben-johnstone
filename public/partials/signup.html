@@ -10,7 +10,7 @@
                 {{ successMessage }}
             </div>
             <!-- SIGNUP FORM -->
-            <form ng-submit="signup()">
+            <form>
                 <div class="form-group">
                     <label>First Name</label>
                     <input type="text" class="form-control" name="fname" placeholder='First Name' ng-model='signupForm.fname'>
@@ -27,7 +27,7 @@
                     <label>Password</label>
                     <input type="password" class="form-control" name="password" placeholder='Password' ng-model='signupForm.password'>
                 </div>
-                <button ng-click="signup()" class="btn btn-warning btn-lg">Signup</button>
+                <button type="submit" ng-click="signup()" class="btn btn-warning btn-lg">Signup</button>
             </form>
 
             <hr>
