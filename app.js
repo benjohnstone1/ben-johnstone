@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 // Passport ===================================================================
 app.use(require('express-session')({
-    secret: 'keyboard cat',
+    secret: '41C34UEgoWbzN5YziGfg',
     resave: false,
     saveUninitialized: false
 }));

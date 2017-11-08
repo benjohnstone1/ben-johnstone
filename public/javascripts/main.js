@@ -17,20 +17,24 @@ myApp.config(function($routeProvider) {
     })
     .when('/accounts', {
       templateUrl: '../partials/accounts.html',
-      access: { restricted: true, admin: true }
+      access: { restricted: false, admin: false }
     })
     .when('/accounts/new', {
       templateUrl: '../partials/accounts.new.html',
-      access: { restricted: true, admin: true }
+      access: { restricted: false, admin: false }
     })
     // the :accountID is now available to the controller
     .when('/accounts/edit/:accountID', {
       templateUrl: '../partials/accounts.edit.html',
-      access: { restricted: true, admin: true }
+      access: { restricted: false, admin: false }
     })
     .when('/accounts/view/:accountID', {
       templateUrl: '../partials/accounts.view.html',
-      access: { restricted: true, admin: true }
+      access: { restricted: false, admin: false }
+    })
+    .when('/analytics', {
+      templateUrl: '../partials/analytics.html',
+      access: { restricted: false, admin: false }
     })
     .when('/todos', {
       templateUrl: '../partials/todos.html',

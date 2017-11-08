@@ -1,21 +1,23 @@
 <div ng-controller="usersController" ng-cloak class="{{ bodyClass }}">
     <div class="jumbotron">
-        <h1> Users Page - <span class="label label-info"> {{ users.length }} </span></h1>
+        <div class="row text-center text-white">
+            <h1> Users - <span class="label label-info"> {{ users.length }} </span></h1>
+        </div>
     </div>
     <div id="user-list" class="row">
         <div class="col-sm-10 col-sm-offset-1 text-center">
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <thead>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                        <th>Id</th>
-                        <th>Admin</th>
-                        <th>Edit</th>
-                        <th>Delete?</th>
+                        <th style="text-align: center">First Name</th>
+                        <th style="text-align: center">Last Name</th>
+                        <th style="text-align: center">Username</th>
+                        <th style="text-align: center">Id</th>
+                        <th style="text-align: center">Admin</th>
+                        <th style="text-align: center">Edit</th>
+                        <th style="text-align: center">Delete?</th>
                     </thead>
-                    <tbody ng-if="!loading" >
+                    <tbody ng-if="!loading">
                         <tr ng-repeat="user in users">
                             <td>{{ user.fname }}</td>
                             <td>{{ user.lname }}</td>

@@ -1,7 +1,7 @@
-<div ng-controller="accountsController" ng-cloak class="{{ bodyClass }}">
+<div ng-controller="analyticsController" ng-cloak class="{{ bodyClass }}">
     <div class="jumbotron">
         <div class="row text-center text-white">
-            <h1> Accounts </h1>
+            <h1> Analytics </h1>
         </div>
     </div>
     <div id="account-list" class="row">
@@ -33,6 +33,7 @@
                 <span class="fa fa-spinner fa-spin fa-3x"></span>
             </p>
             <a href="/#/accounts/new/" class="btn btn-default btn-lg">Create New Account (+)</a>
+            <div class="ct-chart" id="paymentTermsChart"></div>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@ var myApp = angular.module('myApp');
 //=======================  Home Controller =================================
 myApp.controller('homeController', ['$scope', '$http',
 	function($scope, $http) {
-		$scope.welcome = 'Home... Welcome :)';
+		$scope.welcome = 'Welcome';
 		// Define charts
 		new Chartist.Line('#chart1', {
 			labels: [1, 2, 3, 4],
@@ -27,6 +27,100 @@ myApp.controller('homeController', ['$scope', '$http',
 			width: 300,
 			height: 200
 		});
+	}
+]);
+
+//=======================  Analytics Controller ================================
+myApp.controller('analyticsController', ['$scope', '$http', '$location', 'AccountsService',
+	function($scope, $http, $location, AccountsService) {
+		$scope.formData = {};
+		$scope.loading = true;
+
+		function paymentTermSeries(callback) {
+			// GET ===================================================
+			AccountsService.get()
+				.success(function(data) {
+					$scope.accounts = data;
+					callback(data);
+					$scope.loading = false;
+				});
+		}
+		paymentTermSeries(function(data) {
+			var p1 = 0;
+			var p2 = 0;
+			var p3 = 0;
+			for (var i = 0; i < data.length; i++) {
+				switch (data[i].paymentTerm) {
+					case 30:
+						p1 +=1;
+						break;
+					case 60:
+						p2 +=1;
+						break;
+					case 90:
+						p3+=1;
+						break;
+					default:
+					console.log("Undefined payment term");
+			}
+			}
+			var chartData = {
+			labels: ['30 Days', '60 Days', '90 Days'],
+			series: [p1,p2,p3]
+		};
+
+		var options = {
+			width: 400,
+			height: 300,
+			donut: true,
+			donutWidth: 50,
+			donutSolid: true,
+			startAngle: 90,
+			showLabel: true
+		};
+
+		new Chartist.Pie('#paymentTermsChart', chartData, options);
+			
+		});
+		
+		// CREATE ==================================================================
+		$scope.createAccount = function() {
+			if ($scope.formData.name != undefined) {
+				$scope.loading = true;
+				AccountsService.create($scope.formData)
+					.success(function(data) {
+						$scope.loading = false;
+						$scope.formData = {}; // clear the form so our user is ready to enter another
+						$scope.accounts = data; // assign our new list of accounts
+						$location.path('/accounts');
+					});
+			}
+		};
+		// DELETE ==================================================================
+		$scope.deleteAccount = function(id) {
+			$scope.loading = true;
+			var answer = confirm("Are you sure you want to delete this account?");
+			if (answer) {
+				AccountsService.delete(id)
+					.success(function(data) {
+						$scope.loading = false;
+						$scope.accounts = data; // assign our new list of todos
+					});
+			}
+			else {
+				$scope.loading = false;
+			}
+		};
+		// Show Edit Account Page ==================================================
+		$scope.showEditPage = function(id) {
+			$scope.loading = true;
+
+			AccountsService.showEditPage(id)
+				.success(function(data) {
+					$scope.loading = false;
+					$scope.accounts = data;
+				});
+		};
 	}
 ]);
 
