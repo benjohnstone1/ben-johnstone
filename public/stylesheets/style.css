@@ -10,6 +10,49 @@ a {
   color: #00B7FF;
 }
 
+/* navbar */
+.navbar-custom {
+      background-color: #10528F;
+    /*background-color: #0F5CA3;*/
+    border-color: #E7E7E7;
+    border-radius:0;
+}
+
+.navbar-custom .navbar-nav > li > ul > li > a,
+.navbar-custom .navbar-nav > li > a {
+    color:#fff;
+    background-color: #10528F;
+}
+
+.navbar-custom .navbar-nav > .active > a {
+    color: #ffffff;
+    background-color:transparent;
+}
+
+.navbar-custom .navbar-nav > li > ul > li > a:hover,
+.navbar-custom .navbar-nav > li > ul > li > a:focus,
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus,
+.navbar-custom .navbar-nav > .open >a {
+    text-decoration: none;
+    background-color: #3498db;
+}
+
+.navbar-custom .navbar-brand {
+    color:#eeeeee;
+}
+.navbar-custom .navbar-toggle {
+    background-color:#eeeeee;
+}
+.navbar-custom .icon-bar {
+    /*background-color:#33aa33;*/
+        background-color:#3498db;
+    
+    
+}
+
 .jumbotron {
     margin-top: 0px;
     background-image: url(../images/banner_image.jpg);
