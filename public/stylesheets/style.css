@@ -24,8 +24,8 @@ a {
 }
 
 .image-cropper {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     position: relative;
     overflow: hidden;
     border-radius: 50%;
