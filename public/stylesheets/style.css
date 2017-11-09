@@ -2,6 +2,7 @@
     display:none;
   }
 body {
+  padding-top: 75px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -10,7 +11,7 @@ a {
 }
 
 .jumbotron {
-    margin-bottom: 0px;
+    margin-top: 0px;
     background-image: url(../images/banner_image.jpg);
     background-position: 0% 25%;
     background-size: cover;

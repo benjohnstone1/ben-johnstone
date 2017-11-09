@@ -1,18 +1,13 @@
 <div ng-controller="editAccountsController" ng-cloak class="{{ bodyClass }}">
-    <div class="jumbotron">
-        <h1> Edit Account - <span class="label label-info"> {{ accounts.name }} </span></h1>
-    </div>
-
     <p class="text-center" ng-show="loading">
         <span class="fa fa-spinner fa-spin fa-3x"></span>
     </p>
-
     <div id="account-form" class="row">
         <div class="col-sm-8 col-sm-offset-2 text-center">
             <form>
                 <div class="form-group">
                     <label> Account Name: </label>
-                    <input type="text" name="name" class="form-control input-lg text-center"  ng-value="accounts.name" ng-model="accounts.name">
+                    <input type="text" name="name" class="form-control input-lg text-center" ng-value="accounts.name" ng-model="accounts.name">
                     <label> Currency: </label>
                     <input type="text" name="currency" class="form-control input-lg text-center" ng-value="accounts.currency" ng-model="accounts.currency">
                     <label> Active: </label>

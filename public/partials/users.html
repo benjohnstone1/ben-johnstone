@@ -1,38 +1,43 @@
 <div ng-controller="usersController" ng-cloak class="{{ bodyClass }}">
-    <div class="jumbotron">
-        <div class="row text-center text-white">
-            <h1> Users - <span class="label label-info"> {{ users.length }} </span></h1>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row text-center text-white">
+                <h1> Users </h1>
+            </div>
         </div>
     </div>
-    <div id="user-list" class="row">
-        <div class="col-sm-10 col-sm-offset-1 text-center">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <th style="text-align: center">First Name</th>
-                        <th style="text-align: center">Last Name</th>
-                        <th style="text-align: center">Username</th>
-                        <th style="text-align: center">Id</th>
-                        <th style="text-align: center">Admin</th>
-                        <th style="text-align: center">Edit</th>
-                        <th style="text-align: center">Delete?</th>
-                    </thead>
-                    <tbody ng-if="!loading">
-                        <tr ng-repeat="user in users">
-                            <td>{{ user.fname }}</td>
-                            <td>{{ user.lname }}</td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user._id }}</td>
-                            <td>{{ user.admin }}</td>
-                            <td><a ng-href="#" class="btn btn-primary">Edit</a></td>
-                            <td><button class="btn btn-danger" ng-click="deleteUser(user._id)">Delete</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="container">
+        <div id="user-list" class="row">
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <th style="text-align: center">First Name</th>
+                            <th style="text-align: center">Last Name</th>
+                            <th style="text-align: center">Username</th>
+                            <th style="text-align: center">Id</th>
+                            <th style="text-align: center">Admin</th>
+                            <th style="text-align: center">Edit</th>
+                            <th style="text-align: center">Delete?</th>
+                        </thead>
+                        <tbody ng-if="!loading">
+                            <tr ng-repeat="user in users">
+                                <td>{{ user.fname }}</td>
+                                <td>{{ user.lname }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user._id }}</td>
+                                <td>{{ user.admin }}</td>
+                                <td><a ng-href="#" class="btn btn-primary">Edit</a></td>
+                                <td><button class="btn btn-danger" ng-click="deleteUser(user._id)">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center" ng-show="loading">
+                    <span class="fa fa-spinner fa-spin fa-3x"></span>
+                </p>
             </div>
-            <p class="text-center" ng-show="loading">
-                <span class="fa fa-spinner fa-spin fa-3x"></span>
-            </p>
         </div>
+
     </div>
 </div>

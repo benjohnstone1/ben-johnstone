@@ -1,39 +1,43 @@
 <div ng-controller="analyticsController" ng-cloak class="{{ bodyClass }}">
-    <div class="jumbotron">
-        <div class="row text-center text-white">
-            <h1> Analytics </h1>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row text-center text-white">
+                <h1> Analytics </h1>
+            </div>
         </div>
     </div>
-    <div id="account-list" class="row">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
-            <!--LOOP OVER THE Accounts IN $scope.accounts -->
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <th style="text-align: center">Account Name</th>
-                        <th style="text-align: center">Currency</th>
-                        <th style="text-align: center">Active</th>
-                        <th style="text-align: center">Payment Term</th>
-                        <th style="text-align: center">View</th>
-                        <th style="text-align: center">Delete?</th>
-                    </thead>
-                    <tbody ng-if="!loading">
-                        <tr ng-repeat="account in accounts">
-                            <td>{{ account.name }}</td>
-                            <td>{{ account.currency }}</td>
-                            <td>{{ account.active }}</td>
-                            <td>{{ account.paymentTerm }}</td>
-                            <td><a ng-href="/#/accounts/view/{{account._id}}" class="btn btn-primary">View</a></td>
-                            <td><button class="btn btn-danger" ng-click="deleteAccount(account._id)">Delete</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="container">
+        <div id="account-list" class="row">
+            <div class="col-sm-12 col-sm-offset-0 text-center">
+                <!--LOOP OVER THE Accounts IN $scope.accounts -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <th style="text-align: center">Account Name</th>
+                            <th style="text-align: center">Currency</th>
+                            <th style="text-align: center">Active</th>
+                            <th style="text-align: center">Payment Term</th>
+                            <th style="text-align: center">View</th>
+                            <th style="text-align: center">Delete?</th>
+                        </thead>
+                        <tbody ng-if="!loading">
+                            <tr ng-repeat="account in accounts">
+                                <td>{{ account.name }}</td>
+                                <td>{{ account.currency }}</td>
+                                <td>{{ account.active }}</td>
+                                <td>{{ account.paymentTerm }}</td>
+                                <td><a ng-href="/#/accounts/view/{{account._id}}" class="btn btn-primary">View</a></td>
+                                <td><button class="btn btn-danger" ng-click="deleteAccount(account._id)">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center" ng-show="loading">
+                    <span class="fa fa-spinner fa-spin fa-3x"></span>
+                </p>
+                <a href="/#/accounts/new/" class="btn btn-default btn-lg">Create New Account (+)</a>
+                <div class="ct-chart center-block" id="paymentTermsChart"></div>
             </div>
-            <p class="text-center" ng-show="loading">
-                <span class="fa fa-spinner fa-spin fa-3x"></span>
-            </p>
-            <a href="/#/accounts/new/" class="btn btn-default btn-lg">Create New Account (+)</a>
-            <div class="ct-chart" id="paymentTermsChart"></div>
         </div>
     </div>
 </div>

@@ -32,22 +32,6 @@ module.exports = {
 
 */
 
-function setup (ssl) {
-   if (ssl && ssl.active) {
-      return {
-         key  : fs.readFileSync(ssl.key),
-         cert : fs.readFileSync(ssl.certificate)
-      };
-   }
-}
-
-function start (app, options) {
-   if (options)
-      return require('https').createServer(options, app);
-
-   return require('http').createServer(app);
-}
-
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
