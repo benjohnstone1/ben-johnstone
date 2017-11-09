@@ -74,6 +74,13 @@ a {
     border-radius: 50%;
 }
 
+.company-logo {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+}
+
 img {
     margin: 0 auto;
     height: 100%;
