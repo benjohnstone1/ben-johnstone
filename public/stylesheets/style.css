@@ -59,7 +59,6 @@ a {
     background-position: 0% 25%;
     background-size: cover;
     background-repeat: no-repeat;
-    
 }
 
 .text-white {
@@ -75,8 +74,9 @@ a {
 }
 
 .company-logo {
-    width: 100px;
-    height: 100px;
+    /*width: 100px;*/
+    height: 75px;
+    display: inline-block;
     position: relative;
     overflow: hidden;
 }
