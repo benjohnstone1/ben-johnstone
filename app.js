@@ -36,6 +36,21 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
+// set environment variables
+var env = app.get('env') || 'development';
+
+// Handle environments
+if (env == 'production') {
+  app.all('*', ensureSecure);
+}
+
+function ensureSecure(req, res, next) {
+    if (req.headers["x-forwarded-proto"] === "https") {
+        return next();
+    }
+    res.redirect('https://' + req.hostname + req.url);
+}
+
 // Passport config
 var User = require('./model/user');
 passport.use(new LocalStrategy(User.authenticate()));
@@ -61,13 +76,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-app.use(function(req, res, next) {
-  if(!req.secure) {
-    return res.redirect(['https://', req.get('Host'), req.url].join(''));
-  }
-  next();
 });
 
 module.exports = app;

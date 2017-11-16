@@ -4,6 +4,14 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var nodemailer = require('nodemailer');
 
+// router.all('*', ensureSecure); // at top of routing calls
+// function ensureSecure(req, res, next) {
+//     if (req.headers["x-forwarded-proto"] === "https") {
+//         return next();
+//     }
+//     res.redirect('https://' + req.hostname + req.url);
+// }
+
 //=======================  Home Routes =================================
 router.get('/', function(req, res, next) {
     res.render('index');
@@ -37,8 +45,8 @@ router.post('/login', function(req, res, next) {
 
 //=======================  Signup Routes =================================
 
-function sendEmail(username, fName, lName){
-    var fullName = fName+' '+lName;
+function sendEmail(username, fName, lName) {
+    var fullName = fName + ' ' + lName;
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -50,12 +58,12 @@ function sendEmail(username, fName, lName){
         from: 'benji.forrest@gmail.com',
         to: 'benji.forrest@gmail.com',
         subject: 'New User Signup!',
-        html: '<p>A new user has signed up at <a href="http://ben-johnstone.herokuapp.com/">http://ben-johnstone.herokuapp.com</a></p><p>Username: '+username+'</p><p>Name: '+fullName
+        html: '<p>A new user has signed up at <a href="http://ben-johnstone.herokuapp.com/">http://ben-johnstone.herokuapp.com</a></p><p>Username: ' + username + '</p><p>Name: ' + fullName
     };
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
             console.log(error);
-           
+
         }
         else {
             console.log('Email sent: ' + info.response);
@@ -67,7 +75,7 @@ router.post('/signup', function(req, res, next) {
     var username = req.body.username;
     var fname = req.body.fname;
     var lname = req.body.lname;
-    
+
     User.register(new User({
             username: username,
             fname: fname,
