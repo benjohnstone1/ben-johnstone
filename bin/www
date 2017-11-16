@@ -7,14 +7,19 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-app.use(function(req, res, next) {
-  if(!req.secure) {
-    return res.redirect(['https://', req.get('Host'), req.url].join(''));
-  }
-  next();
-});
+// app.use(function(req, res, next) {
+//   if(!req.secure) {
+//     return res.redirect(['https://', req.get('Host'), req.url].join(''));
+//   }
+//   next();
+// });
 
 var server = http.createServer(app);
+
+// set up a route to redirect http to https
+http.get('*',function(req,res){  
+    res.redirect('https://ben-johnstone.herokuapp.com'+req.url);
+});
 
 server.listen(port);
 server.on('error', onError);
