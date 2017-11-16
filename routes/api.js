@@ -5,7 +5,8 @@ var passport = require('passport');
 var nodemailer = require('nodemailer');
 
 //=======================  Home Routes =================================
-router.get('/', function(req, res, next) {
+
+router.all('/*', function(req, res, next) {
     res.render('index');
 });
 //=======================  Login Routes =================================
