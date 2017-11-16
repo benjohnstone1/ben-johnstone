@@ -4,14 +4,6 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var nodemailer = require('nodemailer');
 
-// router.all('*', ensureSecure); // at top of routing calls
-// function ensureSecure(req, res, next) {
-//     if (req.headers["x-forwarded-proto"] === "https") {
-//         return next();
-//     }
-//     res.redirect('https://' + req.hostname + req.url);
-// }
-
 //=======================  Home Routes =================================
 router.get('/', function(req, res, next) {
     res.render('index');

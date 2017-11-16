@@ -34,7 +34,6 @@ app.use(passport.session());
 var routes = require('./routes/api');
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
 
 // set environment variables
 var env = app.get('env') || 'development';
@@ -44,12 +43,15 @@ if (env == 'production') {
   app.all('*', ensureSecure);
 }
 
+// Redirect all HTTP traffic to HTTPS
 function ensureSecure(req, res, next) {
     if (req.headers["x-forwarded-proto"] === "https") {
         return next();
     }
     res.redirect('https://' + req.hostname + req.url);
 }
+
+app.use('/', routes);
 
 // Passport config
 var User = require('./model/user');
