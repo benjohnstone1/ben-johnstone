@@ -63,4 +63,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.use(function(req, res, next) {
+  if(!req.secure) {
+    return res.redirect(['https://', req.get('Host'), req.url].join(''));
+  }
+  next();
+});
+
 module.exports = app;
