@@ -6,27 +6,6 @@ var myApp = angular.module('myApp');
 myApp.controller('homeController', ['$scope', '$http',
 	function($scope, $http) {
 		$scope.welcome = 'Welcome';
-		// Define charts
-		new Chartist.Line('#chart1', {
-			labels: [1, 2, 3, 4],
-			series: [
-				[100, 120, 180, 200]
-			]
-		}, {
-			width: 300,
-			height: 200
-		});
-
-		// Initialize a Line chart in the container with the ID chart2
-		new Chartist.Bar('#chart2', {
-			labels: [1, 2, 3, 4],
-			series: [
-				[5, 2, 8, 3]
-			]
-		}, {
-			width: 300,
-			height: 200
-		});
 	}
 ]);
 
