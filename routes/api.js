@@ -43,8 +43,8 @@ function sendEmail(username, fName, lName) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'benji.forrest@gmail.com',
-            pass: 'Rosinka1108'
+            user: 'ENTER USERNAME HERE',
+            pass: 'ENTER PASSWORD HERE'
         }
     });
     var mailOptions = {
@@ -82,7 +82,7 @@ router.post('/signup', function(req, res, next) {
                 });
             }
             // Send signup email so I know who has registered
-            sendEmail(username, fname, lname);
+            // sendEmail(username, fname, lname);
             passport.authenticate('local')(req, res, function() {
                 return res.status(200).json({
                     status: 'Registration successful!'
