@@ -9,7 +9,7 @@ myApp.config(function($routeProvider) {
     })
     .when('/admin', {
       templateUrl: '../partials/admin.html',
-      access: { restricted: true, admin: false }
+      access: { restricted: false, admin: false }
     })
     .when('/users', {
       templateUrl: '../partials/users.html',
