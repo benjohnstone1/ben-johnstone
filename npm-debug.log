@@ -26,7 +26,7 @@
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:230:5)
 15 verbose pkgid nodewebapp@0.0.0
 16 verbose cwd /home/ubuntu/workspace/nodewebapp
-17 error Linux 4.9.17-c9
+17 error Linux 4.9.80-c9
 18 error argv "/home/ubuntu/.nvm/versions/node/v6.11.5/bin/node" "/home/ubuntu/.nvm/versions/node/v6.11.5/bin/npm" "start"
 19 error node v6.11.5
 20 error npm  v3.10.10

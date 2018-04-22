@@ -1,56 +1,60 @@
 .ng-cloak {
-    display:none;
-  }
+    display: none;
+}
+
 body {
-  padding-top: 75px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding-top: 75px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 /* navbar */
+
 .navbar-custom {
-      background-color: #10528F;
+    background-color: #10528F;
     /*background-color: #0F5CA3;*/
     border-color: #E7E7E7;
-    border-radius:0;
+    border-radius: 0;
 }
 
-.navbar-custom .navbar-nav > li > ul > li > a,
-.navbar-custom .navbar-nav > li > a {
-    color:#fff;
+.navbar-custom .navbar-nav>li>ul>li>a,
+.navbar-custom .navbar-nav>li>a {
+    color: #fff;
     background-color: #10528F;
 }
 
-.navbar-custom .navbar-nav > .active > a {
+.navbar-custom .navbar-nav>.active>a {
     color: #ffffff;
-    background-color:transparent;
+    background-color: transparent;
 }
 
-.navbar-custom .navbar-nav > li > ul > li > a:hover,
-.navbar-custom .navbar-nav > li > ul > li > a:focus,
-.navbar-custom .navbar-nav > li > a:hover,
-.navbar-custom .navbar-nav > li > a:focus,
-.navbar-custom .navbar-nav > .active > a:hover,
-.navbar-custom .navbar-nav > .active > a:focus,
-.navbar-custom .navbar-nav > .open >a {
+.navbar-custom .navbar-nav>li>ul>li>a:hover,
+.navbar-custom .navbar-nav>li>ul>li>a:focus,
+.navbar-custom .navbar-nav>li>a:hover,
+.navbar-custom .navbar-nav>li>a:focus,
+.navbar-custom .navbar-nav>.active>a:hover,
+.navbar-custom .navbar-nav>.active>a:focus,
+.navbar-custom .navbar-nav>.open>a {
     text-decoration: none;
     background-color: #3498db;
 }
 
 .navbar-custom .navbar-brand {
-    color:#eeeeee;
+    color: #eeeeee;
 }
+
 .navbar-custom .navbar-toggle {
-    background-color:#eeeeee;
+    background-color: #eeeeee;
 }
+
 .navbar-custom .icon-bar {
     /*background-color:#33aa33;*/
-        background-color:#3498db;
-    
-    
+    background-color: #3498db;
+
+
 }
 
 .jumbotron {
@@ -62,7 +66,7 @@ a {
 }
 
 .text-white {
-  color: white;
+    color: white;
 }
 
 .image-cropper {
@@ -94,4 +98,22 @@ img {
     margin: 0 auto;
     height: 100%;
     width: auto;
+}
+
+.icon {
+    font-size: 25px;
+    color: #3498db;
+    /*opacity: 0;*/
+    /*background-color: #eeeeee;*/
+    /*transition: .5s ease;*/
+}
+
+.icon:hover {
+    color: #00B7FF;
+}
+
+.container-border {
+    border: 2px solid #eeeeee;
+    border-radius: 2px;
+    /*padding: 0;*/
 }

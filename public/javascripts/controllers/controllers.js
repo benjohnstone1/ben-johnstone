@@ -3,9 +3,31 @@
 var myApp = angular.module('myApp');
 
 //=======================  Home Controller =================================
-myApp.controller('homeController', ['$scope', '$http',
-	function($scope, $http) {
+myApp.controller('homeController', ['$scope', '$http', 'AuthService',
+	function($scope, $http, AuthService) {
+		// Checks if user is logged in
+		AuthService.getUserStatus();
+		var user = null;
+		user = AuthService.isLoggedIn();
+
+		var fname = null;
+		if (user) {
+			AuthService.getProfile()
+				.success(function(response) {
+					fname = response[0].fname;
+					$scope.welcome = 'Welcome ' + fname;
+				});
+		}
 		$scope.welcome = 'Welcome';
+
+		// Use Benji.Forrest profile as Home Page Resume
+		AuthService.getHomeProfile()
+			.success(function(response) {
+				$scope.about_me = response[0].about_me;
+			})
+			.error(function(response) {
+				$scope.about_me = 'Error ' + response;
+			});
 	}
 ]);
 
@@ -31,37 +53,37 @@ myApp.controller('analyticsController', ['$scope', '$http', '$location', 'Accoun
 			for (var i = 0; i < data.length; i++) {
 				switch (data[i].paymentTerm) {
 					case 30:
-						p1 +=1;
+						p1 += 1;
 						break;
 					case 60:
-						p2 +=1;
+						p2 += 1;
 						break;
 					case 90:
-						p3+=1;
+						p3 += 1;
 						break;
 					default:
-					console.log("Undefined payment term");
-			}
+						console.log("Undefined payment term");
+				}
 			}
 			var chartData = {
-			labels: ['30 Days', '60 Days', '90 Days'],
-			series: [p1,p2,p3]
-		};
+				labels: ['30 Days', '60 Days', '90 Days'],
+				series: [p1, p2, p3]
+			};
 
-		var options = {
-			width: 400,
-			height: 300,
-			donut: true,
-			donutWidth: 50,
-			donutSolid: true,
-			startAngle: 90,
-			showLabel: true
-		};
+			var options = {
+				width: 400,
+				height: 300,
+				donut: true,
+				donutWidth: 50,
+				donutSolid: true,
+				startAngle: 90,
+				showLabel: true
+			};
 
-		new Chartist.Pie('#paymentTermsChart', chartData, options);
-			
+			new Chartist.Pie('#paymentTermsChart', chartData, options);
+
 		});
-		
+
 		// CREATE ==================================================================
 		$scope.createAccount = function() {
 			if ($scope.formData.name != undefined) {
@@ -417,10 +439,12 @@ myApp.controller('signupController', ['$scope', '$location', 'AuthService',
 ]);
 
 //=======================  Profile Controller ================================
-myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cookieStore', '$routeParams', '$location',
-	function($scope, $http, AuthService, $cookieStore, $routeParams, $location) {
+myApp.controller('profileController', ['$scope', '$http', 'AuthService', 'ExperiencesService', '$cookieStore', '$routeParams', '$location',
+	function($scope, $http, AuthService, ExperiencesService, $cookieStore, $routeParams, $location) {
 		//var profileID = $routeParams.profileID;
 		// return username from AuthService
+		var experienceId = $routeParams.experienceId;
+
 		AuthService.getProfile()
 			.success(function(response) {
 				$scope.username = response[0].username;
@@ -428,13 +452,44 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cooki
 				$scope.fname = response[0].fname;
 				$scope.lname = response[0].lname;
 				$scope.admin = response[0].admin;
+				// adding about me
+				$scope.about_me = response[0].about_me;
+				$scope.skills = response[0].skills;
 			});
 
-		$scope.editUser = function(id, fname, lname) {
-			var user = { fname: fname, lname: lname };
+		$scope.editUser = function(id, fname, lname, about_me) {
+			var user = { fname: fname, lname: lname, about_me: about_me };
 			AuthService.editUser(id, user)
 				.success(function(data) {
 					$location.path('/profile');
+				})
+				.error(function() {
+					alert("Error - could not update");
+				});
+		};
+
+		$scope.editSkills = function(id, skills) {
+			var user = { skills: skills };
+			AuthService.editUser(id, user)
+				.success(function(data) {
+					$location.path('/profile');
+				})
+				.error(function() {
+					alert("Error - could not update");
+				});
+		};
+
+		$scope.cancelEdit = function() {
+			AuthService.getProfile()
+				.success(function(response) {
+					$scope.username = response[0].username;
+					$scope._id = response[0]._id;
+					$scope.fname = response[0].fname;
+					$scope.lname = response[0].lname;
+					$scope.admin = response[0].admin;
+					// adding about me
+					$scope.about_me = response[0].about_me;
+					$scope.skills = response[0].skills;
 				})
 				.error(function() {
 					alert("Error - could not update");
@@ -453,5 +508,62 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', '$cooki
 					});
 			}
 		};
+
+		// Experiences ==================================================================
+
+		ExperiencesService.get()
+			.success(function(response) {
+				$scope.experiences = response;
+			});
+
+		// CREATE ==================================================================
+		$scope.createExperience = function(_id, company, title, overview, achievements, fromDate, toDate, location) {
+			$scope.loading = true;
+			var experience = { _id: _id, company: company, title: title, overview: overview, achievements: achievements, fromDate: fromDate, toDate: toDate, location: location };
+			// call the create function from our service (returns a promise object)
+			ExperiencesService.create(experience)
+				.success(function(data) {
+					$location.path('/profile');
+					$scope.loading = false;
+					$scope.formData = {}; // clear the form so our user is ready to enter another
+					$scope.experiences = data; // assign our new list of todos
+				})
+				.error(function() {
+					alert("Error - could not create experience");
+				});
+		};
+
+		// Delete ==================================================================
+		$scope.deleteExperience = function(id) {
+			var answer = confirm('Sure you want to delete?');
+			if (answer) {
+				$scope.loading = true;
+				ExperiencesService.delete(id)
+					// if successful creation, call our get function to get all the new todos
+					.success(function(data) {
+						$scope.loading = false;
+						$scope.todos = data; // assign our new list of todos
+					});
+			}
+			else {
+				$scope.loading = false();
+			}
+		};
+
+		// Show Edit Page =======================================================
+
+		// EDIT =======================================================
+		$scope.showExperience = function(id) {
+			ExperiencesService.showEditPage(id)
+				.success(function(data) {
+					$scope.experience = data[0];
+					$scope.loading = false;
+					console.log(JSON.stringify(data[0]));
+				})
+				.error(function(){
+					alert('Error');
+				});
+		};
+
 	}
 ]);

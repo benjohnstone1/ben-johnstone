@@ -56,6 +56,9 @@ myApp.config(function($routeProvider) {
       templateUrl: '../partials/profile.html',
       access: { restricted: true, admin: false }
     })
+     .when('/experiences/edit/:experienceId', {
+      access: { restricted: true, admin: false }
+    })
     .when('/profile/edit/:profileID', {
       templateUrl: '../partials/profile.edit.html',
       access: { restricted: true, admin: false }
@@ -74,6 +77,7 @@ myApp.run(function($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
     function(event, next, current) {
       try {
+        // restricted:true forces login in order to access route
         if (next && next.$$route && next.$$route.access.restricted) {
           if (!AuthService.isLoggedIn()) {
             $rootScope.$evalAsync(function() {

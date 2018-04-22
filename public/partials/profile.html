@@ -6,22 +6,129 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div>
-            <label>Name: {{fname}} {{lname}}</label>
+    <div class="container container-border">
+        <!-- PROFILE ================================================================== -->
+        <h3>Profile</h3>
+        <div class="row">
+            <div class="col-sm-11">
+                <label>Name:</label> {{fname}} {{lname}}
+            </div>
+            <div class="col-sm-1">
+                <div class="icon" data-toggle="modal" data-target="#about_me">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </div>
+            </div>
         </div>
-        <div>
-            <label>User: {{username}}</label>
+        <div class="row">
+            <div class="col-sm-12">
+                <label>User:</label> {{username}}
+            </div>
         </div>
-        <div>
-            <label>Id: {{_id}}</label>
+        <div class="row">
+            <div class="col-sm-12">
+                <label>Admin:</label>{{admin}}
+            </div>
         </div>
-        <div>
-            <label>Admin: {{admin}}</label>
-        </div>
-        <div>
-            <span><a class="btn btn-primary" href="/#/profile/edit/{{_id}}">Edit Profile</a></span>
-            <span><button class="btn btn-danger" ng-click="deleteUser(_id)">Delete Profile</button></span>
+        <!--<div>-->
+        <!--<span><a class="btn btn-info" href="/#/profile/edit/_id">Edit Profile</a></span>-->
+        <!--<span><button class="btn btn-danger" ng-click="deleteUser(_id)">Delete Profile</button></span>-->
+        <!--</div>-->
+        <div class="row" style="padding-bottom: 20px">
+            <div class="col-sm-12">
+                <h3> About Me</h3>
+                {{about_me}}
+            </div>
         </div>
     </div>
+    <!-- Experiences ================================================================== -->
+    <div class="container container-border">
+        <div class="row">
+            <div class="col-sm-11">
+                <h3> Experience </h3>
+            </div>
+            <div class="col-sm-1">
+                <div class="icon" data-toggle="modal" data-target="#experience_new">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </div>
+            </div>
+        </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <p class="text-center" ng-show="loading">
+                        <span class="fa fa-spinner fa-spin fa-3x"></span>
+                    </p>
+                    <tbody>
+                        <tr ng-repeat="exps in experiences">
+                            <td>
+                                <a class="btn btn-info btn-md" ng-click="showExperience(exps._id)" data-toggle="modal" data-target="#experience_display">{{exps.company}} - {{exps.title}}</a>
+                            </td>
+                            <td>
+                                <div class="icon" data-toggle="modal" data-target="#experience_edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button ng-click="deleteExperience(exps._id)" class="btn btn-danger btn-sm">X</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+    <!-- Skills ================================================================== -->
+    <div class="container container-border">
+        <div class="row">
+            <div class="col-sm-11">
+                <h3> Skills </h3>
+            </div>
+            <div class="col-sm-1">
+                <div class="icon" data-toggle="modal" data-target="#skills">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </div>
+            </div>
+        </div>
+        <ul>
+            <!--<li ng-repeat="skill in skills">-->
+            <!--    {{ skills}}-->
+            <!-- </li>-->
+            {{skills}}
+        </ul>
+    </div>
+    <!-- Certifications ================================================================== -->
+    <div class="container container-border">
+        <div class="row">
+            <div class="col-sm-11">
+                <h3> Certifications </h3>
+            </div>
+            <div class="col-sm-1">
+                <div class="icon" data-toggle="modal" data-target="#">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </div>
+            </div>
+        </div>
+        <p>
+            <div class="cert-logo">
+                <img src="../images/sales_admin.png" />
+            </div>
+            <a href="http://certification.salesforce.com/certification-detail-print?conId=003G000002jqbADIAY">Salesforce Certified Administrator, License 17632183, August 2017 – Present</a>
+        </p>
+        <p>
+            <div class="cert-logo">
+                <img src="../images/sales_cloud.png" />
+            </div>
+            <a href="http://certification.salesforce.com/certification-detail-print?conId=003G000002jqbADIAY">Salesforce Sales Cloud Consultant , License 18290103, March 2018 – Present</a>
+        </p>
+    </div>
+
+    <!-- About Me Modal -->
+    <div ng-include src="'partials/modals/about_me.html'"></div>
+    <!-- Experience New -->
+    <div ng-include src="'partials/modals/experience_new.html'"></div>
+    <!-- Skills Modal -->
+    <div ng-include src="'partials/modals/skills.html'"></div>
+    <!-- Experience Display -->
+    <div ng-include src="'partials/modals/experience_display.html'"></div>
+    <!-- Experience Edit -->
+    <div ng-include src="'partials/modals/experience_edit.html'"></div>
 </div>

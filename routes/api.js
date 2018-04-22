@@ -93,19 +93,39 @@ router.post('/signup', function(req, res, next) {
 
 //=======================  Profile Routes =================================
 
-router.get('/profile', function(req, res) {
+
+// checking login with req.isAuthenticated -> want to check against $cookieStore userID (username) instead?
+// expires when browsing session ends
+// only calls when we have /profile, need something to check before this step
+
+router.get('/is_logged_in', function(req, res) {
     if (!req.isAuthenticated()) {
         return res.status(200).json({
             status: false
         });
     }
-    res.status(200).json({
-        status: true
-    });
+    else {
+        res.status(200).json({
+            status: true,
+        });
+    }
 });
+
+// router.get('/is_admin', function(req, res) {
+//     // Returns whether admin is true or false
+//   //  var admin = getUser(res, 'benji.forrest@gmail.com');
+//     return res.status(200).json({
+//         admin:true
+//     });
+// });
 
 router.get('/profile.json', function(req, res, next) {
     getUser(res, req.user.username);
+});
+
+router.get('/profile/home.json', function(req, res, next) {
+    var username = 'benji.forrest@gmail.com';
+    getUser(res, username);
 });
 
 router.put('/profile/:_id', function(req, res) {
@@ -374,6 +394,84 @@ router.delete('/todos/:todo_id', function(req, res) {
             res.send(err);
         }
         getTodos(res, req.user.username);
+    });
+});
+
+//=======================  Experiences Routes =================================
+
+var Experience = mongoose.model('Experience');
+
+function getExperiences(res, user) {
+    Experience.find({ user_id: user }, function(err, experiences) {
+        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+        if (err) {
+            res.send(err);
+        }
+        res.json(experiences); // return all experiences in JSON format
+    });
+}
+
+router.get('/experiences/edit/:experienceId', function(req, res, next) {
+    showExperience(res, req.user.username, req.params.experienceId);
+});
+
+function showExperience(res, user, id) {
+    Experience.find({ "_id": id, user_id: user }, function(err, experience) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(experience);
+    });
+}
+
+router.get('/experiences', function(req, res) {
+    getExperiences(res, req.user.username);
+});
+
+router.post('/experiences', function(req, res) {
+    Experience.create({
+        company: req.body.company,
+        title: req.body.title,
+        overview: req.body.overview,
+        achievements: req.body.achievements,
+        fromDate: req.body.fromDate,
+        toDate: req.body.toDate,
+        location: req.body.location,
+        user_id: req.user.username,
+        done: false
+    }, function(err, account) {
+        if (err) {
+            res.send(err);
+        }
+        // Update experiences
+        getExperiences(res, req.user.username);
+    });
+});
+
+router.get('/experiences/edit/:experience_id', function(req, res) {
+    Experience.find({ '_id': req.params.experience_id }, function(err, editExperience) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(editExperience);
+    });
+});
+
+router.post('/experiences/edit/:experience_id', function(req, res, next) {
+    var id = req.params.experience_id;
+    Experience.update({ _id: id }, { $set: { rank: req.body[0].rank } }, function(error, experience) {
+        getExperiences(res, req.user.username);
+    });
+});
+
+router.delete('/experience/:experience_id', function(req, res) {
+    Experience.remove({
+        _id: req.params.experience_id
+    }, function(err, experience) {
+        if (err) {
+            res.send(err);
+        }
+        getExperiences(res, req.user.username);
     });
 });
 

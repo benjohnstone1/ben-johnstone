@@ -4,8 +4,14 @@
             <label>First Name:</label>
             <input type="text" name="fname" class="form-control input-lg text-center" ng-value="fname" ng-model="fname">
         </div>
-        <label>Last Name:</label>
-        <input type="text" name="fname" class="form-control input-lg text-center" ng-value="lname" ng-model="lname">
+        <div>
+            <label>Last Name:</label>
+            <input type="text" name="lname" class="form-control input-lg text-center" ng-value="lname" ng-model="lname">
+        </div>
+        <div>
+            <label>About Me</label>
+            <textarea rows="4" type="text" name="about_me" class="form-control input-lg" ng-value="about_me" ng-model="about_me"></textarea>
+        </div>
         <div>
             <label>User: {{username}}</label>
         </div>
@@ -16,9 +22,11 @@
             <label>Admin: {{admin}}</label>
         </div>
         <div>
-            <span><button class="btn btn-primary btn-lg" ng-click="editUser(_id,fname,lname)">Save</button></span>
+            <span><button class="btn btn-primary btn-lg" ng-click="editUser(_id,fname,lname, about_me)">Save</button></span>
             <span><a class="btn btn-default btn-lg" href="/#/profile">Cancel</a></span>
             <span><button class="btn btn-danger btn-lg" ng-click="deleteUser(_id)">Delete</button></span>
         </div>
     </div>
 </div>
+
+

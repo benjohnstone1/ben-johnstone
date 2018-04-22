@@ -28,7 +28,7 @@ module.factory('AccountsService', ['$http',
     }
 ]);
 
-//=======================  Todos Service =================================
+//=======================  Users Service =================================
 module.factory('UsersService', ['$http',
     function($http) {
         return {
@@ -62,6 +62,29 @@ module.factory('TodosService', ['$http',
     }
 ]);
 
+//=======================  Experiences Service =================================
+module.factory('ExperiencesService', ['$http',
+    function($http) {
+        return {
+            get: function() {
+                return $http.get('/experiences');
+            },
+            showEditPage: function(id) {
+                return $http.get('/experiences/edit/' + id);
+            },
+            create: function(experienceData) {
+                return $http.post('/experiences', experienceData);
+            },
+            delete: function(id) {
+                return $http.delete('/experience/' + id);
+            },
+            update: function(id, experience) {
+                return $http.post('/experiences/edit/' + id, experience);
+            }
+        };
+    }
+]);
+
 //=======================  Auth Service =================================
 module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
     function($http, $q, $timeout, $cookieStore) {
@@ -80,14 +103,19 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
             isAdmin: isAdmin,
             getUserStatus: getUserStatus,
             editUser: editUser,
+            getHomeProfile: getHomeProfile,
         });
 
         function editUser(id, user) {
             return $http.post('/profile/edit/' + id, user);
         }
 
+        /* function editUserModal(id, user) {
+             return $http.post('/profile/' + id, user);
+         }*/
+
         function getUserStatus() {
-            return $http.get('/profile')
+            return $http.get('/is_logged_in')
                 .success(function(data) {
                     if (data.status) {
                         user = true;
@@ -151,7 +179,22 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
         }
 
         function getProfile() {
-            return $http.get('/profile.json');
+            return $http.get('/profile.json')
+                .success(function(user) {
+                    if (user[0].admin) {
+                        admin = true;
+                    }
+                    else {
+                        admin = false;
+                    }
+                })
+                .error(function(user) {
+                    admin = false;
+                });
+        }
+        
+        function getHomeProfile() {
+            return $http.get('/profile/home.json');
         }
 
         function getUser() {
