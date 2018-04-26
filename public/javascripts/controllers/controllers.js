@@ -7,17 +7,7 @@ myApp.controller('homeController', ['$scope', '$http', 'AuthService', 'Experienc
 	function($scope, $http, AuthService, ExperiencesService) {
 		// Checks if user is logged in
 		AuthService.getUserStatus();
-		var user = null;
-		user = AuthService.isLoggedIn();
 
-		var fname = null;
-		if (user) {
-			AuthService.getProfile()
-				.success(function(response) {
-					fname = response[0].fname;
-					// $scope.welcome = 'Welcome ' + fname;
-				});
-		}
 		$scope.welcome = 'Welcome';
 
 		// Use Benji.Forrest profile as Home Page Resume
@@ -39,8 +29,8 @@ myApp.controller('homeController', ['$scope', '$http', 'AuthService', 'Experienc
 			});
 			
 		//SHOW EXPERIENCES
-		$scope.showExperience = function(id) {
-			ExperiencesService.showEditPage(id)
+		$scope.showHomeExperience = function(id) {
+			ExperiencesService.showHomeExperiences(id)
 				.success(function(data) {
 					$scope.experience = data[0];
 					$scope.loading = false;

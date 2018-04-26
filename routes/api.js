@@ -133,6 +133,20 @@ router.get('/profile/home/experiences.json', function(req, res, next) {
     getExperiences(res, 'benji.forrest@gmail.com');
 });
 
+// GET ALL EXPERIENCES for Homepage without logging in =================
+router.get('/experiences/home/:experience_id', function(req, res, next) {
+    showExperienceHome(res, 'benji.forrest@gmail.com', req.params.experience_id);
+});
+
+function showExperienceHome(res, user, id) {
+    Experience.find({ _id: id, user_id: user }, function(err, experience) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(experience);
+    });
+}
+
 router.put('/profile/:_id', function(req, res) {
     if (!req.isAuthenticated()) {
         return res.status(200).json({

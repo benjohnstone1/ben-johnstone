@@ -78,6 +78,9 @@ module.factory('ExperiencesService', ['$http',
             showEditPage: function(id) {
                 return $http.get('/experiences/edit/' + id);
             },
+            showHomeExperiences: function(id) {
+                return $http.get('/experiences/home/' + id);
+            },
             update: function(id, experience) {
                 return $http.post('/experiences/edit/' + id, experience);
             }
