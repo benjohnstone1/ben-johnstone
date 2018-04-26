@@ -3,8 +3,8 @@
 var myApp = angular.module('myApp');
 
 //=======================  Home Controller =================================
-myApp.controller('homeController', ['$scope', '$http', 'AuthService',
-	function($scope, $http, AuthService) {
+myApp.controller('homeController', ['$scope', '$http', 'AuthService', 'ExperiencesService',
+	function($scope, $http, AuthService, ExperiencesService) {
 		// Checks if user is logged in
 		AuthService.getUserStatus();
 		var user = null;
@@ -15,7 +15,7 @@ myApp.controller('homeController', ['$scope', '$http', 'AuthService',
 			AuthService.getProfile()
 				.success(function(response) {
 					fname = response[0].fname;
-					$scope.welcome = 'Welcome ' + fname;
+					// $scope.welcome = 'Welcome ' + fname;
 				});
 		}
 		$scope.welcome = 'Welcome';
@@ -28,6 +28,27 @@ myApp.controller('homeController', ['$scope', '$http', 'AuthService',
 			.error(function(response) {
 				$scope.about_me = 'Error ' + response;
 			});
+		
+		// Get Experiences
+		AuthService.getHomeExperiences()
+			.success(function(response) {
+				$scope.experiences = response;
+			})
+			.error(function(response) {
+				$scope.experiences = 'Error ' + response;
+			});
+			
+		//SHOW EXPERIENCES
+		$scope.showExperience = function(id) {
+			ExperiencesService.showEditPage(id)
+				.success(function(data) {
+					$scope.experience = data[0];
+					$scope.loading = false;
+				})
+				.error(function() {
+					alert('Error');
+				});
+		};
 	}
 ]);
 
@@ -443,7 +464,6 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', 'Experi
 	function($scope, $http, AuthService, ExperiencesService, $cookieStore, $routeParams, $location) {
 		//var profileID = $routeParams.profileID;
 		// return username from AuthService
-		var experienceId = $routeParams.experienceId;
 
 		AuthService.getProfile()
 			.success(function(response) {
@@ -452,7 +472,6 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', 'Experi
 				$scope.fname = response[0].fname;
 				$scope.lname = response[0].lname;
 				$scope.admin = response[0].admin;
-				// adding about me
 				$scope.about_me = response[0].about_me;
 				$scope.skills = response[0].skills;
 			});
@@ -509,7 +528,7 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', 'Experi
 			}
 		};
 
-		// Experiences ==================================================================
+		// EXPERIENCES ==================================================================
 
 		ExperiencesService.get()
 			.success(function(response) {
@@ -517,23 +536,23 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', 'Experi
 			});
 
 		// CREATE ==================================================================
-		$scope.createExperience = function(_id, company, title, overview, achievements, fromDate, toDate, location) {
+		$scope.createExperience = function(company, title, overview, achievements, fromDate, toDate, location) {
 			$scope.loading = true;
-			var experience = { _id: _id, company: company, title: title, overview: overview, achievements: achievements, fromDate: fromDate, toDate: toDate, location: location };
+			var experience = { company: company, title: title, overview: overview, achievements: achievements, fromDate: fromDate, toDate: toDate, location: location };
 			// call the create function from our service (returns a promise object)
 			ExperiencesService.create(experience)
 				.success(function(data) {
-					$location.path('/profile');
+					// $location.path('/profile');
 					$scope.loading = false;
-					$scope.formData = {}; // clear the form so our user is ready to enter another
-					$scope.experiences = data; // assign our new list of todos
+					// $scope.experience = {}; // clear the form so our user is ready to enter another
+					$scope.experiences = data; // assign our new list of experiences
 				})
 				.error(function() {
 					alert("Error - could not create experience");
 				});
 		};
 
-		// Delete ==================================================================
+		// DELETE ==================================================================
 		$scope.deleteExperience = function(id) {
 			var answer = confirm('Sure you want to delete?');
 			if (answer) {
@@ -542,7 +561,7 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', 'Experi
 					// if successful creation, call our get function to get all the new todos
 					.success(function(data) {
 						$scope.loading = false;
-						$scope.todos = data; // assign our new list of todos
+						$scope.experiences = data;
 					});
 			}
 			else {
@@ -550,17 +569,31 @@ myApp.controller('profileController', ['$scope', '$http', 'AuthService', 'Experi
 			}
 		};
 
-		// Show Edit Page =======================================================
-
-		// EDIT =======================================================
+		// UPDATE =======================================================
 		$scope.showExperience = function(id) {
 			ExperiencesService.showEditPage(id)
 				.success(function(data) {
 					$scope.experience = data[0];
 					$scope.loading = false;
-					console.log(JSON.stringify(data[0]));
+
+					$scope.updateExperience = function() {
+						$scope.loading = true;
+						ExperiencesService.update(id, $scope.experience)
+							.success(function(data) {
+								$scope.loading = false;
+								$scope.experience = data;
+								// Called so all updates are calleed
+								ExperiencesService.get()
+									.success(function(response) {
+										$scope.experiences = response;
+									});
+							})
+							.error(function() {
+								$scope.loading = false;
+							});
+					};
 				})
-				.error(function(){
+				.error(function() {
 					alert('Error');
 				});
 		};

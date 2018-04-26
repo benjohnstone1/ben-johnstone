@@ -58,12 +58,12 @@
                         <span class="fa fa-spinner fa-spin fa-3x"></span>
                     </p>
                     <tbody>
-                        <tr ng-repeat="exps in experiences">
+                        <tr ng-repeat="exps in experiences | orderBy: 'toDate':true">
                             <td>
                                 <a class="btn btn-info btn-md" ng-click="showExperience(exps._id)" data-toggle="modal" data-target="#experience_display">{{exps.company}} - {{exps.title}}</a>
                             </td>
                             <td>
-                                <div class="icon" data-toggle="modal" data-target="#experience_edit">
+                                <div class="icon" ng-click="showExperience(exps._id)" data-toggle="modal" data-target="#experience_edit">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </div>
                             </td>

@@ -17,27 +17,25 @@
         </p>
 
         <h3> About Me</h3>
-        
+
         <p>{{about_me}}</p>
 
         <h3> Experience </h3>
-        <div class="container">
-            <div class="row">
-                <p>
-                    <button class="btn btn-info btn-md" data-toggle="modal" data-target="#Q4ModalSBI">Q4 Inc. - Sr. Business Intelligence Analyst</button>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <p class="text-center" ng-show="loading">
+                    <span class="fa fa-spinner fa-spin fa-3x"></span>
                 </p>
-            </div>
-            <div class="row">
-                <p>
-                    <button class="btn btn-info btn-md" data-toggle="modal" data-target="#Q4ModalBI">Q4 Inc. - Business Intelligence Analyst</button>
-                </p>
-            </div>
-            <div class="row">
-                <p>
-                    <button class="btn btn-info btn-md" data-toggle="modal" data-target="#IBMModal">IBM - Technical Consultant</button>
-                </p>
-            </div>
+                <tbody>
+                    <tr ng-repeat="exps in experiences | orderBy: 'toDate':true">
+                        <td>
+                            <a class="btn btn-info btn-md" ng-click="showExperience(exps._id)" data-toggle="modal" data-target="#experience_display">{{exps.company}} - {{exps.title}}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
         <h3> Skills </h3>
         <ul>
             <li>CRM, Salesforce, Zuora, CPQ</li>
@@ -88,161 +86,164 @@
             <li>Salesforce Einstein Analytics (Business Intelligence)</li>
         </ul>
     </div>
+
+    <!-- Experience Display -->
+    <div ng-include src="'partials/modals/experience_display.html'"></div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="Q4ModalSBI" role="dialog">
-    <div class="modal-dialog">
+<!--<div class="modal fade" id="Q4ModalSBI" role="dialog">-->
+<!--    <div class="modal-dialog">-->
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Q4 Inc. - Senior Business Intelligence Analyst</h4>
-            </div>
-            <div class="modal-body">
-                <div class="company-logo">
-                    <img src="../images/Q4-Logo.png" />
-                </div>
-                <h4>Overview</h4>
-                <p>I’ve worked extensively with Salesforce, integrating 3rd party solutions in order to continue to scale and grow our operations and see full value in our business intelligence solutions. A large focus has been in spearheading the implementation
-                    of Zuora, a CPQ and billing solution, which used in conjunction with Salesforce to generate quotes and then on the back end to facilitate and manage billing operations and provide better data for SaaS metrics.
-                </p>
+<!-- Modal content-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header text-center">-->
+<!--                <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                <h4 class="modal-title">Q4 Inc. - Senior Business Intelligence Analyst</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="company-logo">-->
+<!--                    <img src="../images/Q4-Logo.png" />-->
+<!--                </div>-->
+<!--                <h4>Overview</h4>-->
+<!--                <p>I’ve worked extensively with Salesforce, integrating 3rd party solutions in order to continue to scale and grow our operations and see full value in our business intelligence solutions. A large focus has been in spearheading the implementation-->
+<!--                    of Zuora, a CPQ and billing solution, which used in conjunction with Salesforce to generate quotes and then on the back end to facilitate and manage billing operations and provide better data for SaaS metrics.-->
+<!--                </p>-->
 
-                <p>Post implementation, we've begun to see the real value in implementing these solutions and I'm now focusing efforts on our Series C fund raise.</p>
-                <h4>Notable Achievements</h4>
-                <ul>
-                    <li>
-                        New billing solution allowed us to scale our billing operations exponentially. Our small team was maxed out with handling 500 clients in 2 currencies. We managed to scale to over 1000 clients in 6 different currencies with no additional headcount in the
-                        billing and collections department with capacity for more
-                    </li>
-                    <li>
-                        Implemented Adobe Sign e-signature into quoting flow in Salesforce which gave increased visibility to sales managers and also resulted in decreased time taken to receive signed order forms by over 50% by providing a painless more efficient process
-                    </li>
-                    <li>
-                        Administered demonstration of the Salesforce quoting flow lifecycle to outside and inside sales team at global sales kickoff to be used as Q&A and gather further requirements prior to Zuora implementation to be able to tailor the solution to best fit
-                        their needs
-                    </li>
-                    <li>
-                        Took part in weekly pipeline calls which was invaluable to understanding how the team was positioning our products to the client and seeing where we could provide value add. I then worked with the outside sales reps on a 1-1 basis in order to personalize
-                        their dashboards and give better reporting into their pipeline, this helped the team focus their efforts where it was most needed and spending less time on deals that were unlikely to close
-                    </li>
-                    <li>
-                        The metrics we’ve gathered from our data allowed us to identify areas of product improvement, for example, we had products that only triggered upon usage, when adding a recurring element we found that we managed to increase our communications revenue
-                        by over 16% per sale and customers were more likely to adopt the product
-                    </li>
-                    <li>
-                        Managed multiple stakeholders across different business units (Sales, Finance, Client Success, Marketing & Design) in order to get buy-in to CPQ solution and aid in delivery of solution
-                    </li>
-                </ul>
-                <h4>Location & Timing</h4>
-                <p>Jan 2017 - Present <br/>Toronto, Canada</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+<!--                <p>Post implementation, we've begun to see the real value in implementing these solutions and I'm now focusing efforts on our Series C fund raise.</p>-->
+<!--                <h4>Notable Achievements</h4>-->
+<!--                <ul>-->
+<!--                    <li>-->
+<!--                        New billing solution allowed us to scale our billing operations exponentially. Our small team was maxed out with handling 500 clients in 2 currencies. We managed to scale to over 1000 clients in 6 different currencies with no additional headcount in the-->
+<!--                        billing and collections department with capacity for more-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        Implemented Adobe Sign e-signature into quoting flow in Salesforce which gave increased visibility to sales managers and also resulted in decreased time taken to receive signed order forms by over 50% by providing a painless more efficient process-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        Administered demonstration of the Salesforce quoting flow lifecycle to outside and inside sales team at global sales kickoff to be used as Q&A and gather further requirements prior to Zuora implementation to be able to tailor the solution to best fit-->
+<!--                        their needs-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        Took part in weekly pipeline calls which was invaluable to understanding how the team was positioning our products to the client and seeing where we could provide value add. I then worked with the outside sales reps on a 1-1 basis in order to personalize-->
+<!--                        their dashboards and give better reporting into their pipeline, this helped the team focus their efforts where it was most needed and spending less time on deals that were unlikely to close-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        The metrics we’ve gathered from our data allowed us to identify areas of product improvement, for example, we had products that only triggered upon usage, when adding a recurring element we found that we managed to increase our communications revenue-->
+<!--                        by over 16% per sale and customers were more likely to adopt the product-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        Managed multiple stakeholders across different business units (Sales, Finance, Client Success, Marketing & Design) in order to get buy-in to CPQ solution and aid in delivery of solution-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <h4>Location & Timing</h4>-->
+<!--                <p>Jan 2017 - Present <br/>Toronto, Canada</p>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->
 
-<div class="modal fade" id="Q4ModalBI" role="dialog">
-    <div class="modal-dialog">
+<!--<div class="modal fade" id="Q4ModalBI" role="dialog">-->
+<!--    <div class="modal-dialog">-->
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Q4 Inc. - Business Intelligence Analyst</h4>
-            </div>
-            <div class="modal-body">
-                <div class="company-logo">
-                    <img src="../images/Q4-Logo.png" />
-                </div>
-                <h4>Overview</h4>
-                <p>Business Intelligence, Salesforce Administrator and Systems Integration at Q4 Inc.
-                </p>
-                <h4>Notable Achievements</h4>
-                <ul>
-                    <li>
-                        Provided SaaS metrics, data analysis and due diligence during Series B fund raise, where we successfully raised over $24M in investment
-                    </li>
-                    <li>Moved key business processes away from spreadsheets and into CRM in order that we could better track, analyze and report on data all in real-time</li>
-                    <li>Visualized data through building reports and dashboards</li>
-                    <li>Created Google sheet applications leveraging Google Apps Script and Google API's such as mapping out customer account locations for road shows and automatically creating a best route based on location</li>
-                </ul>
-                <h4>Location & Timing</h4>
-                <p>June 2015 - Present <br/>Toronto, Canada</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+<!-- Modal content-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header text-center">-->
+<!--                <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                <h4 class="modal-title">Q4 Inc. - Business Intelligence Analyst</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="company-logo">-->
+<!--                    <img src="../images/Q4-Logo.png" />-->
+<!--                </div>-->
+<!--                <h4>Overview</h4>-->
+<!--                <p>Business Intelligence, Salesforce Administrator and Systems Integration at Q4 Inc.-->
+<!--                </p>-->
+<!--                <h4>Notable Achievements</h4>-->
+<!--                <ul>-->
+<!--                    <li>-->
+<!--                        Provided SaaS metrics, data analysis and due diligence during Series B fund raise, where we successfully raised over $24M in investment-->
+<!--                    </li>-->
+<!--                    <li>Moved key business processes away from spreadsheets and into CRM in order that we could better track, analyze and report on data all in real-time</li>-->
+<!--                    <li>Visualized data through building reports and dashboards</li>-->
+<!--                    <li>Created Google sheet applications leveraging Google Apps Script and Google API's such as mapping out customer account locations for road shows and automatically creating a best route based on location</li>-->
+<!--                </ul>-->
+<!--                <h4>Location & Timing</h4>-->
+<!--                <p>June 2015 - Present <br/>Toronto, Canada</p>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->
 
-<div class="modal fade" id="IBMModal" role="dialog">
-    <div class="modal-dialog">
+<!--<div class="modal fade" id="IBMModal" role="dialog">-->
+<!--    <div class="modal-dialog">-->
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">IBM - Technical Consultant</h4>
-            </div>
-            <div class="modal-body">
-                <div class="company-logo">
-                    <img src="../images/IBM_logo.png" />
-                </div>
-                <h4>Overview</h4>
-                <p>I joined IBM as a Technical Consultant within IBM's Global Business Services division based in London, UK. This role required 100% travel and as a graduate entry program, I had the opportunity to experience a breadth of consulting roles,
-                    including within project management, development, and both pre and post sales consulting.
-                </p>
-                <h4>Notable Achievements</h4>
-                <ul>
-                    <li>
-                        Completed 5 week consulting workshop where we received training on presentation skills and working in a client-facing environment. This was a hugely beneficial course where we focussed on presentation style and being able to communicate and present technical
-                        solutions to a non-technical audience
-                    </li>
-                    <li>I project managed a team that created a mobile solution using IBM Worklight which was then demoed to an IBM executive panel. The demo was a pre-sales consulting training scenario in which we were responding to an RFP put forward in
-                        the Australian public sector.</li>
-                </ul>
-                <h4>Location & Timing</h4>
-                <p>July 2014 - March 2015 <br/>London, United Kingdom</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+<!-- Modal content-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header text-center">-->
+<!--                <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                <h4 class="modal-title">IBM - Technical Consultant</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="company-logo">-->
+<!--                    <img src="../images/IBM_logo.png" />-->
+<!--                </div>-->
+<!--                <h4>Overview</h4>-->
+<!--                <p>I joined IBM as a Technical Consultant within IBM's Global Business Services division based in London, UK. This role required 100% travel and as a graduate entry program, I had the opportunity to experience a breadth of consulting roles,-->
+<!--                    including within project management, development, and both pre and post sales consulting.-->
+<!--                </p>-->
+<!--                <h4>Notable Achievements</h4>-->
+<!--                <ul>-->
+<!--                    <li>-->
+<!--                        Completed 5 week consulting workshop where we received training on presentation skills and working in a client-facing environment. This was a hugely beneficial course where we focussed on presentation style and being able to communicate and present technical-->
+<!--                        solutions to a non-technical audience-->
+<!--                    </li>-->
+<!--                    <li>I project managed a team that created a mobile solution using IBM Worklight which was then demoed to an IBM executive panel. The demo was a pre-sales consulting training scenario in which we were responding to an RFP put forward in-->
+<!--                        the Australian public sector.</li>-->
+<!--                </ul>-->
+<!--                <h4>Location & Timing</h4>-->
+<!--                <p>July 2014 - March 2015 <br/>London, United Kingdom</p>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->
 
-<div class="modal fade" id="FFRModal" role="dialog">
-    <div class="modal-dialog">
+<!--<div class="modal fade" id="FFRModal" role="dialog">-->
+<!--    <div class="modal-dialog">-->
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Fédération Fraçaise de Rugby - Liaison Officer</h4>
-            </div>
-            <div class="modal-body">
-                <div class="company-logo">
-                    <img src="../images/FFR_icon.png" />
-                </div>
-                <h4>Overview</h4>
-                <p>I volunteered as L’officier de Liaison for the Irish U18 national rugby team whilst studying in France. This involved translating for local media, organizing travel, arranging trips and excursions and being the team’s guide for the duration
-                    of their stay.
-                </p>
-                <h4>Location & Timing</h4>
-                <p>March 2013 - April 2013 <br/>Grenoble, France</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+<!-- Modal content-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header text-center">-->
+<!--                <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                <h4 class="modal-title">Fédération Fraçaise de Rugby - Liaison Officer</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="company-logo">-->
+<!--                    <img src="../images/FFR_icon.png" />-->
+<!--                </div>-->
+<!--                <h4>Overview</h4>-->
+<!--                <p>I volunteered as L’officier de Liaison for the Irish U18 national rugby team whilst studying in France. This involved translating for local media, organizing travel, arranging trips and excursions and being the team’s guide for the duration-->
+<!--                    of their stay.-->
+<!--                </p>-->
+<!--                <h4>Location & Timing</h4>-->
+<!--                <p>March 2013 - April 2013 <br/>Grenoble, France</p>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->

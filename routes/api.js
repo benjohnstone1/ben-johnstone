@@ -123,9 +123,14 @@ router.get('/profile.json', function(req, res, next) {
     getUser(res, req.user.username);
 });
 
+// HOME PAGE INFORMATION
 router.get('/profile/home.json', function(req, res, next) {
     var username = 'benji.forrest@gmail.com';
     getUser(res, username);
+});
+
+router.get('/profile/home/experiences.json', function(req, res, next) {
+    getExperiences(res, 'benji.forrest@gmail.com');
 });
 
 router.put('/profile/:_id', function(req, res) {
@@ -411,12 +416,8 @@ function getExperiences(res, user) {
     });
 }
 
-router.get('/experiences/edit/:experienceId', function(req, res, next) {
-    showExperience(res, req.user.username, req.params.experienceId);
-});
-
 function showExperience(res, user, id) {
-    Experience.find({ "_id": id, user_id: user }, function(err, experience) {
+    Experience.find({ _id: id, user_id: user }, function(err, experience) {
         if (err) {
             res.send(err);
         }
@@ -424,9 +425,18 @@ function showExperience(res, user, id) {
     });
 }
 
+// GET ALL EXPERIENCES =================
+router.get('/experiences/edit/:experience_id', function(req, res, next) {
+    showExperience(res, req.user.username, req.params.experience_id);
+});
+
+// SHOW EXPERIENCE =================
+
 router.get('/experiences', function(req, res) {
     getExperiences(res, req.user.username);
 });
+
+// CREATE EXPERIENCE =================
 
 router.post('/experiences', function(req, res) {
     Experience.create({
@@ -439,28 +449,32 @@ router.post('/experiences', function(req, res) {
         location: req.body.location,
         user_id: req.user.username,
         done: false
-    }, function(err, account) {
+    }, function(err, experience) {
         if (err) {
             res.send(err);
         }
-        // Update experiences
+        // Show updated experiences
         getExperiences(res, req.user.username);
     });
 });
 
-router.get('/experiences/edit/:experience_id', function(req, res) {
-    Experience.find({ '_id': req.params.experience_id }, function(err, editExperience) {
-        if (err) {
-            res.send(err);
-        }
-        res.json(editExperience);
-    });
-});
+// UPDATE EXPERIENCE =============================================
 
 router.post('/experiences/edit/:experience_id', function(req, res, next) {
     var id = req.params.experience_id;
-    Experience.update({ _id: id }, { $set: { rank: req.body[0].rank } }, function(error, experience) {
-        getExperiences(res, req.user.username);
+    var body = req.body;
+    Experience.findById(id, function(error, experience) {
+        if (error) return next(error);
+        if (!experience) {
+            return res.status(404).json({
+                message: 'Experience with id ' + id + ' can not be found.'
+            });
+        }
+        experience.update(body, function(error, experience) {
+            if (error) return next(error);
+            res.json(experience);
+        });
+        // getExperiences(res, req.user.username);
     });
 });
 

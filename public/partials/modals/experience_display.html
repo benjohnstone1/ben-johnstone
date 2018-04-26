@@ -8,15 +8,15 @@
                 <h4 class="modal-title">{{experience.company}} - {{experience.title}}</h4>
             </div>
             <div class="modal-body">
-                <div class="company-logo">
-                    <img src="../images/IBM_logo.png" />
-                </div>
+                <!--<div class="company-logo">-->
+                <!--    <img src="../images/IBM_logo.png" />-->
+                <!--</div>-->
                 <h4>Overview</h4>
                 <p> {{experience.overview}} </p>
                 <h4>Notable Achievements</h4>
                 <p> {{experience.achievements}} </p>
                 <h4>Location & Timing</h4>
-                <p> {{experience.fromDate}} - {{experience.toDate}}
+                <p> {{experience.fromDate | date: "MMM yyyy"}} - {{experience.toDate | date: "MMM yyyy"}}
                 <br/> {{experience.location}}</p>
             </div>
             <div class="modal-footer">

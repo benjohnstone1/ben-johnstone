@@ -69,14 +69,14 @@ module.factory('ExperiencesService', ['$http',
             get: function() {
                 return $http.get('/experiences');
             },
-            showEditPage: function(id) {
-                return $http.get('/experiences/edit/' + id);
-            },
             create: function(experienceData) {
                 return $http.post('/experiences', experienceData);
             },
             delete: function(id) {
                 return $http.delete('/experience/' + id);
+            },
+            showEditPage: function(id) {
+                return $http.get('/experiences/edit/' + id);
             },
             update: function(id, experience) {
                 return $http.post('/experiences/edit/' + id, experience);
@@ -104,8 +104,9 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
             getUserStatus: getUserStatus,
             editUser: editUser,
             getHomeProfile: getHomeProfile,
+            getHomeExperiences: getHomeExperiences,
         });
-
+        
         function editUser(id, user) {
             return $http.post('/profile/edit/' + id, user);
         }
@@ -192,9 +193,13 @@ module.factory('AuthService', ['$http', '$q', '$timeout', '$cookieStore',
                     admin = false;
                 });
         }
-        
+
         function getHomeProfile() {
             return $http.get('/profile/home.json');
+        }
+        
+        function getHomeExperiences() {
+            return $http.get('/profile/home/experiences.json');
         }
 
         function getUser() {

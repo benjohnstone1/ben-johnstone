@@ -1,0 +1,24 @@
+<div ng-controller="homeController" ng-cloak class="{{ bodyClass }}">
+    <div class="container">
+
+        <!--<form method="post" enctype="multipart/form-data" action="/upload">-->
+        <!--    <input type="file" name="file">-->
+        <!--    <input type="submit" value="Submit">-->
+        <!--</form>-->
+
+        <h3> Multer</h3>
+        <form id="frmUploader" enctype="multipart/form-data" action="/upload" method="post">
+            <input type="file" name="imgUploader" multiple />
+            <input class="btn btn-info" type="submit" name="submit" id="btnSubmit" value="Upload" /> </form>
+
+        <h3>Static Image</h3>
+        <div class="company-logo">
+            <img src="../images/IBM_logo.png" />
+        </div>
+
+        <h3> Uploaded Image</h3>
+        <img src="/image.png" />
+
+
+    </div>
+</div>

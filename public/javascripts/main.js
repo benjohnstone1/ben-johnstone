@@ -56,9 +56,13 @@ myApp.config(function($routeProvider) {
       templateUrl: '../partials/profile.html',
       access: { restricted: true, admin: false }
     })
-     .when('/experiences/edit/:experienceId', {
-      access: { restricted: true, admin: false }
-    })
+    // .when('/blog', {
+    //   templateUrl: '../partials/blog.html',
+    //   access: { restricted: false, admin: false }
+    // })
+    // .when('/experiences/edit/:experience_id', {
+    //   access: { restricted: true, admin: false }
+    // })
     .when('/profile/edit/:profileID', {
       templateUrl: '../partials/profile.edit.html',
       access: { restricted: true, admin: false }
