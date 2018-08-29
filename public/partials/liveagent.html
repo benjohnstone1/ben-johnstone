@@ -1,47 +1,4 @@
-<!DOCTYPE html>
-<html ng-app="myApp" lang="en">
-
-<head>
-    <!-- META -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ben Johnstone</title>
-    <!--Style Sheets-->
-    <link rel="stylesheet" href="../public/stylesheets/style.css">
-    <!-- BOOTSTRAP CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Fonts -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- CHARTIST -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-    <!-- ANGULAR -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-cookies.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
-    <!--Load Controller & Services-->
-    <script src="../../public/javascripts/main.js"></script>
-    <script src="../../public/javascripts/controllers/controllers.js"></script>
-    <script src="../../public/javascripts/services/services.js"></script>
-    <!--Fixes Collapse of Navbar in SPA-->
-    <script src="../../public/javascripts/navbar.js"></script>
-    <!-- Google Analytics -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109746822-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-109746822-1');
-    </script>
-    <!-- Live Agent Snap in start -->
-    <style type='text/css'>
+<style type='text/css'>
     .embeddedServiceHelpButton .helpButton .uiButton {
         background-color: #005290;
         font-family: "Salesforce Sans", sans-serif;
@@ -57,8 +14,9 @@
         url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
     }
 </style>
-    <script type='text/javascript' src='https://service.force.com/embeddedservice/4.1/esw.min.js'></script>
-    <script type='text/javascript'>
+
+<script type='text/javascript' src='https://service.force.com/embeddedservice/4.1/esw.min.js'></script>
+<script type='text/javascript'>
     var initESW = function(gslbBaseURL) {
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
@@ -89,18 +47,3 @@
         document.body.appendChild(s); }
     else { initESW('https://service.force.com'); }
 </script>
-    <!-- Live Agent Snap in end -->
-</head>
-
-<header>
-    <div ng-include src="'../public/partials/header.html'"></div>
-</header>
-
-<body>
-    <div ng-view></div>
-    <footer>
-        <div ng-include src="'../public/partials/footer.html'"></div>
-    </footer>
-</body>
-
-</html>
