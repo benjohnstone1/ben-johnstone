@@ -372,7 +372,11 @@ function getTodos(res, user) {
 }
 
 router.get('/todos.json', function(req, res) {
-    getTodos(res, req.user.username);
+    //getTodos(res, req.user.username);
+    var todo1 = {"rank":1, "text": "This is a todo"};
+    var todo2 = {"rank":2, "text": "This is a todo too!"};
+    data = [todo1, todo2];
+    res.json(data)
 });
 
 router.post('/todos', function(req, res) {

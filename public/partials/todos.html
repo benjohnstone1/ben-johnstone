@@ -25,7 +25,7 @@
                             <span class="fa fa-spinner fa-spin fa-3x"></span>
                         </p>
                         <tbody>
-                            <tr ng-repeat="todo in todos | orderBy: '-rank'">
+                            <tr ng-repeat="todo in todos | orderBy: 'rank'">
                                 <td><button ng-click="increase(todo._id)" class="btn btn-primary btn-sm">+</button>
                                 </td>
                                 <td> <button ng-click="decrease(todo._id)" class="btn btn-warning btn-sm">-</button>

@@ -38,7 +38,7 @@ myApp.config(function($routeProvider) {
     })
     .when('/todos', {
       templateUrl: '../partials/todos.html',
-      access: { restricted: true, admin: false }
+      access: { restricted: false, admin: false }
     })
     .when('/todos/edit/:todo_id', {
       templateUrl: '../partials/todos.html',
